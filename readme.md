@@ -1,6 +1,7 @@
 # Tytans II
 
-------
+
+
 ### Update #2
 * Added Player movement
 * Added Player sprite
