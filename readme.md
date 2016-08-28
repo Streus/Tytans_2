@@ -1,5 +1,4 @@
 # Tytans II
-A spiritual successor to the first game I completed.
 
 ------
 ### Update #2
