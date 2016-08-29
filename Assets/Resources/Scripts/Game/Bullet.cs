@@ -4,7 +4,7 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
 
 	public BulletType type;
-	public int speed;
+	public float speed;
 	public int damage;
 	public Faction faction;
 	public bool onHit;
