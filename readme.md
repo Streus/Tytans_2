@@ -1,14 +1,7 @@
 # Tytans II
 
-### Update #3
-* Fleshed out Ability system
-* Added Shoot ability
-* Started work on front-end
-* Added in-game GUI (Not hooked up yet)
-* Added Boomerang Bullet (Not finished)
-* Modified Player sprite
 
-------
+
 ### Update #2
 * Added Player movement
 * Added Player sprite
