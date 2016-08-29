@@ -13,13 +13,13 @@ public class Entity : MonoBehaviour {
 	public int speed;
 	public DeathType death;
 	public ArrayList statuses;
-	public Ability[] abilities;
+	public Ability[] abilities = new Ability[7];
 	public float cooldownRate;
 
 	// Use this for initialization
 	void Start () {
 		statuses = new ArrayList();
-		abilities = new Ability[7];
+		//abilities = new Ability[7];
 	}
 	
 	// Update is called once per frame
