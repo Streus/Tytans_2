@@ -1,4 +1,5 @@
-# Tytans II
+Tytans II
+------
 
 ### Update #3
 * Fleshed out Ability system
