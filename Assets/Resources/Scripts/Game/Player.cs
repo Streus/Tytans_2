@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	public GameObject bullet;
 	private Rigidbody2D physbody;
 	private Entity player;
 
@@ -12,13 +13,11 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		// Basic attack cooldown
-		player.addCooldown(5, 0.5f);
-		Debug.Log(player.cooldowns.ToString());
+		player.addAbility(new BasicShot(transform, bullet), 0);
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		Debug.Log(player.cooldowns.ToString());
 		//point to mouse
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
 		Quaternion rot = Quaternion.LookRotation(transform.position - mousePos, Vector3.back);
@@ -26,20 +25,15 @@ public class Player : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
 		// movement
-		if(Input.GetKey(KeyCode.Mouse0))
+		if(Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftShift))
 		{
 			physbody.AddForce(transform.up * -player.speed);
 		}
 
-		// basic attack (cooldowns[0])
-		if(Input.GetKey(KeyCode.Mouse1) && player.cooldowns[0] <= 0)
+		// basic attack (abilities[0])
+		if(Input.GetKey(KeyCode.Mouse1) && player.abilities[0].ready())
 		{
-			GameObject b = (GameObject)Instantiate(Resources.Load("Prefabs/Bullets/BulletBasic", typeof(GameObject)), transform.position, transform.rotation);
-			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), transform.GetComponent<Collider2D>());
-			Bullet bullet = b.transform.GetComponent<Bullet>();
-			bullet.faction = player.faction;
-
-			player.resetCooldown(0);
+			player.abilities[0].use();
 		}
 
 		Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);

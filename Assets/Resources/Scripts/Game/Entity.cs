@@ -6,43 +6,41 @@ public class Entity : MonoBehaviour {
 	public Faction faction;
 	public int health;
 	public int healthMax;
+	public int healthRegen;
 	public int energy;
 	public int energyMax;
+	public int energyRegen;
 	public int speed;
 	public DeathType death;
 	public ArrayList statuses;
-	public float[] cooldowns;
-	public float[] cooldownsMax;
+	public Ability[] abilities;
+	public float cooldownRate;
 
 	// Use this for initialization
 	void Start () {
 		statuses = new ArrayList();
-		cooldowns = new float[11];
-		cooldownsMax = new float[11];
+		abilities = new Ability[7];
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		// update cooldowns
-		for(int i = 0; i < cooldownsMax.Length; i++)
+		for(int i = 0; i < abilities.Length; i++)
 		{
-			cooldowns[i] -= Time.deltaTime;
-			if(cooldowns[i] < 0) cooldowns[i] = 0;
+			if(abilities[i] != null){
+				abilities[i].currentCD -= Time.deltaTime * cooldownRate;
+				abilities[i].clampCD();
+			}
+			
 		}
 	}
 
-	// Add a cooldown to the list of managed cooldowns
-	public void addCooldown(int index, float max)
+	// Adds an ability to this entity's roster at index
+	public bool addAbility(Ability abil, int index)
 	{
-		cooldownsMax[index] = max;
-		cooldowns[index] = max;
-	}
-
-	// Reset a cooldown to its max value
-	public void resetCooldown(int index)
-	{
-		cooldowns[index] = cooldownsMax[index];
+		abilities[index] = abil;
+		return true;
 	}
 
 	// Verify that this Entity is still alive
