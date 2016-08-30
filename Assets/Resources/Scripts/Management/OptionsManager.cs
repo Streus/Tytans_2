@@ -19,7 +19,7 @@ public class OptionsManager : MonoBehaviour {
 	{
 		// Bindings
 		Bindings.move = (KeyCode)PlayerPrefs.GetInt("keymove", (int)KeyCode.Mouse0);
-		Bindings.dash = (KeyCode)PlayerPrefs.GetInt("keydash", (int)KeyCode.Space);
+		Bindings.classAbility = (KeyCode)PlayerPrefs.GetInt("keyclassability", (int)KeyCode.Space);
 		Bindings.hold = (KeyCode)PlayerPrefs.GetInt("keyhold", (int)KeyCode.LeftShift);
 		Bindings.toggleInventory = (KeyCode)PlayerPrefs.GetInt("keyinventory", (int)KeyCode.Tab);
 		Bindings.pause = (KeyCode)PlayerPrefs.GetInt("keypause", (int)KeyCode.Escape);
@@ -39,7 +39,7 @@ public class OptionsManager : MonoBehaviour {
 	{
 		// Bindings
 		PlayerPrefs.SetInt("keymove", (int)Bindings.move);
-		PlayerPrefs.SetInt("keydash", (int)Bindings.dash);
+		PlayerPrefs.SetInt("keyclassability", (int)Bindings.classAbility);
 		PlayerPrefs.SetInt("keyhold", (int)Bindings.hold);
 		PlayerPrefs.SetInt("keyinventory", (int)Bindings.toggleInventory);
 		PlayerPrefs.SetInt("keypause", (int)Bindings.pause);
@@ -57,7 +57,7 @@ public class OptionsManager : MonoBehaviour {
 	public void resetControlsToDefaults()
 	{
 		Bindings.move = KeyCode.Mouse0;
-		Bindings.dash = KeyCode.Space;
+		Bindings.classAbility = KeyCode.Space;
 		Bindings.hold = KeyCode.LeftShift;
 		Bindings.toggleInventory = KeyCode.Tab;
 		Bindings.pause = KeyCode.Escape;
@@ -75,7 +75,7 @@ public static class Bindings
 {
 	public static KeyCode 
 	move,
-	dash,
+	classAbility,
 	hold, 
 	toggleInventory,
 	pause, 

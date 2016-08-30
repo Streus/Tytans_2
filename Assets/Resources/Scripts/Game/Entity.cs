@@ -4,12 +4,12 @@ using System.Collections;
 public class Entity : MonoBehaviour {
 
 	public Faction faction;
-	public int health;
-	public int healthMax;
-	public int healthRegen;
-	public int energy;
-	public int energyMax;
-	public int energyRegen;
+	public float health;
+	public float healthMax;
+	public float healthRegen;
+	public float energy;
+	public float energyMax;
+	public float energyRegen;
 	public int speed;
 	public DeathType death;
 	public ArrayList statuses;

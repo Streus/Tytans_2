@@ -4,6 +4,8 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public GameObject bullet;
+	public PlayerClass myClass;
+	public Ability specialAbility;
 	private Rigidbody2D physbody;
 	private Entity player;
 
@@ -12,7 +14,7 @@ public class Player : MonoBehaviour {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		player = transform.GetComponent<Entity>();
 
-		// Basic attack cooldown
+		// Basic attack TEMPORARY
 		player.addAbility(new BasicShot(transform, bullet), 0);
 	}
 	

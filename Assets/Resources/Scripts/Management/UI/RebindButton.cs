@@ -57,7 +57,7 @@ public class RebindButton : MonoBehaviour {
 	{
 		switch(keyTitle){
 		case KeyName.move: return "Move";
-		case KeyName.dash: return "Dash";
+		case KeyName.classAbility: return "Class Ability";
 		case KeyName.hold: return "Hold";
 		case KeyName.toggleInventory: return "Inventory";
 		case KeyName.pause: return "Pause";
@@ -75,7 +75,7 @@ public class RebindButton : MonoBehaviour {
 	{
 		switch(keyTitle){
 		case KeyName.move: key = Bindings.move; break;
-		case KeyName.dash: key = Bindings.dash; break;
+		case KeyName.classAbility: key = Bindings.classAbility; break;
 		case KeyName.hold: key = Bindings.hold; break;
 		case KeyName.toggleInventory: key = Bindings.toggleInventory; break;
 		case KeyName.pause: key = Bindings.pause; break;
@@ -92,7 +92,7 @@ public class RebindButton : MonoBehaviour {
 	{
 		switch(keyTitle){
 		case KeyName.move: Bindings.move = key; break;
-		case KeyName.dash: Bindings.dash = key; break;
+		case KeyName.classAbility: Bindings.classAbility = key; break;
 		case KeyName.hold: Bindings.hold = key; break;
 		case KeyName.toggleInventory: Bindings.toggleInventory = key; break;
 		case KeyName.pause: Bindings.pause = key; break;
@@ -109,7 +109,7 @@ public class RebindButton : MonoBehaviour {
 public enum KeyName 
 {
 	move,
-	dash,
+	classAbility,
 	hold,
 	toggleInventory,
 	pause,
