@@ -25,13 +25,13 @@ public class Player : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
 		// movement
-		if(Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftShift))
+		if(Input.GetKey(Bindings.move) && !Input.GetKey(Bindings.hold))
 		{
 			physbody.AddForce(transform.up * -player.speed);
 		}
 
 		// basic attack (abilities[0])
-		if(Input.GetKey(KeyCode.Mouse1) && player.abilities[0].ready())
+		if(Input.GetKey(Bindings.ability0) && player.abilities[0].ready())
 		{
 			player.abilities[0].use();
 		}
