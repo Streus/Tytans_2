@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour {
+
+	public AudioMixer mainAudio;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +36,10 @@ public class OptionsManager : MonoBehaviour {
 
 		// Options
 		Options.tutorial = bool.Parse(PlayerPrefs.GetString("optiontutorial", "true"));
+		mainAudio.SetFloat ("mastervolume", PlayerPrefs.GetFloat ("mastervolume", 0f));
+		mainAudio.SetFloat ("musicvolume", PlayerPrefs.GetFloat ("musicvolume", 0f));
+		mainAudio.SetFloat ("effectsvolume", PlayerPrefs.GetFloat ("effectsvolume", 0f));
+
 	}
 
 	// Save all of the global options values to PlayerPrefs
@@ -52,6 +60,15 @@ public class OptionsManager : MonoBehaviour {
 
 		// Options
 		PlayerPrefs.SetString("optiontutorial", Options.tutorial.ToString());
+		float masvol = 0f;
+		mainAudio.GetFloat ("mastervolume", out masvol);
+		PlayerPrefs.SetFloat ("mastervolume", masvol);
+		float musvol = 0f;
+		mainAudio.GetFloat ("musicvolume", out musvol);
+		PlayerPrefs.SetFloat ("musicvolume", musvol);
+		float effvol = 0f;
+		mainAudio.GetFloat ("effectsvolume", out effvol);
+		PlayerPrefs.SetFloat ("effectsvolume", effvol);
 	}
 
 	public void resetControlsToDefaults()

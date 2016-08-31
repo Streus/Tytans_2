@@ -34,9 +34,6 @@ public abstract class Ability {
 	public void clampCD() {
 		if(currentCD < 0)
 			currentCD = 0f;
-
-		// debug code
-		Debug.Log(currentCD + "/" + cooldown);
 	}
 
 	public bool ready()

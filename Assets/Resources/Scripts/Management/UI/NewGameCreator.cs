@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
 public class NewGameCreator : MonoBehaviour {
 
@@ -26,12 +27,19 @@ public class NewGameCreator : MonoBehaviour {
 	Transform classGroup;
 	Text classDescription;
 	Transform bulletGroup;
+	Slider difficultySlider;
+	Text difficultyText;
 
 	// Use this for initialization
 	void Start () {
 		classGroup = transform.GetChild(0).GetChild(2);
 		classDescription = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
 		bulletGroup = transform.GetChild(0).GetChild(7);
+		difficultySlider = transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Slider>();
+		difficultyText = transform.GetChild(0).GetChild(5).GetChild(1).GetChild(0).GetComponent<Text>();
+
+		setClass(0);
+		setDifficulty();
 	}
 	
 	// Update is called once per frame
@@ -40,8 +48,6 @@ public class NewGameCreator : MonoBehaviour {
 	}
 
 	// All setters
-	public void setDifficulty(int x) { difficulty = (Difficulty)x; }
-
 	public void setClass(int pc)
 	{
 		pClass = (PlayerClass)pc;
@@ -64,7 +70,33 @@ public class NewGameCreator : MonoBehaviour {
 	public GameObject getBullet() { return bulletType; }
 	public void setBullet(GameObject x) { bulletType = x; }
 		
-	} 
+	public void setDifficulty()
+	{
+		difficulty = (Difficulty)(int)difficultySlider.value;
+		string difftext = "";
+		switch (difficulty) {
+		case Difficulty.Easy:
+			difftext = "Easy";
+			difficultyText.color = Color.green;
+			break;
+		case Difficulty.Normal:
+			difftext = "Normal";
+			difficultyText.color = Color.yellow;
+			break;
+		case Difficulty.Hard: 
+			difftext = "Hard";
+			difficultyText.color = Color.red;
+			break;
+		}
+		difficultyText.text = difftext;
+	}
+
+	public void moveToGame()
+	{
+		//TODO set up GameManager
+		EditorSceneManager.LoadScene ("Overworld");
+	}
+} 
 
 public enum PlayerClass
 {

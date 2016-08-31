@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -19,6 +20,9 @@ public class GameManager : MonoBehaviour {
 		else if(manager != this){
 			Destroy(transform.gameObject);
 		}
+
+		//check the scene
+		//TODO
 	}
 	
 	// Update is called once per frame
