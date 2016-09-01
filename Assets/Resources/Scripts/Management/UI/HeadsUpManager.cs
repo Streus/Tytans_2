@@ -22,7 +22,16 @@ public class HeadsUpManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//update health and energy bars
 		healthBar.fillAmount = player.health / player.healthMax;
 		energyBar.fillAmount = player.energy / player.energyMax;
+
+		//update status bar
+		//TODO
+
+		//update ability bar
+		for (int i = 0; i < player.abilities.Length; i++) {
+			abilityBar.GetChild (i).GetComponent<AbilitySlot> ().ability = player.abilities [i];
+		}
 	}
 }

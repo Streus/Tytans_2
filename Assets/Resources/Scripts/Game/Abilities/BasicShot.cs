@@ -8,7 +8,7 @@ public class BasicShot : Ability {
 	public BasicShot(Transform entity, GameObject bt) : base(entity){
 		dispName = "Shoot";
 		desc = "Fire a bullet.";
-		image = null;
+		image = (Sprite)Resources.Load ("Sprites/Game/Bullets/BoomerangBullet", typeof(Sprite));
 		cost = 0;
 		cooldown = 1f;
 		currentCD = cooldown;

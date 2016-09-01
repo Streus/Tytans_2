@@ -14,12 +14,12 @@ public class NewGameCreator : MonoBehaviour {
 	// Player options
 	private PlayerClass pClass = PlayerClass.defender;
 	private Sprite shipSprite;
-	private float healthMax = 0;
-	private float healthRegen = 0;
-	private float energyMax = 0;
-	private float energyRegen = 0;
-	private int speed = 0;
-	private string classAbility = "Dash";
+	//private float healthMax = 0;
+	//private float healthRegen = 0;
+	//private float energyMax = 0;
+	//private float energyRegen = 0;
+	//private int speed = 0;
+	//private string classAbility = "Dash";
 	private string shootAbility = "BasicShot";
 	private GameObject bulletType;
 

@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad (transform.gameObject);
 		physbody = transform.GetComponent<Rigidbody2D>();
 		player = transform.GetComponent<Entity>();
 
