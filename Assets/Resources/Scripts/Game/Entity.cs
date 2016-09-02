@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour {
 	public int speed;
 	public DeathType death;
 	public ArrayList statuses;
-	public Ability[] abilities = new Ability[8];
+	public Ability[] abilities = new Ability[7];
 	public float cooldownRate;
 
 	// Use this for initialization
@@ -34,6 +34,13 @@ public class Entity : MonoBehaviour {
 			}
 			
 		}
+
+		// regen health and energy
+		health += healthRegen * Time.deltaTime;
+		if(health > healthMax) health = healthMax;
+
+		energy += energyRegen * Time.deltaTime;
+		if(energy > energyMax) energy = energyMax;
 	}
 
 	// Adds an ability to this entity's roster at index

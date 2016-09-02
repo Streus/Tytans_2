@@ -26,7 +26,7 @@ public class Bullet : MonoBehaviour {
 			hitEffect();
 
 		// move
-		physbody.AddForce(transform.up * -speed);
+		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {

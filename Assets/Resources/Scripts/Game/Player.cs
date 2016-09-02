@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
 
 		// Basic attack TEMPORARY
 		player.addAbility(new BasicShot(transform, bullet), 0);
+		player.addAbility(new Dash(transform), 1);
+		player.addAbility(new RailgunShot(transform, bullet), 2);
+		player.addAbility(new BurstShot(transform, bullet), 3);
 	}
 	
 	// Update is called once per frame
@@ -37,6 +40,24 @@ public class Player : MonoBehaviour {
 		if(Input.GetKey(Bindings.ability0) && player.abilities[0].ready())
 		{
 			player.abilities[0].use();
+		}
+
+		// class ability (abilities[1])
+		if(Input.GetKey(Bindings.classAbility) && player.abilities[1].ready())
+		{
+			player.abilities[1].use();
+		}
+
+		// flex ability 1 (abilities[2])
+		if(Input.GetKey(Bindings.ability1) && player.abilities[2].ready())
+		{
+			player.abilities[2].use();
+		}
+
+		// flex ability 2 (abilities[3])
+		if(Input.GetKey(Bindings.ability2) && player.abilities[3].ready())
+		{
+			player.abilities[3].use();
 		}
 
 		Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);

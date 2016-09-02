@@ -3,7 +3,18 @@ using System.Collections;
 
 //TODO
 public class CoreOverload : Ability {
-	public CoreOverload(Transform e) : base(e){}
+	public CoreOverload(Transform e) : base(e){
+		dispName = "Core Overload";
+		desc = "Emit a powerful shockwave that knocks back and damages enemies as well as restoring some energy.";
+		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityCoreOverload", typeof(Sprite));
+		cost = -75;
+		cooldown = 10f;
+		currentCD = cooldown;
+	}
 
-	public override bool use(){ return false; }
+	//TODO
+	public override bool use(){
+		currentCD = cooldown;
+		return false; 
+	}
 }
