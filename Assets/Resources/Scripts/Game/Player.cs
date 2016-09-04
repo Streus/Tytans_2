@@ -5,7 +5,6 @@ public class Player : MonoBehaviour {
 
 	public GameObject bullet;
 	public PlayerClass myClass;
-	public Ability specialAbility;
 	private Rigidbody2D physbody;
 	private Entity player;
 
@@ -14,12 +13,6 @@ public class Player : MonoBehaviour {
 		DontDestroyOnLoad (transform.gameObject);
 		physbody = transform.GetComponent<Rigidbody2D>();
 		player = transform.GetComponent<Entity>();
-
-		// Basic attack TEMPORARY
-		player.addAbility(new BasicShot(transform, bullet), 0);
-		player.addAbility(new Dash(transform), 1);
-		player.addAbility(new RailgunShot(transform, bullet), 2);
-		player.addAbility(new BurstShot(transform, bullet), 3);
 	}
 	
 	// Update is called once per frame

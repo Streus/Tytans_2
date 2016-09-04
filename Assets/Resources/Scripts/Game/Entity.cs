@@ -16,8 +16,12 @@ public class Entity : MonoBehaviour {
 	public Ability[] abilities = new Ability[7];
 	public float cooldownRate;
 
+	// The % of damage this entity takes
+	public float damageReduction;
+
 	// Use this for initialization
 	void Start () {
+		damageReduction = 1f;
 		statuses = new ArrayList();
 		//abilities = new Ability[7]; The fuckiest of errors
 	}

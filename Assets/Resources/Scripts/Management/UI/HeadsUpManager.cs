@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HeadsUpManager : MonoBehaviour {
 
 	// Entity to pull stats from
-	public Entity player;
+	private Entity player;
 
 	private Image healthBar;
 	private Image energyBar;
@@ -14,6 +14,8 @@ public class HeadsUpManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		player = GameManager.player.transform.GetComponent<Entity>();
+
 		healthBar = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
 		energyBar = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
 		statusBar = transform.GetChild (2).GetChild (0);

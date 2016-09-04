@@ -5,22 +5,12 @@ using UnityEditor.SceneManagement;
 
 public class NewGameCreator : MonoBehaviour {
 
-	public GameObject gameManager;
-
 	// Misc game options
 	private Difficulty difficulty = Difficulty.Easy;
 	private bool tutorial = Options.tutorial;
 
 	// Player options
 	private PlayerClass pClass = PlayerClass.defender;
-	private Sprite shipSprite;
-	//private float healthMax = 0;
-	//private float healthRegen = 0;
-	//private float energyMax = 0;
-	//private float energyRegen = 0;
-	//private int speed = 0;
-	//private string classAbility = "Dash";
-	private string shootAbility = "BasicShot";
 	private GameObject bulletType;
 
 	// Important children
@@ -40,6 +30,8 @@ public class NewGameCreator : MonoBehaviour {
 
 		setClass(0);
 		setDifficulty();
+		setBullet((GameObject)Resources.Load("Prefabs/Bullets/BulletBasic", typeof(GameObject)));
+
 	}
 	
 	// Update is called once per frame
@@ -93,7 +85,11 @@ public class NewGameCreator : MonoBehaviour {
 
 	public void moveToGame()
 	{
-		//TODO set up GameManager
+		//set up GameManager
+		GameManager.manager.setDifficulty(difficulty);
+		GameManager.manager.setPlayerClass(pClass);
+		GameManager.manager.setBullet(bulletType);
+		GameManager.manager.setSaveName("New Game");
 		EditorSceneManager.LoadScene ("Overworld");
 	}
 } 
