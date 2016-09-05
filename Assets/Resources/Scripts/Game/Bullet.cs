@@ -5,7 +5,7 @@ public class Bullet : MonoBehaviour {
 
 	public BulletType type;
 	public float speed;
-	public int damage;
+	public float damage;
 	public Faction faction;
 	public bool onHit;
 	public float duration;
@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour {
 		// countdown duration left on this bullet
 		duration -= Time.deltaTime;
 		if(duration <= 0)
-			hitEffect();
+			die();
 
 		// move
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
@@ -37,13 +37,14 @@ public class Bullet : MonoBehaviour {
 			// do damage to that entity
 			Entity other = col.transform.GetComponent<Entity>();
 			if(onHit)
-				hitEffect(other);
+				hitEffect(col);
 			other.health -= damage;
 			other.checkDeath();
 		}
 	}
 
-	private void hitEffect(Entity other = null){
+	private void hitEffect(Collision2D col){
+		Entity other = col.transform.GetComponent<Entity>();
 		switch(type)
 		{
 		case BulletType.Basic:
@@ -56,10 +57,34 @@ public class Bullet : MonoBehaviour {
 			
 			break;
 		case BulletType.Flame:
-			
+			if(other != null)
+				other.addStatus(new StatusFire(5f, col.transform, 5f));
 			break;
 		case BulletType.Splitter:
 			
+			break;
+		}
+		Destroy(transform.gameObject);
+	}
+
+	private void die()
+	{
+		switch(type)
+		{
+		case BulletType.Basic:
+
+			break;
+		case BulletType.Bouncing:
+
+			break;
+		case BulletType.Explosive:
+
+			break;
+		case BulletType.Flame:
+			
+			break;
+		case BulletType.Splitter:
+
 			break;
 		}
 		Destroy(transform.gameObject);

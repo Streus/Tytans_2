@@ -10,7 +10,6 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DontDestroyOnLoad (transform.gameObject);
 		physbody = transform.GetComponent<Rigidbody2D>();
 		player = transform.GetComponent<Entity>();
 	}
@@ -52,7 +51,5 @@ public class Player : MonoBehaviour {
 		{
 			player.abilities[3].use();
 		}
-
-		Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, Camera.main.transform.position.z);
 	}
 }

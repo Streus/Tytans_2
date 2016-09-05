@@ -35,8 +35,7 @@ public class Entity : MonoBehaviour {
 			if(abilities[i] != null){
 				abilities[i].currentCD -= Time.deltaTime * cooldownRate;
 				abilities[i].clampCD();
-			}
-			
+			}	
 		}
 
 		// regen health and energy
@@ -45,6 +44,8 @@ public class Entity : MonoBehaviour {
 
 		energy += energyRegen * Time.deltaTime;
 		if(energy > energyMax) energy = energyMax;
+
+		checkDeath();
 	}
 
 	// Adds an ability to this entity's roster at index
@@ -52,6 +53,11 @@ public class Entity : MonoBehaviour {
 	{
 		abilities[index] = abil;
 		return true;
+	}
+
+	public void addStatus(StatusEffect status)
+	{
+		statuses.Add(status);
 	}
 
 	// Verify that this Entity is still alive
@@ -73,6 +79,7 @@ public class Entity : MonoBehaviour {
 
 			break;
 		}
+		Destroy(transform.gameObject);
 	}
 }
 
