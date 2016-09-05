@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+
+// Delegate for the changedStatuses event
+public delegate void UpdatedStatusList(StatusEffect status);
 
 public class Entity : MonoBehaviour {
 
@@ -15,8 +19,6 @@ public class Entity : MonoBehaviour {
 	public ArrayList statuses;
 	public Ability[] abilities = new Ability[7];
 	public float cooldownRate;
-
-	// The % of damage this entity takes
 	public float damageReduction;
 
 	// Use this for initialization
@@ -38,6 +40,11 @@ public class Entity : MonoBehaviour {
 			}	
 		}
 
+		//update statuses
+		for (int i = 0; i < statuses.Count; i++) {
+			((StatusEffect)statuses [i]).update (Time.deltaTime);
+		}
+
 		// regen health and energy
 		health += healthRegen * Time.deltaTime;
 		if(health > healthMax) health = healthMax;
@@ -55,9 +62,18 @@ public class Entity : MonoBehaviour {
 		return true;
 	}
 
+	// Event code for broadcasting status list changes to listeners
+	public event UpdatedStatusList changedStatuses;
+	protected virtual void onChanged(StatusEffect status) {
+		if (changedStatuses != null)
+			changedStatuses(status);
+	}
+
 	public void addStatus(StatusEffect status)
 	{
 		statuses.Add(status);
+		status.apply();
+		onChanged (status);
 	}
 
 	// Verify that this Entity is still alive

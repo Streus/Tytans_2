@@ -24,16 +24,19 @@ public abstract class StatusEffect{
 		statusList = invokerVars.statuses;
 	}
 
+	// Add an effect to the passed transform's Entity script
 	public abstract void apply();
+
+	// Remove the effect added by this instance
 	public abstract void revert();
 
-	public void setStatusList(ArrayList al)
+	// Decrement duration and check for termination case
+	public void update(float dec)
 	{
-		statusList = al;
-	}
-
-	private void removeFromList()
-	{
-		statusList.Remove(this);
+		duration -= dec;
+		if (duration <= 0f) {
+			revert();
+			statusList.Remove (this);
+		}
 	}
 }
