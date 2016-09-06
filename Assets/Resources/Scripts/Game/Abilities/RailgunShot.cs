@@ -9,6 +9,7 @@ public class RailgunShot : Ability {
 	public RailgunShot(Transform e, GameObject bt) : base(e){
 		dispName = "Railgun Shot";
 		desc = "Fire a powerful bullet that knocks the ship back.";
+		position = 6;
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityRailgunShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 1.5f;

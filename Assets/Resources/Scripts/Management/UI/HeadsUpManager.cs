@@ -28,6 +28,10 @@ public class HeadsUpManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//check for destroyed player
+		if (GameManager.player == null)
+			Destroy (gameObject);
+
 		//update health and energy bars
 		healthBar.fillAmount = player.health / player.healthMax;
 		energyBar.fillAmount = player.energy / player.energyMax;
@@ -43,11 +47,12 @@ public class HeadsUpManager : MonoBehaviour {
 		player.changedStatuses -= new UpdatedStatusList (addStatusToStatusBar);
 	}
 
-	// Add a GUI GameObject to the statsu bar to represent the passed status effect
+	// Add a GUI GameObject to the status bar to represent the passed status effect
 	private void addStatusToStatusBar(StatusEffect status)
 	{
-		GameObject statusGUI = (GameObject)Instantiate(Resources.Load<GameObject> ("Prefabs/UI/StatusEffect"), statusBar.transform);
+		GameObject statusGUI = (GameObject)Instantiate(Resources.Load<GameObject> ("Prefabs/UI/StatusEffect"));
+		statusGUI.transform.SetParent (statusBar.transform, false);
 		StatusListener statusGUIData = statusGUI.GetComponent<StatusListener> ();
-		statusGUIData.status = status;
+		statusGUIData.setStatus (status);
 	}
 }

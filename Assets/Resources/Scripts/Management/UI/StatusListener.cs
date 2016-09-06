@@ -20,7 +20,14 @@ public class StatusListener : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	
 	// Update is called once per frame
 	void Update () {
-		cooldownField.text = status.duration.ToString ("D");
+		if (status.duration <= 0)
+			Destroy (gameObject);
+		cooldownField.text = status.duration.ToString ("###");
+	}
+
+	public void setStatus(StatusEffect status)
+	{
+		this.status = status;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)

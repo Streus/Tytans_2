@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public abstract class Ability {
+public abstract class Ability : IComparable{
 	 
 	// The ability's display name
 	public string dispName;
 
 	// The ability's description flavor-text
 	public string desc;
+
+	// The ability's position in the array of all abilities
+	public int position;
 
 	// The graphic associated with this ability
 	public Sprite image;
@@ -39,6 +43,11 @@ public abstract class Ability {
 	public bool ready()
 	{
 		return currentCD <= 0f;
+	}
+
+	public int CompareTo(object other)
+	{
+		return this.dispName.CompareTo (((Ability)other).dispName);
 	}
 
 	// Invoke the ability

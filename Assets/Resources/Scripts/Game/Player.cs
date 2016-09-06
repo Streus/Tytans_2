@@ -1,21 +1,34 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public delegate void LearnedAbility(Ability ability);
+
 public class Player : MonoBehaviour {
 
 	public GameObject bullet;
 	public PlayerClass myClass;
 	private Rigidbody2D physbody;
 	private Entity player;
+	public ArrayList learnedAbilities;
 
 	// Use this for initialization
 	void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		player = transform.GetComponent<Entity>();
+
+		learnedAbilities = new ArrayList ();
+	}
+
+	void Update () {
+		if (!physbody.simulated)
+			return;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		if (!physbody.simulated)
+			return;
+
 		//point to mouse
 		Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.transform.position.z));
 		Quaternion rot = Quaternion.LookRotation(transform.position - mousePos, Vector3.back);
@@ -51,5 +64,25 @@ public class Player : MonoBehaviour {
 		{
 			player.abilities[3].use();
 		}
+	}
+
+	// Event to use with learnAbility
+	public event LearnedAbility newAbility;
+	protected virtual void updatedAbilityList(Ability ability){
+		if(newAbility != null)
+			newAbility(ability);
+	}
+
+	// Add a new ability to the player's list of learned abilities and re-sort the list
+	// Return false if the ability is already learned.
+	public bool learnAbility(Ability ability)
+	{
+		if (learnedAbilities.Contains (ability))
+			return false;
+
+		learnedAbilities.Add (ability);
+		learnedAbilities.Sort (null);
+		updatedAbilityList (ability);
+		return true;
 	}
 }

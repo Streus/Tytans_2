@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-// Delegate for the changedStatuses event
+// Delegate for the addStatus method
 public delegate void UpdatedStatusList(StatusEffect status);
 
 public class Entity : MonoBehaviour {
@@ -21,15 +21,21 @@ public class Entity : MonoBehaviour {
 	public float cooldownRate;
 	public float damageReduction;
 
+	public Rigidbody2D physbody;
+
 	// Use this for initialization
 	void Start () {
 		damageReduction = 1f;
 		statuses = new ArrayList();
 		//abilities = new Ability[7]; The fuckiest of errors
+
+		physbody = transform.GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!physbody.simulated)
+			return;
 
 		// update cooldowns
 		for(int i = 0; i < abilities.Length; i++)
@@ -53,6 +59,8 @@ public class Entity : MonoBehaviour {
 		if(energy > energyMax) energy = energyMax;
 
 		checkDeath();
+
+
 	}
 
 	// Adds an ability to this entity's roster at index
@@ -64,7 +72,7 @@ public class Entity : MonoBehaviour {
 
 	// Event code for broadcasting status list changes to listeners
 	public event UpdatedStatusList changedStatuses;
-	protected virtual void onChanged(StatusEffect status) {
+	protected virtual void onChangedStatus(StatusEffect status) {
 		if (changedStatuses != null)
 			changedStatuses(status);
 	}
@@ -73,7 +81,7 @@ public class Entity : MonoBehaviour {
 	{
 		statuses.Add(status);
 		status.apply();
-		onChanged (status);
+		onChangedStatus (status);
 	}
 
 	// Verify that this Entity is still alive

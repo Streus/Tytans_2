@@ -39,4 +39,9 @@ public abstract class StatusEffect{
 			statusList.Remove (this);
 		}
 	}
+
+	public override string ToString()
+	{
+		return "Status Effect: " + name + "\nAffecting: " + invoker.gameObject.name + "\nDuration: " + duration.ToString ("###");
+	}
 }

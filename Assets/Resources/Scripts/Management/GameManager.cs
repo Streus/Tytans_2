@@ -18,12 +18,19 @@ public class GameManager : MonoBehaviour {
 	private string lastScene;
 	private Vector2 spawnCoordinates;
 
+	// Other misc variables
+	private bool paused;
+	private Menu[] menus;
+
 	// Use this for initialization
 	void Start () {
-		// instantiate defaults
+		//instantiate defaults
 		saveName = "default";
 		lastScene = "Overworld";
 		spawnCoordinates = Vector2.zero;
+
+		paused = false;
+		menus = null;
 
 		//ensure there's only one GameManager
 		if(manager == null){
@@ -38,9 +45,32 @@ public class GameManager : MonoBehaviour {
 		SceneManager.sceneLoaded += EditorSceneManager_sceneLoaded;
 	}
 
+	// Update is called once per frame
+	void Update () {
+		//toggle the pause state of the game and toggle a pause menu
+		if (Input.GetKeyDown (Bindings.pause)) {
+			paused = !paused;
+			pause ();
+			//TODO toggle pause menu
+		}
+	}
+
+	// Stop simulation on all Rigidbodies
+	public void pause()
+	{
+		Rigidbody2D[] bodies = FindObjectsOfType<Rigidbody2D> ();
+		foreach (Rigidbody2D body in bodies) {
+			body.simulated = !paused;
+		}
+	}
+
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 	{
-		lastScene = SceneManager.GetActiveScene().name;
+		//save this room as the last entered room
+		lastScene = arg0.name;
+
+		//gather a list of all the menus in this room
+		menus = FindObjectsOfType<Menu> ();
 
 		//make player
 		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Players/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
@@ -95,11 +125,6 @@ public class GameManager : MonoBehaviour {
 			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerCaster", typeof(Sprite));
 			break;
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void setDifficulty(Difficulty d){

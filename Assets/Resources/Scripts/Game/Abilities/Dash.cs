@@ -6,6 +6,7 @@ public class Dash : Ability {
 	public Dash(Transform e) : base(e){
 		dispName = "Dash";
 		desc = "Gain a burst of forward speed";
+		position = 4;
 		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityDash", typeof(Sprite));
 		cost = 10;
 		cooldown = 3f;

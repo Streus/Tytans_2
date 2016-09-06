@@ -16,20 +16,23 @@ public class Bullet : MonoBehaviour {
 	void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		physbody.drag = 5;
+
+		//add force
+		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!physbody.simulated)
+			return;
+
 		// countdown duration left on this bullet
 		duration -= Time.deltaTime;
 		if(duration <= 0)
 			die();
-
-		// move
-		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
 	}
 
-	void OnCollisionEnter2D (Collision2D col) {
+	void OnTriggerEnter2D (Collider2D col) {
 		// check if the object being collided with is an Entity of another faction
 		if(col.transform.gameObject.GetComponent<Entity>() != null && 
 			faction != col.transform.GetComponent<Entity>().faction)
@@ -43,7 +46,7 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
-	private void hitEffect(Collision2D col){
+	private void hitEffect(Collider2D col){
 		Entity other = col.transform.GetComponent<Entity>();
 		switch(type)
 		{
