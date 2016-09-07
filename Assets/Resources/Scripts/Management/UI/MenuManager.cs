@@ -3,23 +3,23 @@ using System.Collections;
 
 public class MenuManager : MonoBehaviour 
 {
-	//public static MenuManager menuSystem;
+	public static MenuManager menuSystem;
 
 	public Menu currentMenu;
+	private Menu[] menus;
 
 	public void Start()
 	{
-		//if (menuSystem = null)
-		//	menuSystem = this;
-		//else
-		//	Destroy (gameObject);
+		menuSystem = this;
+
+		menus = FindObjectsOfType<Menu> ();
 
 		showMenu(currentMenu);
 	}
 
-	void OnDestroy () {
-		//if (menuSystem == this)
-		//	menuSystem = null;
+	public Menu[] getMenus()
+	{
+		return menus;
 	}
 
 	public void showMenu(Menu menu)

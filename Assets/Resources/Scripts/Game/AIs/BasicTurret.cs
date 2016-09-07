@@ -17,6 +17,9 @@ public class BasicTurret : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+		if (!physbody.simulated)
+			return;
+
 		Vector3 tarPos = GameManager.player.transform.position;
 		Quaternion rot = Quaternion.LookRotation(transform.position - tarPos);
 		transform.rotation = rot;

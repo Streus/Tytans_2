@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
-		physbody.drag = 5;
+		physbody.drag = 0;
 
 		//add force
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);

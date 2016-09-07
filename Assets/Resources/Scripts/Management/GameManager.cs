@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
 
 	// Other misc variables
 	private bool paused;
-	//private Menu[] menus;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +29,6 @@ public class GameManager : MonoBehaviour {
 		spawnCoordinates = Vector2.zero;
 
 		paused = false;
-		//menus = null;
 
 		//ensure there's only one GameManager
 		if(manager == null){
@@ -48,10 +46,19 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//toggle the pause state of the game and toggle a pause menu
-		if (Input.GetKeyDown (Bindings.pause)) {
+		if (Input.GetKeyDown (Bindings.pause)) 
+		{
 			paused = !paused;
 			pause ();
-			//TODO toggle pause menu
+
+			Menu[] menuList = MenuManager.menuSystem.getMenus ();
+			foreach (Menu menu in menuList) 
+			{
+				if (paused && menu.gameObject.name == "Pause")
+					MenuManager.menuSystem.showMenu (menu);
+				else if (!paused && menu.gameObject.name == "Empty")
+					MenuManager.menuSystem.showMenu (menu);
+			}
 		}
 	}
 
@@ -68,9 +75,6 @@ public class GameManager : MonoBehaviour {
 	{
 		//save this room as the last entered room
 		lastScene = arg0.name;
-
-		//gather a list of all the menus in this room
-		//menus = FindObjectsOfType<Menu> ();
 
 		//make player
 		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Players/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
