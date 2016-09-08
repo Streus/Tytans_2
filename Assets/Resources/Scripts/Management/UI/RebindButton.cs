@@ -56,17 +56,17 @@ public class RebindButton : MonoBehaviour {
 	private string getBindingName()
 	{
 		switch(keyTitle){
-		case KeyName.move: return "Move";
+		case KeyName.forward: return "Forward";
+		case KeyName.strafeL: return "Strafe Left";
+		case KeyName.reverse: return "Reverse";
+		case KeyName.strafeR: return "Strafe Right";
+		case KeyName.fire: return "Fire";
 		case KeyName.classAbility: return "Class Ability";
-		case KeyName.hold: return "Hold";
-		case KeyName.toggleInventory: return "Inventory";
-		case KeyName.pause: return "Pause";
 		case KeyName.ability0: return "Ability 1";
 		case KeyName.ability1: return "Ability 2";
 		case KeyName.ability2: return "Ability 3";
-		case KeyName.ability3: return "Ability 4";
-		case KeyName.ability4: return "Ability 5";
-		case KeyName.ability5: return "Ability 6";
+		case KeyName.toggleInventory: return "Inventory";
+		case KeyName.pause: return "Pause";
 		default: return "UNKNOWN";
 		}
 	}
@@ -74,49 +74,49 @@ public class RebindButton : MonoBehaviour {
 	public void setKey()
 	{
 		switch(keyTitle){
-		case KeyName.move: key = Bindings.move; break;
+		case KeyName.forward: key = Bindings.forward; break;
+		case KeyName.strafeL: key = Bindings.strafeL; break;
+		case KeyName.reverse: key = Bindings.reverse; break;
+		case KeyName.strafeR: key = Bindings.strafeR; break;
+		case KeyName.fire: key = Bindings.fire; break;
 		case KeyName.classAbility: key = Bindings.classAbility; break;
-		case KeyName.hold: key = Bindings.hold; break;
-		case KeyName.toggleInventory: key = Bindings.toggleInventory; break;
-		case KeyName.pause: key = Bindings.pause; break;
 		case KeyName.ability0: key = Bindings.ability0; break;
 		case KeyName.ability1: key = Bindings.ability1; break;
 		case KeyName.ability2: key = Bindings.ability2; break;
-		case KeyName.ability3: key = Bindings.ability3; break;
-		case KeyName.ability4: key = Bindings.ability4; break;
-		case KeyName.ability5: key = Bindings.ability5; break;
+		case KeyName.toggleInventory: key = Bindings.toggleInventory; break;
+		case KeyName.pause: key = Bindings.pause; break;
 		}
 	}
 
 	public void updateBinding()
 	{
 		switch(keyTitle){
-		case KeyName.move: Bindings.move = key; break;
+		case KeyName.forward: Bindings.forward = key; break;
+		case KeyName.strafeL: Bindings.strafeL = key; break;
+		case KeyName.reverse: Bindings.reverse = key; break;
+		case KeyName.strafeR: Bindings.strafeR = key; break;
+		case KeyName.fire: Bindings.fire = key; break;
 		case KeyName.classAbility: Bindings.classAbility = key; break;
-		case KeyName.hold: Bindings.hold = key; break;
-		case KeyName.toggleInventory: Bindings.toggleInventory = key; break;
-		case KeyName.pause: Bindings.pause = key; break;
 		case KeyName.ability0: Bindings.ability0 = key; break;
 		case KeyName.ability1: Bindings.ability1 = key; break;
 		case KeyName.ability2: Bindings.ability2 = key; break;
-		case KeyName.ability3: Bindings.ability3 = key; break;
-		case KeyName.ability4: Bindings.ability4 = key; break;
-		case KeyName.ability5: Bindings.ability5 = key; break;
+		case KeyName.toggleInventory: Bindings.toggleInventory = key; break;
+		case KeyName.pause: Bindings.pause = key; break;
 		}
 	}
 }
 
 public enum KeyName 
 {
-	move,
+	forward,
+	strafeL,
+	reverse,
+	strafeR,
+	fire,
 	classAbility,
-	hold,
-	toggleInventory,
-	pause,
 	ability0,
 	ability1,
 	ability2,
-	ability3,
-	ability4,
-	ability5
+	toggleInventory,
+	pause
 }

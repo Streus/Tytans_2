@@ -20,8 +20,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-		if (!physbody.simulated)
-			return;
+		//if (!physbody.simulated)
+		//	return;
 	}
 	
 	// Update is called once per frame
@@ -36,13 +36,21 @@ public class Player : MonoBehaviour {
 		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
 		// movement
-		if(Input.GetKey(Bindings.move) && !Input.GetKey(Bindings.hold))
-		{
-			physbody.AddForce(transform.up * -player.speed);
+		if (Input.GetKey (Bindings.forward)) {
+			physbody.AddForce (transform.up * -player.speed);
+		}
+		if (Input.GetKey (Bindings.strafeL)) {
+			physbody.AddForce (transform.right * player.speed);
+		}
+		if (Input.GetKey (Bindings.reverse)) {
+			physbody.AddForce (transform.up * player.speed);
+		}
+		if (Input.GetKey (Bindings.strafeR)) {
+			physbody.AddForce (transform.right * -player.speed);
 		}
 
 		// basic attack (abilities[0])
-		if(Input.GetKey(Bindings.ability0) && player.abilities[0].ready())
+		if(Input.GetKey(Bindings.fire) && player.abilities[0].ready())
 		{
 			player.abilities[0].use();
 		}
@@ -60,9 +68,15 @@ public class Player : MonoBehaviour {
 		}
 
 		// flex ability 2 (abilities[3])
-		if(Input.GetKey(Bindings.ability2) && player.abilities[3].ready())
+		if(Input.GetKey(Bindings.ability1) && player.abilities[3].ready())
 		{
 			player.abilities[3].use();
+		}
+
+		// flex ability 3 (abilities[4])
+		if(Input.GetKey(Bindings.ability2) && player.abilities[4].ready())
+		{
+			player.abilities[4].use();
 		}
 	}
 

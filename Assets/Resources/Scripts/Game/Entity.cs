@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour {
 	public int speed;
 	public DeathType death;
 	public ArrayList statuses;
-	public Ability[] abilities = new Ability[7];
+	public Ability[] abilities = new Ability[5];
 	public float cooldownRate;
 	public float damageReduction;
 

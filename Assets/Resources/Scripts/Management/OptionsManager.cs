@@ -22,17 +22,17 @@ public class OptionsManager : MonoBehaviour {
 	public void loadOptions()
 	{
 		// Bindings
-		Bindings.move = (KeyCode)PlayerPrefs.GetInt("keymove", (int)KeyCode.Mouse0);
+		Bindings.forward = (KeyCode)PlayerPrefs.GetInt("keyforward", (int)KeyCode.W);
+		Bindings.strafeL = (KeyCode)PlayerPrefs.GetInt ("keystrafel", (int)KeyCode.A);
+		Bindings.reverse = (KeyCode)PlayerPrefs.GetInt("keyreverse", (int)KeyCode.S);
+		Bindings.strafeR = (KeyCode)PlayerPrefs.GetInt ("keystrafer", (int)KeyCode.D);
+		Bindings.fire = (KeyCode)PlayerPrefs.GetInt ("keyfire", (int)KeyCode.Mouse0);
 		Bindings.classAbility = (KeyCode)PlayerPrefs.GetInt("keyclassability", (int)KeyCode.Space);
-		Bindings.hold = (KeyCode)PlayerPrefs.GetInt("keyhold", (int)KeyCode.LeftShift);
+		Bindings.ability0 = (KeyCode)PlayerPrefs.GetInt("keyability0", (int)KeyCode.LeftShift);
+		Bindings.ability1 = (KeyCode)PlayerPrefs.GetInt("keyability1", (int)KeyCode.E);
+		Bindings.ability2 = (KeyCode)PlayerPrefs.GetInt("keyability2", (int)KeyCode.Q);
 		Bindings.toggleInventory = (KeyCode)PlayerPrefs.GetInt("keyinventory", (int)KeyCode.Tab);
 		Bindings.pause = (KeyCode)PlayerPrefs.GetInt("keypause", (int)KeyCode.Escape);
-		Bindings.ability0 = (KeyCode)PlayerPrefs.GetInt("keyability0", (int)KeyCode.Mouse1);
-		Bindings.ability1 = (KeyCode)PlayerPrefs.GetInt("keyability1", (int)KeyCode.Q);
-		Bindings.ability2 = (KeyCode)PlayerPrefs.GetInt("keyability2", (int)KeyCode.W);
-		Bindings.ability3 = (KeyCode)PlayerPrefs.GetInt("keyability3", (int)KeyCode.E);
-		Bindings.ability4 = (KeyCode)PlayerPrefs.GetInt("keyability4", (int)KeyCode.R);
-		Bindings.ability5 = (KeyCode)PlayerPrefs.GetInt("keyability5", (int)KeyCode.T);
 
 		// Options
 		Options.tutorial = bool.Parse(PlayerPrefs.GetString("optiontutorial", "true"));
@@ -46,17 +46,17 @@ public class OptionsManager : MonoBehaviour {
 	public void saveOptions()
 	{
 		// Bindings
-		PlayerPrefs.SetInt("keymove", (int)Bindings.move);
+		PlayerPrefs.SetInt("keyforward", (int)Bindings.forward);
+		PlayerPrefs.SetInt("keystrafel", (int)Bindings.strafeL);
+		PlayerPrefs.SetInt("keyreverse", (int)Bindings.reverse);
+		PlayerPrefs.SetInt("keystrafer", (int)Bindings.strafeR);
+		PlayerPrefs.SetInt("keyfire", (int)Bindings.fire);
 		PlayerPrefs.SetInt("keyclassability", (int)Bindings.classAbility);
-		PlayerPrefs.SetInt("keyhold", (int)Bindings.hold);
-		PlayerPrefs.SetInt("keyinventory", (int)Bindings.toggleInventory);
-		PlayerPrefs.SetInt("keypause", (int)Bindings.pause);
 		PlayerPrefs.SetInt("keyability0", (int)Bindings.ability0);
 		PlayerPrefs.SetInt("keyability1", (int)Bindings.ability1);
 		PlayerPrefs.SetInt("keyability2", (int)Bindings.ability2);
-		PlayerPrefs.SetInt("keyability3", (int)Bindings.ability3);
-		PlayerPrefs.SetInt("keyability4", (int)Bindings.ability4);
-		PlayerPrefs.SetInt("keyability5", (int)Bindings.ability5);
+		PlayerPrefs.SetInt("keypause", (int)Bindings.pause);
+		PlayerPrefs.SetInt("keyinventory", (int)Bindings.toggleInventory);
 
 		// Options
 		PlayerPrefs.SetString("optiontutorial", Options.tutorial.ToString());
@@ -73,17 +73,18 @@ public class OptionsManager : MonoBehaviour {
 
 	public void resetControlsToDefaults()
 	{
-		Bindings.move = KeyCode.Mouse0;
+		PlayerPrefs.DeleteAll ();
+		Bindings.forward = KeyCode.W;
+		Bindings.strafeL = KeyCode.A;
+		Bindings.reverse = KeyCode.S;
+		Bindings.strafeR = KeyCode.D;
+		Bindings.fire = KeyCode.Mouse0;
 		Bindings.classAbility = KeyCode.Space;
-		Bindings.hold = KeyCode.LeftShift;
+		Bindings.ability0 = KeyCode.LeftShift;
+		Bindings.ability1 = KeyCode.E;
+		Bindings.ability2 = KeyCode.Q;
 		Bindings.toggleInventory = KeyCode.Tab;
 		Bindings.pause = KeyCode.Escape;
-		Bindings.ability0 = KeyCode.Mouse1;
-		Bindings.ability1 = KeyCode.Q;
-		Bindings.ability2 = KeyCode.W;
-		Bindings.ability3 = KeyCode.E;
-		Bindings.ability4 = KeyCode.R;
-		Bindings.ability5 = KeyCode.T;
 	}
 }
 
@@ -91,17 +92,17 @@ public class OptionsManager : MonoBehaviour {
 public static class Bindings
 {
 	public static KeyCode 
-	move,
+	forward,
+	strafeL,
+	reverse,
+	strafeR,
+	fire,
 	classAbility,
-	hold, 
-	toggleInventory,
-	pause, 
 	ability0,
 	ability1,
 	ability2,
-	ability3,
-	ability4,
-	ability5;
+	toggleInventory,
+	pause;
 }
 	
 // A global variable class that holds unique, non-default options
