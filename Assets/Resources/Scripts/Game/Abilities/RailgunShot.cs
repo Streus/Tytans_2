@@ -19,7 +19,15 @@ public class RailgunShot : Ability {
 
 	//TODO
 	public override bool use(){ 
+		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);
+		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
+		Bullet bullet = b.transform.GetComponent<Bullet>();
+		bullet.faction = invoker.GetComponent<Entity>().faction;
+		bullet.damage *= 2;
+
+		invoker.GetComponent<Rigidbody2D>().AddForce(invoker.transform.up * 100);
+
 		currentCD = cooldown;
-		return false; 
+		return true;
 	}
 }

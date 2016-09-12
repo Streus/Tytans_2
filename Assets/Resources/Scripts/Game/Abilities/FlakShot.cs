@@ -16,9 +16,17 @@ public class FlakShot : Ability {
 		currentCD = cooldown;
 		bulletPrefab = bt;
 	}
-
-	//TODO
+		
 	public override bool use(){
+		for(int i = 0; i < 5; i++){
+			Quaternion randomizedRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (float)Random.Range(-20, 20)));
+			GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, randomizedRot);
+			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
+			Bullet bullet = b.transform.GetComponent<Bullet>();
+			bullet.faction = invoker.GetComponent<Entity>().faction;
+			bullet.damage /= 2;
+		}
+			
 		currentCD = cooldown;
 		return false; 
 	}

@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 		}
 
 		// flex ability 1 (abilities[2])
-		if(Input.GetKey(Bindings.ability1) && player.abilities[2].ready())
+		if(Input.GetKey(Bindings.ability0) && player.abilities[2].ready())
 		{
 			player.abilities[2].use();
 		}
