@@ -10,9 +10,6 @@ public abstract class Ability : IComparable{
 	// The ability's description flavor-text
 	public string desc;
 
-	// The ability's position in the array of all abilities
-	public int position;
-
 	// The graphic associated with this ability
 	public Sprite image;
 

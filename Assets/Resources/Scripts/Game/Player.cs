@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public delegate void LearnedAbility(Ability ability);
-
 public class Player : MonoBehaviour {
 
 	public GameObject bullet;
@@ -17,6 +15,8 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		learnedAbilities = new ArrayList ();
+		learnAbility(new BasicShot(transform, bullet));
+		learnAbility(new CoreOverload(transform));
 	}
 
 	void Update () {
@@ -80,13 +80,6 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	// Event to use with learnAbility
-	public event LearnedAbility newAbility;
-	protected virtual void updatedAbilityList(Ability ability){
-		if(newAbility != null)
-			newAbility(ability);
-	}
-
 	// Add a new ability to the player's list of learned abilities and re-sort the list
 	// Return false if the ability is already learned.
 	public bool learnAbility(Ability ability)
@@ -96,7 +89,6 @@ public class Player : MonoBehaviour {
 
 		learnedAbilities.Add (ability);
 		learnedAbilities.Sort (null);
-		updatedAbilityList (ability);
 		return true;
 	}
 }

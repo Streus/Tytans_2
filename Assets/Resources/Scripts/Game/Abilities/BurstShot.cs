@@ -9,8 +9,6 @@ public class BurstShot : Ability {
 
 	public BurstShot(Transform e, GameObject bt) : base(e){
 		dispName = "Burst Shot";
-		desc = "Fire a burst of three bullets.";
-		position = 2;
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityBurstShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 1f;
