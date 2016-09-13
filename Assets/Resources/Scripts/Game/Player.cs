@@ -15,7 +15,7 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		learnedAbilities = new ArrayList ();
-		learnAbility(new BasicShot(transform, bullet));
+		learnAbility(new Dash(transform));
 		learnAbility(new CoreOverload(transform));
 	}
 

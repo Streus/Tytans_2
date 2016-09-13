@@ -47,6 +47,10 @@ public abstract class Ability : IComparable{
 		return this.dispName.CompareTo (((Ability)other).dispName);
 	}
 
+	// Creates a deep copy of this Ability
+	// Returns the copy of this ability
+	public abstract Ability Copy();
+
 	// Invoke the ability
 	// Returns true if the ability was successfully used
 	// Returns false if the ability was on cooldown, or the invoker has insufficent energy

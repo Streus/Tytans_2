@@ -4,14 +4,12 @@ using UnityEngine.UI;
 
 public class AbilityChooseButton : MonoBehaviour {
 
-	public Image image;
 	public Ability ability;
 	public int slotNumber;
 
 	// Use this for initialization
 	void Start () {
-		image = transform.GetComponent<Image>();
-		ability = null;
+		ability = transform.parent.parent.GetComponent<AbilitySelectorButton>().slotValue;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +19,17 @@ public class AbilityChooseButton : MonoBehaviour {
 
 	public void changeAbility()
 	{
-		GameManager.player.GetComponent<Entity>().addAbility(ability, slotNumber);
+		//check for dublicate abilities in the player's roster
+		Ability[] abilities = GameManager.player.GetComponent<Entity> ().abilities;
+		for (int i = 0; i < abilities.Length; i++) 
+		{
+			if (abilities [i] == null)
+				continue;
+			if (abilities [i].CompareTo (ability) == 0)
+				return;
+		}
+
+		//assign a copy of this ability to the player's roster
+		GameManager.player.GetComponent<Entity>().addAbility(ability.Copy(), slotNumber);
 	}
 }

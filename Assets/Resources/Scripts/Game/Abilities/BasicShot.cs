@@ -15,6 +15,11 @@ public class BasicShot : Ability {
 		bulletPrefab = bt;
 	}
 
+	public override Ability Copy ()
+	{
+		return new BasicShot (invoker, bulletPrefab);
+	}
+
 	public override bool use()
 	{
 		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);

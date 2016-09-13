@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
 			entScr.healthRegen = 1.25f;
 			entScr.energyMax = 100f;
 			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 0.25f;
+			entScr.energyRegen = 1.25f;
 			entScr.speed = 27;
 			entScr.addAbility(new FlakShot(player.transform, playerBullet), 0);
 			entScr.addAbility(new AbsorptionField(player.transform), 1);
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour {
 			entScr.healthRegen = 0.5f;
 			entScr.energyMax = 100f;
 			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 0.25f;
+			entScr.energyRegen = 1.25f;
 			entScr.speed = 50;
 			entScr.addAbility(new BurstShot(player.transform, playerBullet), 0);
 			entScr.addAbility(new Dash(player.transform), 1);
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour {
 			entScr.healthRegen = 0.5f;
 			entScr.energyMax = 200f;
 			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 1f;
+			entScr.energyRegen = 2f;
 			entScr.speed = 35;
 			entScr.addAbility(new RailgunShot(player.transform, playerBullet), 0);
 			entScr.addAbility(new CoreOverload(player.transform), 1);

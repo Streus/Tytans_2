@@ -15,6 +15,11 @@ public class FlakShot : Ability {
 		currentCD = cooldown;
 		bulletPrefab = bt;
 	}
+
+	public override Ability Copy ()
+	{
+		return new FlakShot (invoker, bulletPrefab);
+	}
 		
 	public override bool use(){
 		for(int i = 0; i < 5; i++){

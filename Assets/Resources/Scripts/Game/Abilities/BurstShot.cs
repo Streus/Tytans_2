@@ -17,6 +17,11 @@ public class BurstShot : Ability {
 		shotNumber = 1;
 	}
 
+	public override Ability Copy ()
+	{
+		return new BurstShot (invoker, bulletPrefab);
+	}
+
 	//TODO
 	public override bool use(){ 
 		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);

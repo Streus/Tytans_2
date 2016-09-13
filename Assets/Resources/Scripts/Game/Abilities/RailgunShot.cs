@@ -16,6 +16,11 @@ public class RailgunShot : Ability {
 		bulletPrefab = bt;
 	}
 
+	public override Ability Copy ()
+	{
+		return new RailgunShot (invoker, bulletPrefab);
+	}
+
 	//TODO
 	public override bool use(){ 
 		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);

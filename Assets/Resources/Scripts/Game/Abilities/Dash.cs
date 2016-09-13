@@ -12,9 +12,14 @@ public class Dash : Ability {
 		currentCD = cooldown;
 	}
 
+	public override Ability Copy ()
+	{
+		return new Dash (invoker);
+	}
+
 	public override bool use(){
 		Rigidbody2D body = invoker.GetComponent<Rigidbody2D>();
-		body.AddForce(invoker.up * -20, ForceMode2D.Impulse);
+		body.AddForce(invoker.up * -70, ForceMode2D.Impulse);
 		invoker.GetComponent<Entity>().energy -= cost;
 		currentCD = cooldown;
 		return true;

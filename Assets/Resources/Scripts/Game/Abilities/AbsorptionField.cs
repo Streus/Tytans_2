@@ -13,8 +13,14 @@ public class AbsorptionField : Ability {
 		currentCD = cooldown;
 	}
 
+	public override Ability Copy()
+	{
+		return new AbsorptionField (invoker);
+	}
+
 	//TODO
 	public override bool use(){ 
+		invoker.GetComponent<Entity>().energy -= cost;
 		currentCD = cooldown;
 		return false; 
 	}

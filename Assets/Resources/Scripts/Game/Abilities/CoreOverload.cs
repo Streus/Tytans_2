@@ -12,8 +12,14 @@ public class CoreOverload : Ability {
 		currentCD = cooldown;
 	}
 
+	public override Ability Copy ()
+	{
+		return new CoreOverload (invoker);
+	}
+
 	//TODO
 	public override bool use(){
+		invoker.GetComponent<Entity>().energy -= cost;
 		currentCD = cooldown;
 		return false; 
 	}
