@@ -15,7 +15,6 @@ public class AbilitySelectorButton : MonoBehaviour {
 		slotList.SetActive(false);
 
 		abilityGraphic = transform.GetChild(0).GetComponent<Image> ();
-		Debug.Log (abilityGraphic);
 	}
 
 	public void updateGraphic()

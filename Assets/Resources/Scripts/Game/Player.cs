@@ -15,8 +15,6 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		learnedAbilities = new ArrayList ();
-		learnAbility(new Dash(transform));
-		learnAbility(new CoreOverload(transform));
 	}
 
 	void Update () {
@@ -84,8 +82,9 @@ public class Player : MonoBehaviour {
 	// Return false if the ability is already learned.
 	public bool learnAbility(Ability ability)
 	{
-		if (learnedAbilities.Contains (ability))
-			return false;
+		for (int i = 0; i < learnedAbilities.Count; i++)
+			if (((Ability)learnedAbilities [i]).CompareTo (ability) == 0)
+				return false;
 
 		learnedAbilities.Add (ability);
 		learnedAbilities.Sort (null);

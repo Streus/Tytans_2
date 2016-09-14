@@ -19,7 +19,7 @@ public class Dash : Ability {
 
 	public override bool use(){
 		Rigidbody2D body = invoker.GetComponent<Rigidbody2D>();
-		body.AddForce(invoker.up * -70, ForceMode2D.Impulse);
+		body.AddForce(invoker.up * -50, ForceMode2D.Impulse);
 		invoker.GetComponent<Entity>().energy -= cost;
 		currentCD = cooldown;
 		return true;
