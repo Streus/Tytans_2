@@ -5,15 +5,18 @@ using UnityEngine.Audio;
 
 public class AudioSlider : MonoBehaviour {
 
-	public string channelName;
 	public AudioMixer mix;
-	private Slider slider;
+	public string channelName;
+	public Slider slider;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		slider = transform.GetComponent<Slider> ();
-		float temp;
+	}
+	void Start () {
+		float temp = 0f;
 		mix.GetFloat (channelName, out temp);
+		Debug.Log (channelName + " slider inits with: " + temp); //DEBUG CODE
 		slider.value = temp;
 	}
 

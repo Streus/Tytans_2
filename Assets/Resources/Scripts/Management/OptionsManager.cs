@@ -8,9 +8,10 @@ public class OptionsManager : MonoBehaviour {
 	public AudioMixer mainAudio;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		DontDestroyOnLoad(transform.gameObject);
 		loadOptions();
+		PlayerPrefs.DeleteAll (); // DEBUG CODE
 	}
 	
 	// Update is called once per frame
@@ -36,10 +37,14 @@ public class OptionsManager : MonoBehaviour {
 
 		// Options
 		Options.tutorial = bool.Parse(PlayerPrefs.GetString("optiontutorial", "true"));
+		Screen.fullScreen = bool.Parse(PlayerPrefs.GetString("optionfullscreen", "false"));
 		mainAudio.SetFloat ("mastervolume", PlayerPrefs.GetFloat ("mastervolume", 0f));
 		mainAudio.SetFloat ("musicvolume", PlayerPrefs.GetFloat ("musicvolume", 0f));
 		mainAudio.SetFloat ("effectsvolume", PlayerPrefs.GetFloat ("effectsvolume", 0f));
 
+		Debug.Log("Master init to: " + PlayerPrefs.GetFloat("mastervolume", -60f)); //DEBUG CODE
+		Debug.Log("Music init to: " + PlayerPrefs.GetFloat("musicvolume", -60f)); //DEBUG CODE
+		Debug.Log("Effects init to: " + PlayerPrefs.GetFloat("effectsvolume", -60f)); //DEBUG CODE
 	}
 
 	// Save all of the global options values to PlayerPrefs
@@ -60,30 +65,45 @@ public class OptionsManager : MonoBehaviour {
 
 		// Options
 		PlayerPrefs.SetString("optiontutorial", Options.tutorial.ToString());
-		float masvol = 0f;
+		PlayerPrefs.SetString ("optionfullscreen", Screen.fullScreen.ToString ());
+		float masvol;
 		mainAudio.GetFloat ("mastervolume", out masvol);
 		PlayerPrefs.SetFloat ("mastervolume", masvol);
-		float musvol = 0f;
+		float musvol;
 		mainAudio.GetFloat ("musicvolume", out musvol);
 		PlayerPrefs.SetFloat ("musicvolume", musvol);
-		float effvol = 0f;
+		float effvol;
 		mainAudio.GetFloat ("effectsvolume", out effvol);
 		PlayerPrefs.SetFloat ("effectsvolume", effvol);
+
+		Debug.Log ("Saving volume levels as: " + masvol + " " + musvol + " " + effvol);
+
+		PlayerPrefs.Save ();
 	}
 
 	public void resetControlsToDefaults()
 	{
-		PlayerPrefs.DeleteAll ();
+		PlayerPrefs.DeleteKey ("keyforward");
 		Bindings.forward = KeyCode.W;
+		PlayerPrefs.DeleteKey ("keystrafel");
 		Bindings.strafeL = KeyCode.A;
+		PlayerPrefs.DeleteKey ("keyreverse");
 		Bindings.reverse = KeyCode.S;
+		PlayerPrefs.DeleteKey ("keystrafer");
 		Bindings.strafeR = KeyCode.D;
+		PlayerPrefs.DeleteKey ("keyfire");
 		Bindings.fire = KeyCode.Mouse0;
+		PlayerPrefs.DeleteKey ("keyclassability");
 		Bindings.classAbility = KeyCode.Space;
+		PlayerPrefs.DeleteKey ("keyability0");
 		Bindings.ability0 = KeyCode.LeftShift;
+		PlayerPrefs.DeleteKey ("keyability1");
 		Bindings.ability1 = KeyCode.E;
+		PlayerPrefs.DeleteKey ("keyability2");
 		Bindings.ability2 = KeyCode.Q;
+		PlayerPrefs.DeleteKey ("keyinventory");
 		Bindings.toggleInventory = KeyCode.Tab;
+		PlayerPrefs.DeleteKey ("keypause");
 		Bindings.pause = KeyCode.Escape;
 	}
 }
