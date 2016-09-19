@@ -9,6 +9,7 @@ public class HeadsUpManager : MonoBehaviour {
 	private Entity player;
 
 	private Image healthBar;
+	private Image shieldBar;
 	private Image energyBar;
 	private Transform statusBar;
 	private Transform abilityBar;
@@ -21,6 +22,7 @@ public class HeadsUpManager : MonoBehaviour {
 		player.changedStatuses += new UpdatedStatusList (addStatusToStatusBar);
 
 		healthBar = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
+		shieldBar = transform.GetChild (0).GetChild (1).GetComponent<Image> ();
 		energyBar = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
 		statusBar = transform.GetChild (2).GetChild (0);
 		abilityBar = transform.GetChild (2).GetChild (1);
@@ -34,6 +36,12 @@ public class HeadsUpManager : MonoBehaviour {
 
 		//update health and energy bars
 		healthBar.fillAmount = player.health / player.healthMax;
+
+		if(player.shieldMax != 0)
+			shieldBar.fillAmount = player.shieldHealth / player.shieldMax;
+		else
+			shieldBar.fillAmount = 0;
+		
 		energyBar.fillAmount = player.energy / player.energyMax;
 
 		//update ability bar

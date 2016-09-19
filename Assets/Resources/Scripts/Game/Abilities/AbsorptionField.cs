@@ -17,10 +17,11 @@ public class AbsorptionField : Ability {
 	{
 		return new AbsorptionField (invoker);
 	}
-
-	//TODO
+		
 	public override bool use(){ 
-		invoker.GetComponent<Entity>().energy -= cost;
+		Entity invokervars = invoker.GetComponent<Entity>();
+		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 2f, 200f));
+		invokervars.energy -= cost;
 		currentCD = cooldown;
 		return false; 
 	}

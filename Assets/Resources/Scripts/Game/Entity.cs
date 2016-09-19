@@ -7,20 +7,35 @@ public delegate void UpdatedStatusList(StatusEffect status);
 
 public class Entity : MonoBehaviour {
 
+	// Faction
 	public Faction faction;
+
+	// Health vars
 	public float health;
 	public float healthMax;
 	public float healthRegen;
+
+	// Shield vars
+	public float shieldHealth;
+	public float shieldMax;
+	public float shieldRegen;
+
+	// Energy vars
 	public float energy;
 	public float energyMax;
 	public float energyRegen;
+
+	// Misc Stat vars
 	public int speed;
 	public DeathType death;
-	public ArrayList statuses;
-	public Ability[] abilities = new Ability[5];
 	public float cooldownRate;
 	public float damageReduction;
 
+	// Misc Lists
+	public ArrayList statuses;
+	public Ability[] abilities = new Ability[5]; //this has to be here
+
+	// Other Misc
 	public Rigidbody2D physbody;
 
 	// Use this for initialization
@@ -51,16 +66,19 @@ public class Entity : MonoBehaviour {
 			((StatusEffect)statuses [i]).update (Time.deltaTime);
 		}
 
-		// regen health and energy
+		// regen health, shield, and energy
 		health += healthRegen * Time.deltaTime;
 		if(health > healthMax) health = healthMax;
 
+		shieldHealth += shieldRegen * Time.deltaTime;
+		if(shieldHealth > shieldMax) shieldHealth = shieldMax;
+		if(shieldHealth <= 0) shieldHealth = shieldMax = shieldRegen = 0f; //shield break state
+
 		energy += energyRegen * Time.deltaTime;
 		if(energy > energyMax) energy = energyMax;
+		if(energy < 0) energy = 0;
 
 		checkDeath();
-
-
 	}
 
 	// Adds an ability to this entity's roster at index
@@ -77,8 +95,24 @@ public class Entity : MonoBehaviour {
 			changedStatuses(status);
 	}
 
+	// Apply a new status to this entity
 	public void addStatus(StatusEffect status)
 	{
+		//check for duplicate statuses
+		//if there are duplicates, replace them
+		for(int i = 0; i < statuses.Count; i++)
+		{
+			if(((StatusEffect)statuses[i]).CompareTo(status) == 0)
+			{
+				((StatusEffect)statuses[i]).duration = 0;
+				statuses.Insert(i, status);
+				status.apply();
+				onChangedStatus(status);
+				return;
+			}
+		}
+
+		//this is a new status
 		statuses.Add(status);
 		status.apply();
 		onChangedStatus (status);

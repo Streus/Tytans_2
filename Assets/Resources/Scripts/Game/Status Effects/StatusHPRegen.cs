@@ -9,7 +9,7 @@ public class StatusHPRegen : StatusEffect {
 	{
 		name = "Healing";
 		desc = "Regenerating health over time.";
-		icon = null; //TODO add regen status sprite
+		icon = Resources.Load<Sprite>("Sprites/UI/Status Effects/StatusEffectHPRegen");
 
 		regenAmount = ra;
 	}

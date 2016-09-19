@@ -26,22 +26,45 @@ public class Bullet : MonoBehaviour {
 		if (!physbody.simulated)
 			return;
 
-		// countdown duration left on this bullet
+		//countdown duration left on this bullet
 		duration -= Time.deltaTime;
 		if(duration <= 0)
 			die();
 	}
 
 	void OnTriggerEnter2D (Collider2D col) {
-		// check if the object being collided with is an Entity of another faction
+		//check if the object being collided with is an Entity of another faction
 		if(col.transform.gameObject.GetComponent<Entity>() != null && 
 			faction != col.transform.GetComponent<Entity>().faction)
 		{
-			// do damage to that entity
+			//do damage to that entity
 			Entity other = col.transform.GetComponent<Entity>();
+
+			//check for a shield
+			if(other.shieldHealth > 0)
+			{
+				//do damage to the shield, and destroy it if necessary
+				other.shieldHealth -= damage;
+				if(other.shieldHealth < 0)
+				{
+					other.health -= -other.shieldHealth;
+					other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
+				}
+			}
+			else
+			{
+				//do damage to the entity's health pool
+				other.health -= damage;
+			}
+
+			//do fancy stuff
+			hitEffect(col);
+
+			//check for bullet death
 			if(onHit)
-				hitEffect(col);
-			other.health -= damage;
+				die();
+
+			//tell the entity to check for death state
 			other.checkDeath();
 		}
 	}
@@ -67,7 +90,6 @@ public class Bullet : MonoBehaviour {
 			
 			break;
 		}
-		Destroy(transform.gameObject);
 	}
 
 	private void die()
@@ -90,7 +112,7 @@ public class Bullet : MonoBehaviour {
 
 			break;
 		}
-		Destroy(transform.gameObject);
+		Destroy(gameObject);
 	}
 }
 

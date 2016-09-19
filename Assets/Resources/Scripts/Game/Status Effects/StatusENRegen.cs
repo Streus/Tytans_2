@@ -9,7 +9,7 @@ public class StatusENRegen : StatusEffect {
 	{
 		name = "Recharging";
 		desc = "Regenerating energy over time.";
-		icon = null; //TODO add sprite fo this mofo
+		icon = Resources.Load<Sprite>("Sprites/UI/Status Effects/StatusEffectENRegen");
 
 		regenAmount = ra;
 	}

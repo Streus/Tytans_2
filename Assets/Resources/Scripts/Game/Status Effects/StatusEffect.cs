@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public abstract class StatusEffect{
+public abstract class StatusEffect : IComparable{
 	
 	public string name;
 	public string desc;
@@ -31,13 +32,18 @@ public abstract class StatusEffect{
 	public abstract void revert();
 
 	// Decrement duration and check for termination case
-	public void update(float dec)
+	public virtual void update(float dec)
 	{
 		duration -= dec;
 		if (duration <= 0f) {
 			revert();
 			statusList.Remove (this);
 		}
+	}
+
+	public int CompareTo(object other)
+	{
+		return this.name.CompareTo (((StatusEffect)other).name);
 	}
 
 	public override string ToString()
