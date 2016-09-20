@@ -34,8 +34,8 @@ public class BasicTurret : MonoBehaviour {
 
 	void OnDestroy () {
 		if(self.health <= 0){
-			GameObject drop = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/AbilityPickUp"), transform.position, Quaternion.identity);
-			drop.GetComponent<AbilityPickUp> ().assignAbility (new Dash (GameManager.player.transform));
+			GameObject drop = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/BulletPickUp"), transform.position, Quaternion.identity);
+			drop.GetComponent<BulletPickUp> ().assignBullet ("BulletPlasma");
 		}
 	}
 }

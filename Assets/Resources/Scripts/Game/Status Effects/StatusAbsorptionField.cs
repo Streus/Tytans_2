@@ -33,7 +33,7 @@ public class StatusAbsorptionField : StatusEffect {
 
 		//calculate and apply regen status
 		float absorbedDamage = 1 - (invokerVars.shieldHealth / invokerVars.shieldMax);
-		invokerVars.addStatus (new StatusHPRegen(10f, invoker, 5f * absorbedDamage));
+		invokerVars.addStatus (new StatusHPRegen(10f, invoker, regenAmount * absorbedDamage));
 
 		//remove shield
 		invokerVars.shieldMax = invokerVars.shieldHealth = invokerVars.shieldRegen = 0;

@@ -9,6 +9,8 @@ public abstract class StatusEffect : IComparable{
 	public Sprite icon;
 	public float duration;
 
+	public bool applied;
+
 	public Transform invoker;
 	private ArrayList statusList;
 	public Entity invokerVars;
@@ -19,6 +21,8 @@ public abstract class StatusEffect : IComparable{
 		desc = "This status effect is not defined.";
 		icon = null;
 		duration = dur;
+
+		applied = false;
 
 		invoker = t;
 		invokerVars = invoker.GetComponent<Entity>();
@@ -34,11 +38,25 @@ public abstract class StatusEffect : IComparable{
 	// Decrement duration and check for termination case
 	public virtual void update(float dec)
 	{
+		applied = true;
 		duration -= dec;
 		if (duration <= 0f) {
 			revert();
 			statusList.Remove (this);
 		}
+	}
+
+	//change the entitiy to which this status effect will be applied
+	//return false if the status has already been applied
+	public bool changeSubject(Transform t)
+	{
+		if (applied)
+			return false;
+		statusList.Remove (this);
+		invoker = t;
+		invokerVars = invoker.GetComponent<Entity> ();
+		statusList = invokerVars.statuses;
+		return true;
 	}
 
 	public int CompareTo(object other)
