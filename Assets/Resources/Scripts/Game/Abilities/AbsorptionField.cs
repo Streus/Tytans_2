@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//TODO
 public class AbsorptionField : Ability {
 
 	public AbsorptionField(Transform e) : base(e){
@@ -20,9 +19,12 @@ public class AbsorptionField : Ability {
 		
 	public override bool use(){ 
 		Entity invokervars = invoker.GetComponent<Entity>();
-		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 2f, 200f));
+		if (invokervars.shieldMax > 0) //invoker already has a shield
+			return false;
+
+		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 2f, 350f));
 		invokervars.energy -= cost;
 		currentCD = cooldown;
-		return false; 
+		return true; 
 	}
 }

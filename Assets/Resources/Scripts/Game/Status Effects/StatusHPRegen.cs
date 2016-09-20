@@ -5,6 +5,8 @@ public class StatusHPRegen : StatusEffect {
 
 	private float regenAmount;
 
+	private GameObject healEffect;
+
 	public StatusHPRegen(float dur, Transform t, float ra) : base(dur, t)
 	{
 		name = "Healing";
@@ -16,11 +18,15 @@ public class StatusHPRegen : StatusEffect {
 
 	public override void apply ()
 	{
+		healEffect = (GameObject)MonoBehaviour.Instantiate (Resources.Load<GameObject> ("Prefabs/Effects/HealEffect"), invoker, false);
+
 		invokerVars.healthRegen += regenAmount;
 	}
 
 	public override void revert ()
 	{
+		MonoBehaviour.Destroy (healEffect);
+
 		invokerVars.healthRegen -= regenAmount;
 	}
 }

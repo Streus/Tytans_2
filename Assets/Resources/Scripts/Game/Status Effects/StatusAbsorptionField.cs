@@ -5,7 +5,7 @@ public class StatusAbsorptionField : StatusEffect {
 
 	private float regenAmount;
 	private float shieldAmount;
-	GameObject shieldEffect;
+	private GameObject shieldEffect;
 
 	public StatusAbsorptionField(float dur, Transform t, float ra, float sa) : base(dur, t)
 	{
@@ -24,13 +24,16 @@ public class StatusAbsorptionField : StatusEffect {
 
 		//apply shield to invoker
 		invokerVars.shieldMax = invokerVars.shieldHealth = shieldAmount;
-		invokerVars.shieldRegen = shieldAmount;
 	}
 
 	public override void revert ()
 	{
 		//remove visual
 		MonoBehaviour.Destroy(shieldEffect);
+
+		//calculate and apply regen status
+		float absorbedDamage = 1 - (invokerVars.shieldHealth / invokerVars.shieldMax);
+		invokerVars.addStatus (new StatusHPRegen(10f, invoker, 5f * absorbedDamage));
 
 		//remove shield
 		invokerVars.shieldMax = invokerVars.shieldHealth = invokerVars.shieldRegen = 0;
