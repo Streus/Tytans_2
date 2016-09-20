@@ -76,6 +76,10 @@ public class Player : MonoBehaviour {
 		{
 			player.abilities[4].use();
 		}
+
+		//DEBUG CODE
+		if(Input.GetKeyDown(KeyCode.Mouse1))
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), mousePos, Quaternion.identity);
 	}
 
 	// Add a new ability to the player's list of learned abilities and re-sort the list

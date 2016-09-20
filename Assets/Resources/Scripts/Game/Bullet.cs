@@ -79,6 +79,8 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Bouncing:
 			
 			break;
+		case BulletType.Explosion:
+			break;
 		case BulletType.Explosive:
 			
 			break;
@@ -102,6 +104,8 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Bouncing:
 
 			break;
+		case BulletType.Explosion: 
+			break;
 		case BulletType.Explosive:
 
 			break;
@@ -118,5 +122,5 @@ public class Bullet : MonoBehaviour {
 
 public enum BulletType
 {
-	Basic, Bouncing, Explosive, Flame, Splitter
+	Basic, Bouncing, Explosion, Explosive, Flame, Splitter
 }
