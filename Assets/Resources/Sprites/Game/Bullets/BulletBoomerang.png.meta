@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 566f36c8aaf89d748b3b2f93de245a86
-timeCreated: 1472440299
+guid: ab695c2619a4588459c421a255ade793
+timeCreated: 1474476012
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BoomerangBullet_0
-    21300002: BoomerangBullet_1
-    21300004: BoomerangBullet_2
-    21300006: BoomerangBullet_3
+    21300000: BulletBoomerang_0
+    21300002: BulletBoomerang_1
+    21300004: BulletBoomerang_2
+    21300006: BulletBoomerang_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -33,7 +33,7 @@ TextureImporter:
   textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -48,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 50
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -57,52 +57,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BoomerangBullet_0
+      name: BulletBoomerang_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BoomerangBullet_1
+      name: BulletBoomerang_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 12
         y: 0
-        width: 48
-        height: 48
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BoomerangBullet_2
+      name: BulletBoomerang_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 24
         y: 0
-        width: 48
-        height: 48
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BoomerangBullet_3
+      name: BulletBoomerang_3
       rect:
         serializedVersion: 2
-        x: 144
+        x: 36
         y: 0
-        width: 48
-        height: 48
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

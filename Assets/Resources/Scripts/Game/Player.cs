@@ -78,8 +78,8 @@ public class Player : MonoBehaviour {
 		}
 
 		//DEBUG CODE
-		if(Input.GetKeyDown(KeyCode.Mouse1))
-			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), mousePos, Quaternion.identity);
+		if (Input.GetKeyDown (KeyCode.LeftControl))
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), Vector3.zero, Quaternion.identity);
 	}
 
 	// Add a new ability to the player's list of learned abilities and re-sort the list

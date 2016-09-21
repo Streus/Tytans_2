@@ -19,6 +19,9 @@ public class Bullet : MonoBehaviour {
 
 		//add force
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
+
+		if(type == BulletType.Explosion)
+			GameManager.cameraController.shakeCamera (0.1f, 0.2f);
 	}
 	
 	// Update is called once per frame

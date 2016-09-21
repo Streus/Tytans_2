@@ -5,28 +5,29 @@ public class CameraControl : MonoBehaviour {
 
 	private GameObject player;
 	private Vector3 offset;
-	private Transform camera;
+	private Transform cam;
 
 	//camera shake varibles
 	private float intensity;
 	private float shakeTime;
 
-	void Awake () {
-		camera = transform.GetChild (0);
-	}
-
 	// Use this for initialization
 	void Start () {
+		GameManager.cameraController = this;
+
 		player = GameManager.player;
 		offset = transform.position - player.transform.position;
+
+		cam = transform.GetChild (0);
 	}
 
 	void Update () {
 		if (shakeTime > 0f) {
-			camera.localPosition = Random.insideUnitSphere * intensity;
+			Vector3 shakePos = Random.insideUnitSphere * intensity;
+			cam.transform.localPosition = shakePos;
 			shakeTime -= Time.deltaTime;
 		} else {
-			camera.localPosition = Vector3.zero;
+			cam.transform.localPosition = Vector3.zero;
 		}
 	}
 
@@ -37,6 +38,8 @@ public class CameraControl : MonoBehaviour {
 
 	public void shakeCamera(float intensity, float shakeTime)
 	{
+		//DEBUG CODE
+		Debug.Log("Shaking it up!");
 		this.intensity = intensity;
 		this.shakeTime = shakeTime;
 	}
