@@ -66,6 +66,6 @@ public abstract class StatusEffect : IComparable{
 
 	public override string ToString()
 	{
-		return "Status Effect: " + name + "\nAffecting: " + invoker.gameObject.name + "\nDuration: " + duration.ToString ("###");
+		return name + "\n" + desc;
 	}
 }

@@ -31,7 +31,6 @@ public abstract class Ability : IComparable{
 	}
 
 	// Decrement the cooldown variable
-	//Param: A multipier to reduce cooldown time
 	public void clampCD() {
 		if(currentCD < 0)
 			currentCD = 0f;
@@ -45,6 +44,11 @@ public abstract class Ability : IComparable{
 	public int CompareTo(object other)
 	{
 		return this.dispName.CompareTo (((Ability)other).dispName);
+	}
+
+	public override string ToString ()
+	{
+		return dispName + "\n" + desc + "\n" + "\nCost: " + cost + " energy\nCooldown: " + cooldown + " seconds";
 	}
 
 	// Creates a deep copy of this Ability

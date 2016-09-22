@@ -10,6 +10,8 @@ public class StatusListener : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private Text cooldownField;
 	private Image image;
 
+	private GameObject popupInfo;
+
 	// Use this for initialization
 	void Start () {
 		cooldownField = transform.GetChild (0).GetComponent<Text> ();
@@ -32,11 +34,13 @@ public class StatusListener : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		Debug.Log ("Add description box pop-up!");
+		popupInfo = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/DescriptionBox"), transform, false);
+		popupInfo.transform.GetComponent<RectTransform>().offsetMin += new Vector2(0f, 25f);
+		popupInfo.transform.GetChild(0).GetComponent<Text>().text = status.ToString();
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
-		
+		Destroy(popupInfo);
 	}
 }
