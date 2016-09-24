@@ -8,8 +8,10 @@ public class HeadsUpManager : MonoBehaviour {
 	// Entity to pull stats from
 	private Entity player;
 
+	private Image healthBarBack;
 	private Image healthBar;
 	private Image shieldBar;
+	private Image energyBarBack;
 	private Image energyBar;
 	private Transform statusBar;
 	private Transform abilityBar;
@@ -21,9 +23,11 @@ public class HeadsUpManager : MonoBehaviour {
 		//add a listener to the changedStatuses event
 		player.changedStatuses += new UpdatedStatusList (addStatusToStatusBar);
 
-		healthBar = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
-		shieldBar = transform.GetChild (0).GetChild (1).GetComponent<Image> ();
-		energyBar = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
+		healthBarBack = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
+		healthBar = transform.GetChild (0).GetChild (1).GetComponent<Image> ();
+		shieldBar = transform.GetChild (0).GetChild (2).GetComponent<Image> ();
+		energyBarBack = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
+		energyBar = transform.GetChild (1).GetChild (1).GetComponent<Image> ();
 		statusBar = transform.GetChild (2).GetChild (0);
 		abilityBar = transform.GetChild (2).GetChild (1);
 	}
@@ -43,6 +47,19 @@ public class HeadsUpManager : MonoBehaviour {
 			shieldBar.fillAmount = 0;
 		
 		energyBar.fillAmount = player.energy / player.energyMax;
+
+		//update resource bar backgrounds
+		if(healthBarBack.fillAmount != healthBar.fillAmount)
+		{
+			float dFill = healthBar.fillAmount - healthBarBack.fillAmount;
+			healthBarBack.fillAmount += dFill * Time.deltaTime;
+		}
+
+		if(energyBarBack.fillAmount != energyBar.fillAmount)
+		{
+			float dFill = energyBar.fillAmount - energyBarBack.fillAmount;
+			energyBarBack.fillAmount += dFill * Time.deltaTime;
+		}
 
 		//update ability bar
 		for (int i = 0; i < player.abilities.Length; i++) {
