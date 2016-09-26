@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		learnedAbilities = new ArrayList ();
+		learnAbility (new DaedalusMissle (transform)); //DEBUG CODE
 	}
 
 	void Update () {
@@ -76,10 +77,6 @@ public class Player : MonoBehaviour {
 		{
 			player.abilities[4].use();
 		}
-
-		//DEBUG CODE
-		if (Input.GetKeyDown (KeyCode.LeftControl))
-			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), Vector3.zero, Quaternion.identity);
 	}
 
 	// Add a new ability to the player's list of learned abilities and re-sort the list

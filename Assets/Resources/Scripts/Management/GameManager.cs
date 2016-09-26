@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour {
 	// Other misc variables
 	private bool paused;
 	public static CameraControl cameraController;
-	public static Transform GUI;
 
 	// Use this for initialization
 	void Start () {

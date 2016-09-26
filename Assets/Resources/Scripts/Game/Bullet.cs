@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour {
 		if(col.transform.gameObject.GetComponent<Entity>() != null && 
 			faction != col.transform.GetComponent<Entity>().faction)
 		{
-			Color htColor = new Color(0f, 0f, 0f);
+			Color htColor = new Color(0f, 0f, 0f, 1f);
 
 			//retrieve the entity info of the collider
 			Entity other = col.transform.GetComponent<Entity>();
@@ -57,18 +57,18 @@ public class Bullet : MonoBehaviour {
 					other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
 				}
 
-				htColor = new Color(1f, 0.7f, 0f); //hitText color for shields
+				htColor = new Color(1f, 0.7f, 0f, 1f); //hitText color for shields
 			}
 			else
 			{
 				//do damage to the entity's health pool
 				other.health -= damage;
 
-				htColor = new Color(1f, 0f, 0f); //hitText color for health
+				htColor = new Color(1f, 0f, 0f, 1f); //hitText color for health
 			}
 
 			//create a hitText
-			createHitText(col.transform.position, htColor, damage);
+			createHitText(col.transform.position, htColor, damage.ToString());
 
 			//do fancy stuff
 			hitEffect(col);
@@ -122,7 +122,7 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Explosion: 
 			break;
 		case BulletType.Explosive:
-
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), transform.position, Quaternion.identity);
 			break;
 		case BulletType.Flame:
 			
@@ -137,17 +137,16 @@ public class Bullet : MonoBehaviour {
 	// Create a damage indicator on the GUI layer
 	// param: the world position of the bullet-entity collision
 	// param: the color of the damage text
-	// opt param: the amount of damage done in the bullet-entity collision
-	// opt param: text to describe something else that happened in the collision, like a status application
-	private void createHitText(Vector3 worldPos, Color color, float damage = 0f, string info = "")
+	// opt param: text to describe what happened in the collision, like damage done, a status application, etc
+	private void createHitText(Vector3 worldPos, Color color, string info)
 	{
-		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"));
-		hitText.transform.SetParent(GameManager.GUI, false);
-		hitText.GetComponent<RectTransform>().position = Camera.main.WorldToScreenPoint(worldPos);
-		Debug.Log("Creating " + hitText.ToString() + " at " + Camera.main.WorldToViewportPoint(worldPos).ToString()); //DEBUG TEXT
+		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"), Vector3.zero, Quaternion.identity);
+		hitText.GetComponent<HitText> ().setParentPosition (worldPos);
+		Debug.Log("HitText is actaully at " + hitText.GetComponent<RectTransform>().anchoredPosition.ToString());
 		Text t = hitText.GetComponent<Text>();
 		t.color = color;
-		t.text = damage.ToString("####.##") + info;
+		t.text = info;
+		hitText.GetComponent<HitText> ().duration = 2f;
 	}
 }
 
