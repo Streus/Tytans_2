@@ -16,6 +16,10 @@ public class HeadsUpManager : MonoBehaviour {
 	private Transform statusBar;
 	private Transform abilityBar;
 
+	void Awake () {
+		GameManager.GUI = transform;
+	}
+
 	// Use this for initialization
 	void Start () {
 		player = GameManager.player.transform.GetComponent<Entity>();

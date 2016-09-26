@@ -28,7 +28,7 @@ public class BasicTurret : MonoBehaviour {
 		//Debug.Log(self.abilities[0].currentCD);
 		//if(self.abilities[0].ready())
 		//{
-			self.abilities[0].use();
+			//self.abilities[0].use();
 		//}
 	}
 
