@@ -142,7 +142,6 @@ public class Bullet : MonoBehaviour {
 	{
 		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"), Vector3.zero, Quaternion.identity);
 		hitText.GetComponent<HitText> ().setParentPosition (worldPos);
-		Debug.Log("HitText is actaully at " + hitText.GetComponent<RectTransform>().anchoredPosition.ToString());
 		Text t = hitText.GetComponent<Text>();
 		t.color = color;
 		t.text = info;
