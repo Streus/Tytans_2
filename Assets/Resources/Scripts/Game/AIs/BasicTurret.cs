@@ -11,8 +11,7 @@ public class BasicTurret : MonoBehaviour {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		self = transform.GetComponent<Entity>();
 
-
-		self.addAbility(new BasicShot(transform, Resources.Load<GameObject>("Prefabs/Bullets/BulletPlasma")), 0);
+		self.addAbility(new DaedalusMissle(transform), 0);
 	}
 	
 	// Update is called once per frame
@@ -21,15 +20,15 @@ public class BasicTurret : MonoBehaviour {
 			return;
 
 		Vector3 tarPos = GameManager.player.transform.position;
-		Quaternion rot = Quaternion.LookRotation(transform.position - tarPos);
+		Quaternion rot = Quaternion.LookRotation(transform.position - new Vector3(tarPos.x, tarPos.y, -20), Vector3.back);
 		transform.rotation = rot;
 		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 
-		//Debug.Log(self.abilities[0].currentCD);
-		//if(self.abilities[0].ready())
-		//{
+		Debug.Log(self.abilities[0].currentCD);
+		if(self.abilities[0].ready())
+		{
 			self.abilities[0].use();
-		//}
+		}
 	}
 
 	void OnDestroy () {
