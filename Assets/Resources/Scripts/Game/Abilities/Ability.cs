@@ -14,7 +14,7 @@ public abstract class Ability : IComparable{
 	public Sprite image;
 
 	// The amount of energy this ability consumes
-	public int cost;
+	public float cost;
 
 	// The time the invokee must wait in seconds
 	public float cooldown;

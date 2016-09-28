@@ -99,8 +99,8 @@ public class Bullet : MonoBehaviour {
 			
 			break;
 		case BulletType.Flame:
-			if(other != null)
-				other.addStatus(new StatusFire(5f, col.transform, 5f));
+			if(other != null && Random.value < 0.33f)
+				other.addStatus(new StatusFire(10f, col.transform, 1f));
 			break;
 		case BulletType.Splitter:
 			

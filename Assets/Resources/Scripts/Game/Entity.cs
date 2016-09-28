@@ -30,6 +30,7 @@ public class Entity : MonoBehaviour {
 	public DeathType death;
 	public float cooldownRate;
 	public float damageReduction;
+	public int statusImmune;
 
 	// Misc Lists
 	public ArrayList statuses;
@@ -40,6 +41,7 @@ public class Entity : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		statusImmune = 0;
 		damageReduction = 1f;
 		statuses = new ArrayList();
 		//abilities = new Ability[7]; The fuckiest of errors
@@ -98,6 +100,10 @@ public class Entity : MonoBehaviour {
 	// Apply a new status to this entity
 	public void addStatus(StatusEffect status)
 	{
+		//check immunity
+		if (statusImmune > 0)
+			return;
+
 		//check for duplicate statuses
 		//if there are duplicates, replace them
 		for(int i = 0; i < statuses.Count; i++)

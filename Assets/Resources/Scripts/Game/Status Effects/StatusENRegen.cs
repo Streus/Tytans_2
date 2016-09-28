@@ -16,11 +16,19 @@ public class StatusENRegen : StatusEffect {
 
 	public override void apply ()
 	{
+		//apply particle effect
+
+
+		//apply regen
 		invokerVars.energyRegen += regenAmount;
 	}
 
 	public override void revert ()
 	{
+		//remove particle effect
+
+
+		//remove regen
 		invokerVars.energyRegen -= regenAmount;
 	}
 }
