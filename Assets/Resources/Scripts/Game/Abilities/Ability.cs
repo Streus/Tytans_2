@@ -30,7 +30,7 @@ public abstract class Ability : IComparable{
 		invoker = entity;
 	}
 
-	// Decrement the cooldown variable
+	// Clamp the cooldown variable at zero
 	public void clampCD() {
 		if(currentCD < 0)
 			currentCD = 0f;
@@ -38,7 +38,7 @@ public abstract class Ability : IComparable{
 
 	public bool ready()
 	{
-		return currentCD <= 0f;
+		return (currentCD <= 0f) && (cost <= invoker.GetComponent<Entity>().energy);
 	}
 
 	public int CompareTo(object other)

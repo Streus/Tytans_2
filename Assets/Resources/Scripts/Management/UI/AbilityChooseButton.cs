@@ -25,8 +25,12 @@ public class AbilityChooseButton : MonoBehaviour {
 		{
 			if (abilities [i] == null)
 				continue;
-			if (abilities [i].CompareTo (ability) == 0)
+			if (abilities [i].CompareTo (ability) == 0){
+				Ability temp = abilities [i];
+				abilities [i] = abilities [slotNumber];
+				abilities[slotNumber] = temp;
 				return;
+			}
 		}
 
 		//assign a copy of this ability to the player's roster

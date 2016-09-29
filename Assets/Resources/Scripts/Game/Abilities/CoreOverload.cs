@@ -16,11 +16,10 @@ public class CoreOverload : Ability {
 	{
 		return new CoreOverload (invoker);
 	}
-
-	//TODO
+		
 	public override bool use(){
 		//explosion boom boom
-
+		//TODO
 
 		//apply regen and reset ability
 		invoker.GetComponent<Entity>().addStatus(new StatusENRegen(2f, invoker, 40f));

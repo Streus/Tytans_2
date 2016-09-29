@@ -24,7 +24,11 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 		if (ability != null) {
 			icon.sprite = ability.image;
 			cdIndicator.fillAmount = ability.currentCD / ability.cooldown;
-			cdText.text = (ability.currentCD).ToString("##.#");
+			cdText.text = (ability.currentCD).ToString ("##.#");
+		} else {
+			icon.sprite = null;
+			cdIndicator.fillAmount = 0;
+			cdText.text = "";
 		}
 	}
 

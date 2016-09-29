@@ -17,7 +17,7 @@ public class StatusENRegen : StatusEffect {
 	public override void apply ()
 	{
 		//apply particle effect
-
+		//TODO
 
 		//apply regen
 		invokerVars.energyRegen += regenAmount;
@@ -26,7 +26,7 @@ public class StatusENRegen : StatusEffect {
 	public override void revert ()
 	{
 		//remove particle effect
-
+		//TODO
 
 		//remove regen
 		invokerVars.energyRegen -= regenAmount;
