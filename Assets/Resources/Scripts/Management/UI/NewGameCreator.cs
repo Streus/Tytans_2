@@ -7,11 +7,10 @@ public class NewGameCreator : MonoBehaviour {
 
 	// Misc game options
 	private Difficulty difficulty = Difficulty.Easy;
-	private bool tutorial = Options.tutorial;
 
 	// Player options
 	private PlayerClass pClass = PlayerClass.defender;
-	private GameObject bulletType;
+	private string bulletType;
 
 	// Important children
 	Transform classGroup;
@@ -30,7 +29,7 @@ public class NewGameCreator : MonoBehaviour {
 
 		setClass(0);
 		setDifficulty();
-		setBullet((GameObject)Resources.Load("Prefabs/Bullets/BulletBasic", typeof(GameObject)));
+		setBullet("BulletBasic");
 
 	}
 	
@@ -59,8 +58,8 @@ public class NewGameCreator : MonoBehaviour {
 		}
 	}
 
-	public GameObject getBullet() { return bulletType; }
-	public void setBullet(GameObject x) { bulletType = x; }
+	public string getBullet() { return bulletType; }
+	public void setBullet(string x) { bulletType = x; }
 		
 	public void setDifficulty()
 	{

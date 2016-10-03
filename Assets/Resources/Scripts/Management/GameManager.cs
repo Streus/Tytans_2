@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class GameManager : MonoBehaviour {
 
@@ -10,13 +13,14 @@ public class GameManager : MonoBehaviour {
 	// The player object and supporting vars
 	public static GameObject player;
 	private PlayerClass playerClass;
-	private GameObject playerBullet;
+	private string playerBullet;
 
 	// Options to save for this game file
-	private string saveName;
-	private Difficulty difficulty;
-	private string lastScene;
-	private Vector2 spawnCoordinates;
+	public string saveName;
+	public Difficulty difficulty;
+	public Vector3 spawnCoordinates;
+	public Ability[] flexAbilities = new Ability[3];
+	public bool[] completedBosses = new bool[14];
 
 	// Other misc variables
 	private bool paused;
@@ -26,8 +30,7 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		//instantiate defaults
 		saveName = "default";
-		lastScene = "Overworld";
-		spawnCoordinates = Vector2.zero;
+		spawnCoordinates = Vector3.zero;
 
 		paused = false;
 
@@ -74,9 +77,6 @@ public class GameManager : MonoBehaviour {
 
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 	{
-		//save this room as the last entered room
-		lastScene = arg0.name;
-
 		//make player
 		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Players/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
 		Entity entScr = player.transform.GetComponent<Entity>();
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour {
 		//set up stats depending on class
 		switch(playerClass){
 		case PlayerClass.defender:
-			plyScr.bullet = playerBullet;
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 150f;
 			entScr.health = entScr.healthMax;
@@ -94,13 +94,13 @@ public class GameManager : MonoBehaviour {
 			entScr.energy = entScr.energyMax;
 			entScr.energyRegen = 1.25f;
 			entScr.speed = 27;
-			entScr.addAbility(new FlakShot(player.transform, playerBullet), 0);
+			entScr.addAbility(new FlakShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new AbsorptionField(player.transform), 1);
 
 			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerDefender", typeof(Sprite));
 			break;
 		case PlayerClass.skirmisher:
-			plyScr.bullet = playerBullet;
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 75f;
 			entScr.health = entScr.healthMax;
@@ -109,13 +109,13 @@ public class GameManager : MonoBehaviour {
 			entScr.energy = entScr.energyMax;
 			entScr.energyRegen = 1.25f;
 			entScr.speed = 50;
-			entScr.addAbility(new BurstShot(player.transform, playerBullet), 0);
+			entScr.addAbility(new BurstShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new Dash(player.transform), 1);
 
 			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerSkirmisher", typeof(Sprite));
 			break;
 		case PlayerClass.caster:
-			plyScr.bullet = playerBullet;
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 50f;
 			entScr.health = entScr.healthMax;
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour {
 			entScr.energy = entScr.energyMax;
 			entScr.energyRegen = 2f;
 			entScr.speed = 35;
-			entScr.addAbility(new RailgunShot(player.transform, playerBullet), 0);
+			entScr.addAbility(new RailgunShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new CoreOverload(player.transform), 1);
 
 			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerCaster", typeof(Sprite));
@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour {
 		playerClass = pc;
 	}
 
-	public void setBullet(GameObject bullet){
+	public void setBullet(string bullet){
 		playerBullet = bullet;
 	}
 
@@ -150,5 +150,49 @@ public class GameManager : MonoBehaviour {
 	}
 	public string getSaveName(){
 		return saveName;
+	}
+
+	// Create a .dat file named (saveName) and save game relevent information to it
+	public void saveGame()
+	{
+		//set up data container
+		SaveGameFile save = new SaveGameFile();
+		save.save_playerClass = playerClass;
+		save.save_playerBullet = playerBullet;
+		save.save_difficulty = difficulty;
+		save.save_spawnCoordinates = spawnCoordinates;
+		save.save_flexAbilities = flexAbilities;
+		save.save_completedBosses = completedBosses;
+
+		//serialize and save
+		FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Create);
+		BinaryFormatter bf = new BinaryFormatter();
+		bf.Serialize(file, save);
+		file.Close();
+	}
+
+	// Load (saveName).dat and begin a game with its data
+	public void loadGame()
+	{
+		if(File.Exists(Application.persistentDataPath + "/" + saveName + ".dat")){
+			//load and deserialize file
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Open);
+			SaveGameFile save = bf.Deserialize(file);
+
+			//set GameManager values to match deserialized values
+
+		}
+	}
+
+	[Serializable]
+	private class SaveGameFile
+	{
+		public PlayerClass save_playerClass;
+		public string save_playerBullet;
+		public Difficulty save_difficulty;
+		public Vector3 save_spawnCoordinates;
+		public Ability[] save_flexAbilities = new Ability[3];
+		public bool[] save_completedBosses = new bool[14];
 	}
 }
