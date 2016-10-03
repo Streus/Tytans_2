@@ -7,7 +7,7 @@ public class SavePoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		enabled = true;
+		canSave = true;
 	}
 	
 	// Update is called once per frame
@@ -31,6 +31,8 @@ public class SavePoint : MonoBehaviour {
 			//update spawn coordinates and save
 			GameManager.manager.spawnCoordinates = transform.position;
 			GameManager.manager.saveGame();
+
+			Debug.Log ("Saved " + GameManager.manager.getSaveName ());
 		}
 	}
 }

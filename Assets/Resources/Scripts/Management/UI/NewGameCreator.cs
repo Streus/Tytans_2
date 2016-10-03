@@ -2,11 +2,14 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEditor.SceneManagement;
+using System.IO;
+using System.Text.RegularExpressions;
 
 public class NewGameCreator : MonoBehaviour {
 
 	// Misc game options
 	private Difficulty difficulty = Difficulty.Easy;
+	private string saveName;
 
 	// Player options
 	private PlayerClass pClass = PlayerClass.defender;
@@ -18,15 +21,18 @@ public class NewGameCreator : MonoBehaviour {
 	Transform bulletGroup;
 	Slider difficultySlider;
 	Text difficultyText;
+	InputField gameNameInput;
 
 	// Use this for initialization
 	void Start () {
 		classGroup = transform.GetChild(0).GetChild(2);
 		classDescription = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
-		bulletGroup = transform.GetChild(0).GetChild(7);
-		difficultySlider = transform.GetChild(0).GetChild(5).GetChild(0).GetComponent<Slider>();
-		difficultyText = transform.GetChild(0).GetChild(5).GetChild(1).GetChild(0).GetComponent<Text>();
+		bulletGroup = transform.GetChild(0).GetChild(5);
+		difficultySlider = transform.GetChild(1).GetChild(4).GetChild(0).GetComponent<Slider>();
+		difficultyText = transform.GetChild(1).GetChild(4).GetChild(1).GetChild(0).GetComponent<Text>();
+		gameNameInput = transform.GetChild (1).GetChild (2).GetComponent<InputField> ();
 
+		setSaveName ();
 		setClass(0);
 		setDifficulty();
 		setBullet("BulletBasic");
@@ -60,6 +66,17 @@ public class NewGameCreator : MonoBehaviour {
 
 	public string getBullet() { return bulletType; }
 	public void setBullet(string x) { bulletType = x; }
+
+	public void setSaveName() 
+	{
+		Match newName = Regex.Match (gameNameInput.text, "[A-Za-z0-9]+", RegexOptions.Singleline);
+		if (newName.Value.Equals(gameNameInput.text))
+			saveName = newName.Value;
+		else{
+			gameNameInput.text = "";
+			gameNameInput.ForceLabelUpdate ();
+		}
+	}
 		
 	public void setDifficulty()
 	{
@@ -85,10 +102,10 @@ public class NewGameCreator : MonoBehaviour {
 	public void moveToGame()
 	{
 		//set up GameManager
+		GameManager.manager.setSaveName(saveName);
 		GameManager.manager.setDifficulty(difficulty);
 		GameManager.manager.setPlayerClass(pClass);
 		GameManager.manager.setBullet(bulletType);
-		GameManager.manager.setSaveName("New Game");
 		EditorSceneManager.LoadScene ("Overworld");
 	}
 } 

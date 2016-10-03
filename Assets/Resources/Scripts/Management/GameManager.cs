@@ -160,9 +160,10 @@ public class GameManager : MonoBehaviour {
 		save.save_playerClass = playerClass;
 		save.save_playerBullet = playerBullet;
 		save.save_difficulty = difficulty;
-		save.save_spawnCoordinates = spawnCoordinates;
-		save.save_flexAbilities = flexAbilities;
-		save.save_completedBosses = completedBosses;
+		save.save_spawnX = spawnCoordinates.x;
+		save.save_spawnY = spawnCoordinates.y;
+		//save.save_flexAbilities = flexAbilities;
+		//save.save_completedBosses = completedBosses;
 
 		//serialize and save
 		FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Create);
@@ -174,11 +175,11 @@ public class GameManager : MonoBehaviour {
 	// Load (saveName).dat and begin a game with its data
 	public void loadGame()
 	{
-		if(File.Exists(Application.persistentDataPath + "/" + saveName + ".dat")){
+		if(File.Exists(Application.persistentDataPath + "\\" + saveName + ".dat")){
 			//load and deserialize file
 			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Open);
-			SaveGameFile save = bf.Deserialize(file);
+			FileStream file = File.Open(Application.persistentDataPath + "\\" + saveName + ".dat", FileMode.Open);
+			SaveGameFile save = (SaveGameFile)bf.Deserialize(file);
 
 			//set GameManager values to match deserialized values
 
@@ -191,8 +192,9 @@ public class GameManager : MonoBehaviour {
 		public PlayerClass save_playerClass;
 		public string save_playerBullet;
 		public Difficulty save_difficulty;
-		public Vector3 save_spawnCoordinates;
-		public Ability[] save_flexAbilities = new Ability[3];
-		public bool[] save_completedBosses = new bool[14];
+		public float save_spawnX;
+		public float save_spawnY;
+		//public Ability[] save_flexAbilities = new Ability[3];
+		//public bool[] save_completedBosses = new bool[14];
 	}
 }
