@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//TODO
-public class RailgunShot : Ability {
+public class RailgunShot : BulletFlexAbility {
 
-	GameObject bulletPrefab;
+	public RailgunShot(Transform e, GameObject bt) : base(e, bt){ }
+	public RailgunShot() : base(){ }
 
-	public RailgunShot(Transform e, GameObject bt) : base(e){
+	protected override void setValues ()
+	{
 		dispName = "Railgun Shot";
 		desc = "Fire a powerful bullet that knocks the ship back.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityRailgunShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 1.5f;
 		currentCD = cooldown;
-		bulletPrefab = bt;
 	}
 
 	public override Ability Copy ()
@@ -21,7 +21,6 @@ public class RailgunShot : Ability {
 		return new RailgunShot (invoker, bulletPrefab);
 	}
 
-	//TODO
 	public override bool use(){ 
 		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);
 		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());

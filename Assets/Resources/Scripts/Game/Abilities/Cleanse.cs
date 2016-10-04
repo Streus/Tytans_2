@@ -3,7 +3,10 @@ using System.Collections;
 
 public class Cleanse : Ability {
 
-	public Cleanse(Transform e) : base(e)
+	public Cleanse(Transform e) : base(e){ }
+	public Cleanse() : base(){ }
+
+	protected override void setValues ()
 	{
 		dispName = "Cleanse";
 		desc = "Remove all status effects and gain temporary immunity to status effects";

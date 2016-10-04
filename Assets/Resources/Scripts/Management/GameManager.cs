@@ -137,11 +137,19 @@ public class GameManager : MonoBehaviour {
 		//add flexAbilities
 		for(int i = 0; i < 3; i++)
 		{
-			entScr.addAbility(flexAbilities[i], i + 2);
+			if (flexAbilities [i] == null)
+				continue;
+			flexAbilities [i].invoker = player.transform;
+			if (flexAbilities [i] is BulletFlexAbility)
+				((BulletFlexAbility)flexAbilities [i]).bulletPrefab = plyScr.bullet;
+			entScr.addAbility(flexAbilities[i].Copy(), i + 2);
 		}
 
 		//add learned abilities
 		plyScr.learnedAbilities = (ArrayList)learnedAbilites.Clone();
+		for (int i = 0; i < plyScr.learnedAbilities.Count; i++) {
+			((Ability)learnedAbilites [i]).invoker = player.transform;
+		}
 	}
 
 	public void setDifficulty(Difficulty d){
@@ -169,6 +177,8 @@ public class GameManager : MonoBehaviour {
 	{
 		//set up data container
 		SaveGameFile save = new SaveGameFile();
+
+		//save stuff
 		save.save_playerClass = (int)playerClass;
 		save.save_playerBullet = playerBullet;
 		save.save_difficulty = (int)difficulty;
@@ -177,17 +187,17 @@ public class GameManager : MonoBehaviour {
 
 		//save abilities
 		save.abilityNames = new string[3];
-		Entity entscr = player.GetComponent<Entity> ();
+		Entity entscr = player.transform.GetComponent<Entity> ();
 		for (int i = 0; i < 3; i++) {
-			if (entscr.abilities [i] == null)
+			if (entscr.abilities [i + 2] == null)
 				save.abilityNames [i] = "";
 			else
-				save.abilityNames [i] = player.GetComponent<Entity> ().abilities [i + 2].GetType().AssemblyQualifiedName;
+				save.abilityNames [i] = entscr.abilities [i + 2].GetType().AssemblyQualifiedName;
 		}
 
 		//save learned abilites
-		Ability[] temp = new Ability[1];
-		player.GetComponent<Player> ().learnedAbilities.CopyTo (temp);
+		Ability[] temp = new Ability[player.transform.GetComponent<Player>().learnedAbilities.Count];
+		player.transform.GetComponent<Player> ().learnedAbilities.CopyTo (temp);
 		save.abilityNames = new string[temp.Length];
 		for (int i = 0; i < temp.Length; i++) {
 			save.abilityNames [i] = temp [i].GetType().AssemblyQualifiedName;
@@ -220,7 +230,7 @@ public class GameManager : MonoBehaviour {
 			spawnCoordinates.y = save.save_spawnY;
 
 			//load abilities
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < save.abilityNames.Length; i++) {
 				if (save.abilityNames [i] == "")
 					flexAbilities [i] = null;
 				else

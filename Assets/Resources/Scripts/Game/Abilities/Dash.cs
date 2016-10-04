@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//TODO
 public class Dash : Ability {
-	public Dash(Transform e) : base(e){
+	
+	public Dash(Transform e) : base(e){ }
+	public Dash() : base(){ }
+
+	protected override void setValues ()
+	{
 		dispName = "Dash";
 		desc = "Gain a burst of forward speed";
 		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityDash", typeof(Sprite));

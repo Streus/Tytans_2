@@ -3,7 +3,12 @@ using System.Collections;
 
 //TODO
 public class CoreOverload : Ability {
-	public CoreOverload(Transform e) : base(e){
+	
+	public CoreOverload(Transform e) : base(e){ }
+	public CoreOverload() : base(){ }
+
+	protected override void setValues ()
+	{
 		dispName = "Core Overload";
 		desc = "Emit a powerful shockwave that knocks back and damages enemies as well as restoring some energy.";
 		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityCoreOverload", typeof(Sprite));

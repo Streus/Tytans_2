@@ -38,8 +38,6 @@ public class CameraControl : MonoBehaviour {
 
 	public void shakeCamera(float intensity, float shakeTime)
 	{
-		//DEBUG CODE
-		Debug.Log("Shaking it up!");
 		this.intensity = intensity;
 		this.shakeTime = shakeTime;
 	}

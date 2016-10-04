@@ -3,7 +3,11 @@ using System.Collections;
 
 public class AbsorptionField : Ability {
 
-	public AbsorptionField(Transform e) : base(e){
+	public AbsorptionField(Transform e) : base(e){ }
+	public AbsorptionField() : base(){ }
+
+	protected override void setValues ()
+	{
 		dispName = "Absorption Field";
 		desc = "Convert incoming damage into health regen for a short time.";
 		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityAbsorptionField", typeof(Sprite));

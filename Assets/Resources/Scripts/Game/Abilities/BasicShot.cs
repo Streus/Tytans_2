@@ -1,18 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasicShot : Ability {
+public class BasicShot : BulletFlexAbility {
 
-	GameObject bulletPrefab;
+	public BasicShot(Transform e, GameObject bt) : base(e, bt){ }
+	public BasicShot() : base(){ }
 
-	public BasicShot(Transform entity, GameObject bt) : base(entity){
+	protected override void setValues ()
+	{
 		dispName = "Shoot";
 		desc = "Fire a bullet.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityBasicShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 0.5f;
 		currentCD = cooldown;
-		bulletPrefab = bt;
 	}
 
 	public override Ability Copy ()

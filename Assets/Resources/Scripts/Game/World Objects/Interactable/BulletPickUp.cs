@@ -30,8 +30,12 @@ public class BulletPickUp : MonoBehaviour {
 	{
 		if (col.gameObject == GameManager.player) 
 		{
-			//TODO this doesn't update the gameobject being used by instantiated abilities
+			Entity playerEnt = col.transform.GetComponent<Entity> ();
 			col.gameObject.GetComponent<Player> ().bullet = bullet;
+			for (int i = 0; i < playerEnt.abilities.Length; i++) {
+				if (playerEnt.abilities [i] is BulletFlexAbility)
+					((BulletFlexAbility)playerEnt.abilities [i]).bulletPrefab = bullet;
+			}
 			Destroy (gameObject);
 		}
 	}

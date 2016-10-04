@@ -99,9 +99,13 @@ public class NewGameCreator : MonoBehaviour {
 		difficultyText.text = difftext;
 	}
 
+	// Assign chosen values to GameManager.manager and move to game scene
 	public void moveToGame()
 	{
-		//set up GameManager
+		//set up GameManager (clearing any possible loaded values)
+		GameManager.manager.flexAbilities = new Ability[3];
+		GameManager.manager.learnedAbilites.Clear ();
+		GameManager.manager.completedBosses = new bool[14];
 		GameManager.manager.setSaveName(saveName);
 		GameManager.manager.setDifficulty(difficulty);
 		GameManager.manager.setPlayerClass(pClass);

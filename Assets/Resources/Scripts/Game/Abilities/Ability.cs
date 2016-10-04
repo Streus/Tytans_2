@@ -25,10 +25,20 @@ public abstract class Ability : IComparable{
 	// The invoker using the ability
 	public Transform invoker;
 
-	// A basic, empty constructor
+	// A basic constructor
 	public Ability(Transform entity) {
 		invoker = entity;
+		setValues ();
 	}
+	// An empty constructor
+	public Ability() {
+		invoker = null;
+		setValues ();
+	}
+
+	// Set the unique values of the ability
+	// Necessary for empty constructor
+	protected abstract void setValues();
 
 	// Clamp the cooldown variable at zero
 	public void clampCD() {

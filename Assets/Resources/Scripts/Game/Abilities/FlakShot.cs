@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//TODO
-public class FlakShot : Ability {
+public class FlakShot : BulletFlexAbility {
 
-	GameObject bulletPrefab;
+	public FlakShot(Transform e, GameObject bt) : base(e, bt){ }
+	public FlakShot() : base(){ }
 
-	public FlakShot(Transform e, GameObject bt) : base(e){
+	protected override void setValues ()
+	{
 		dispName = "Flak Shot";
 		desc = "Fire a volley of short-range bullets.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityFlakShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 1f;
 		currentCD = cooldown;
-		bulletPrefab = bt;
 	}
 
 	public override Ability Copy ()
