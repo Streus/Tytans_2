@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	public Difficulty difficulty;
 	public Vector3 spawnCoordinates;
 	public Ability[] flexAbilities = new Ability[3];
+	public ArrayList learnedAbilites;
 	public bool[] completedBosses = new bool[14];
 
 	// Other misc variables
@@ -29,8 +30,9 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//instantiate defaults
-		saveName = "default";
+		saveName = "";
 		spawnCoordinates = Vector3.zero;
+		learnedAbilites = new ArrayList();
 
 		paused = false;
 
@@ -82,7 +84,7 @@ public class GameManager : MonoBehaviour {
 		Entity entScr = player.transform.GetComponent<Entity>();
 		Player plyScr = player.transform.GetComponent<Player>();
 
-		//set up stats depending on class
+		//set up stats and default abilites depending on class
 		switch(playerClass){
 		case PlayerClass.defender:
 			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
@@ -130,6 +132,15 @@ public class GameManager : MonoBehaviour {
 			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerCaster", typeof(Sprite));
 			break;
 		}
+
+		//add flexAbilities
+		for(int i = 0; i < 3; i++)
+		{
+			entScr.addAbility(flexAbilities[i], i + 2);
+		}
+
+		//add learned abilities
+		plyScr.learnedAbilities = (ArrayList)learnedAbilites.Clone();
 	}
 
 	public void setDifficulty(Difficulty d){
@@ -157,16 +168,22 @@ public class GameManager : MonoBehaviour {
 	{
 		//set up data container
 		SaveGameFile save = new SaveGameFile();
-		save.save_playerClass = playerClass;
+		save.save_playerClass = (int)playerClass;
 		save.save_playerBullet = playerBullet;
-		save.save_difficulty = difficulty;
+		save.save_difficulty = (int)difficulty;
 		save.save_spawnX = spawnCoordinates.x;
 		save.save_spawnY = spawnCoordinates.y;
-		//save.save_flexAbilities = flexAbilities;
-		//save.save_completedBosses = completedBosses;
+		//save abilities
+		Debug.Log("Cannot save abilities yet.");
+
+		//save learned abilites
+		Debug.Log("Cannot save learned abilities yet.");
+
+		//save defeated bosses
+		Debug.Log("Cannot save defeated bosses yet.");
 
 		//serialize and save
-		FileStream file = File.Open(Application.persistentDataPath + "/" + saveName + ".dat", FileMode.Create);
+		FileStream file = File.Open(Application.persistentDataPath + "\\" + saveName + ".dat", FileMode.Create);
 		BinaryFormatter bf = new BinaryFormatter();
 		bf.Serialize(file, save);
 		file.Close();
@@ -182,19 +199,40 @@ public class GameManager : MonoBehaviour {
 			SaveGameFile save = (SaveGameFile)bf.Deserialize(file);
 
 			//set GameManager values to match deserialized values
+			playerClass = (PlayerClass)save.save_playerClass;
+			playerBullet = save.save_playerBullet;
+			difficulty = (Difficulty)save.save_difficulty;
+			spawnCoordinates.x = save.save_spawnX;
+			spawnCoordinates.y = save.save_spawnY;
+			//load abilities
+			Debug.Log("Cannot load abilities yet.");
 
+			//load learned abilites
+			Debug.Log("Cannot load learned abilities yet.");
+
+			//load defeated bosses
+			Debug.Log("Cannot load defeated bosses yet.");
 		}
 	}
 
 	[Serializable]
 	private class SaveGameFile
 	{
-		public PlayerClass save_playerClass;
+		public int save_playerClass;
 		public string save_playerBullet;
-		public Difficulty save_difficulty;
+		public int save_difficulty;
+
+		//spawn position
 		public float save_spawnX;
 		public float save_spawnY;
-		//public Ability[] save_flexAbilities = new Ability[3];
-		//public bool[] save_completedBosses = new bool[14];
+
+		//abilities;
+
+
+		//learned abilities
+
+
+		//defeated bosses
+
 	}
 }

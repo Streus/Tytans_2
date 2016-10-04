@@ -16,18 +16,18 @@ public class NewGameCreator : MonoBehaviour {
 	private string bulletType;
 
 	// Important children
-	Transform classGroup;
+	//Transform classGroup;
 	Text classDescription;
-	Transform bulletGroup;
+	//Transform bulletGroup;
 	Slider difficultySlider;
 	Text difficultyText;
 	InputField gameNameInput;
 
 	// Use this for initialization
 	void Start () {
-		classGroup = transform.GetChild(0).GetChild(2);
+		//classGroup = transform.GetChild(0).GetChild(2);
 		classDescription = transform.GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
-		bulletGroup = transform.GetChild(0).GetChild(5);
+		//bulletGroup = transform.GetChild(0).GetChild(5);
 		difficultySlider = transform.GetChild(1).GetChild(4).GetChild(0).GetComponent<Slider>();
 		difficultyText = transform.GetChild(1).GetChild(4).GetChild(1).GetChild(0).GetComponent<Text>();
 		gameNameInput = transform.GetChild (1).GetChild (2).GetComponent<InputField> ();

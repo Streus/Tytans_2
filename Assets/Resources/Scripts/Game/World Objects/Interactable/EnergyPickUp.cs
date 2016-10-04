@@ -3,10 +3,10 @@ using System.Collections;
 
 public class EnergyPickUp : MonoBehaviour {
 
-	private Rigidbody2D physbody;
+	//private Rigidbody2D physbody;
 
 	void Awake () {
-		physbody = transform.GetComponent<Rigidbody2D> ();
+		//physbody = transform.GetComponent<Rigidbody2D> ();
 	}
 
 	// Use this for initialization
