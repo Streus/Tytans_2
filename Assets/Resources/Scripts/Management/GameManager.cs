@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 
 public class GameManager : MonoBehaviour {
 
@@ -173,14 +174,27 @@ public class GameManager : MonoBehaviour {
 		save.save_difficulty = (int)difficulty;
 		save.save_spawnX = spawnCoordinates.x;
 		save.save_spawnY = spawnCoordinates.y;
+
 		//save abilities
-		Debug.Log("Cannot save abilities yet.");
+		save.abilityNames = new string[3];
+		Entity entscr = player.GetComponent<Entity> ();
+		for (int i = 0; i < 3; i++) {
+			if (entscr.abilities [i] == null)
+				save.abilityNames [i] = "";
+			else
+				save.abilityNames [i] = player.GetComponent<Entity> ().abilities [i + 2].GetType().AssemblyQualifiedName;
+		}
 
 		//save learned abilites
-		Debug.Log("Cannot save learned abilities yet.");
+		Ability[] temp = new Ability[1];
+		player.GetComponent<Player> ().learnedAbilities.CopyTo (temp);
+		save.abilityNames = new string[temp.Length];
+		for (int i = 0; i < temp.Length; i++) {
+			save.abilityNames [i] = temp [i].GetType().AssemblyQualifiedName;
+		}
 
 		//save defeated bosses
-		Debug.Log("Cannot save defeated bosses yet.");
+		save.defeatedBosses = completedBosses;
 
 		//serialize and save
 		FileStream file = File.Open(Application.persistentDataPath + "\\" + saveName + ".dat", FileMode.Create);
@@ -204,19 +218,27 @@ public class GameManager : MonoBehaviour {
 			difficulty = (Difficulty)save.save_difficulty;
 			spawnCoordinates.x = save.save_spawnX;
 			spawnCoordinates.y = save.save_spawnY;
+
 			//load abilities
-			Debug.Log("Cannot load abilities yet.");
+			for (int i = 0; i < 3; i++) {
+				if (save.abilityNames [i] == "")
+					flexAbilities [i] = null;
+				else
+					flexAbilities [i] = (Ability)Activator.CreateInstance (Type.GetType (save.abilityNames [i]));
+			}
 
 			//load learned abilites
-			Debug.Log("Cannot load learned abilities yet.");
+			for (int i = 0; i < save.learnedAbilityNames.Length; i++) {
+				learnedAbilites.Add((Ability)Activator.CreateInstance (Type.GetType (save.learnedAbilityNames [i])));
+			}
 
 			//load defeated bosses
-			Debug.Log("Cannot load defeated bosses yet.");
+			completedBosses = save.defeatedBosses;
 		}
 	}
 
 	[Serializable]
-	private class SaveGameFile
+	private class SaveGameFile : ISerializable
 	{
 		public int save_playerClass;
 		public string save_playerBullet;
@@ -227,12 +249,44 @@ public class GameManager : MonoBehaviour {
 		public float save_spawnY;
 
 		//abilities;
-
+		public string[] abilityNames;
 
 		//learned abilities
-
+		public string[] learnedAbilityNames;
 
 		//defeated bosses
+		public bool[] defeatedBosses;
 
+		public SaveGameFile() { }
+
+		//for loading
+		public SaveGameFile(SerializationInfo info, StreamingContext context)
+		{
+			save_playerClass = (int) info.GetValue("playerClass", typeof(int));
+			save_playerBullet = (string) info.GetValue("playerBullet", typeof(string));
+			save_difficulty = (int) info.GetValue("difficulty", typeof(int));
+
+			save_spawnX = (float) info.GetValue("spawnX", typeof(float));
+			save_spawnY = (float) info.GetValue("spawnY", typeof(float));
+
+			abilityNames = (string[]) info.GetValue("abilityNames", typeof(string[]));
+			learnedAbilityNames = (string[]) info.GetValue("learnedAbilityNames", typeof(string[]));
+		}
+
+		//for saving
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue ("playerClass", save_playerClass);
+			info.AddValue ("playerBullet", save_playerBullet);
+			info.AddValue ("difficulty", save_difficulty);
+
+			info.AddValue ("spawnX", save_spawnX);
+			info.AddValue ("spawnY", save_spawnY);
+
+			info.AddValue ("abilityNames", abilityNames, typeof(string[]));
+			info.AddValue ("learnedAbilityNames", learnedAbilityNames, typeof(string[]));
+
+			info.AddValue ("defeatedBosses", defeatedBosses, typeof(bool[]));
+		}
 	}
 }

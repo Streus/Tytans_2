@@ -13,11 +13,13 @@ public class LoadGameList : MonoBehaviour {
 		//create buttons to correspond to each .dat file
 		for (int i = 0; i < saveGames.Length; i++) 
 		{
+			saveGames [i] = saveGames [i].Replace (Application.persistentDataPath + "\\", "");
+			saveGames [i] = saveGames [i].Replace (".dat", "");
 			Debug.Log("Loaded " + saveGames[i]);
 			GameObject element = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/UI/LoadGameElement"), transform, false);
 			element.GetComponent<LoadGameElement>().setGameName(saveGames[i]);
 			RectTransform listBox = transform.GetComponent<RectTransform>();
-			listBox.sizeDelta = new Vector2 (listBox.sizeDelta.x, listBox.sizeDelta.y + 95f);
+			listBox.sizeDelta = new Vector2 (listBox.sizeDelta.x, listBox.sizeDelta.y + 105f);
 		}
 	}
 	
