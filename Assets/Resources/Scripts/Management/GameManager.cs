@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour {
 
 		public SaveGameFile() { }
 
-		//for loading
+		//for deserialization
 		public SaveGameFile(SerializationInfo info, StreamingContext context)
 		{
 			save_playerClass = (int) info.GetValue("playerClass", typeof(int));
@@ -279,11 +279,26 @@ public class GameManager : MonoBehaviour {
 			save_spawnX = (float) info.GetValue("spawnX", typeof(float));
 			save_spawnY = (float) info.GetValue("spawnY", typeof(float));
 
-			abilityNames = (string[]) info.GetValue("abilityNames", typeof(string[]));
-			learnedAbilityNames = (string[]) info.GetValue("learnedAbilityNames", typeof(string[]));
+			//abilityNames
+			abilityNames = new string[(int)info.GetValue("abilityNamesLength", typeof(int))];
+			for(int i = 0; i < abilityNames.Length; i++){
+				abilityNames[i] = (string)info.GetValue("abilityNames" + i, typeof(string));
+			}
+
+			//learnedAbilityNames
+			learnedAbilityNames = new string[info.GetValue("learnedAbilityNamesLength", typeof(int))];
+			for(int i = 0; i < learnedAbilityNames.Length; i++){
+				learnedAbilityNames[i] = (string)info.GetValue("learnedAbilityNames" + i, typeof(string));
+			}
+
+			//deafeatedBosses
+			defeatedBosses = new bool[info.GetValue("defeatedBossesLength", typeof(int))];
+			for(int i = 0; i < defeatedBosses.Length; i++){
+				defeatedBosses[i] = (bool)info.GetValue("defeatedBosses" + i, typeof(bool));
+			}
 		}
 
-		//for saving
+		//for serialization
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue ("playerClass", save_playerClass);
@@ -293,10 +308,23 @@ public class GameManager : MonoBehaviour {
 			info.AddValue ("spawnX", save_spawnX);
 			info.AddValue ("spawnY", save_spawnY);
 
-			info.AddValue ("abilityNames", abilityNames, typeof(string[]));
-			info.AddValue ("learnedAbilityNames", learnedAbilityNames, typeof(string[]));
+			//abilityNames
+			for (int i = 0; i < abilityNames.Length; i++) {
+				info.AddValue ("abilityNames" + i, abilityNames [i], typeof(string));
+			}
+			info.AddValue ("abilityNamesLength", abilityNames.Length, typeof(int));
 
-			info.AddValue ("defeatedBosses", defeatedBosses, typeof(bool[]));
+			//learnedAbilityNames
+			for (int i = 0; i < learnedAbilityNames.Length; i++) {
+				info.AddValue ("learnedAbilityNames" + i, learnedAbilityNames [i], typeof(string));
+			}
+			info.AddValue ("learnedAbilityNamesLength", learnedAbilityNames.Length, typeof(int));
+
+			//defeatedBosses
+			for (int i = 0; i < defeatedBosses.Length; i++) {
+				info.AddValue ("defeatedBosses" + i, defeatedBosses [i], typeof(bool));
+			}
+			info.AddValue ("defeatedBossesLength", defeatedBosses.Length, typeof(int));
 		}
 	}
 }
