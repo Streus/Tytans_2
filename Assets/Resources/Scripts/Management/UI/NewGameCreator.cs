@@ -107,9 +107,9 @@ public class NewGameCreator : MonoBehaviour {
 		GameManager.manager.learnedAbilites.Clear ();
 		GameManager.manager.completedBosses = new bool[14];
 		GameManager.manager.setSaveName(saveName);
-		GameManager.manager.setDifficulty(difficulty);
-		GameManager.manager.setPlayerClass(pClass);
-		GameManager.manager.setBullet(bulletType);
+		GameManager.manager.difficulty = difficulty;
+		GameManager.manager.playerClass = pClass;
+		GameManager.manager.playerBullet = bulletType;
 		EditorSceneManager.LoadScene ("Overworld");
 	}
 } 

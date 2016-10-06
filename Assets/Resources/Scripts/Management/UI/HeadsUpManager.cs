@@ -36,7 +36,7 @@ public class HeadsUpManager : MonoBehaviour {
 	void Update () {
 		//check for destroyed player
 		if (GameManager.player == null)
-			Destroy (gameObject);
+			return;
 
 		//update health and energy bars
 		healthBar.fillAmount = player.health / player.healthMax;

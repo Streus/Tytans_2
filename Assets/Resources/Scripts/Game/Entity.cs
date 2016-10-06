@@ -137,13 +137,14 @@ public class Entity : MonoBehaviour {
 		switch(death)
 		{
 		case DeathType.Player:
-
+			Instantiate (Resources.Load<GameObject> ("Prefabs/Bullets/MediumExplosion"));
+			GameManager.manager.playerDeath ();
 			break;
-		default:
-
+		case DeathType.Normal:
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"));
+			Destroy(transform.gameObject);
 			break;
 		}
-		Destroy(transform.gameObject);
 	}
 }
 
@@ -154,5 +155,5 @@ public enum Faction
 
 public enum DeathType
 {
-	Player
+	Player, Normal
 }
