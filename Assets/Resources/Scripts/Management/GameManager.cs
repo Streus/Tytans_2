@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour {
 
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 	{
+		if(arg0.name == "MainMenu")
+			return;
+
 		//make player
 		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Players/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
 		Entity entScr = player.transform.GetComponent<Entity>();
@@ -180,7 +183,7 @@ public class GameManager : MonoBehaviour {
 
 		//save stuff
 		save.save_playerClass = (int)playerClass;
-		save.save_playerBullet = playerBullet;
+		save.save_playerBullet = playerBullet = player.transform.GetComponent<Player>().bullet.name;
 		save.save_difficulty = (int)difficulty;
 		save.save_spawnX = spawnCoordinates.x;
 		save.save_spawnY = spawnCoordinates.y;
@@ -198,9 +201,9 @@ public class GameManager : MonoBehaviour {
 		//save learned abilites
 		Ability[] temp = new Ability[player.transform.GetComponent<Player>().learnedAbilities.Count];
 		player.transform.GetComponent<Player> ().learnedAbilities.CopyTo (temp);
-		save.abilityNames = new string[temp.Length];
+		save.learnedAbilityNames = new string[temp.Length];
 		for (int i = 0; i < temp.Length; i++) {
-			save.abilityNames [i] = temp [i].GetType().AssemblyQualifiedName;
+			save.learnedAbilityNames [i] = temp [i].GetType().AssemblyQualifiedName;
 		}
 
 		//save defeated bosses
@@ -286,13 +289,13 @@ public class GameManager : MonoBehaviour {
 			}
 
 			//learnedAbilityNames
-			learnedAbilityNames = new string[info.GetValue("learnedAbilityNamesLength", typeof(int))];
+			learnedAbilityNames = new string[(int)info.GetValue("learnedAbilityNamesLength", typeof(int))];
 			for(int i = 0; i < learnedAbilityNames.Length; i++){
 				learnedAbilityNames[i] = (string)info.GetValue("learnedAbilityNames" + i, typeof(string));
 			}
 
 			//deafeatedBosses
-			defeatedBosses = new bool[info.GetValue("defeatedBossesLength", typeof(int))];
+			defeatedBosses = new bool[(int)info.GetValue("defeatedBossesLength", typeof(int))];
 			for(int i = 0; i < defeatedBosses.Length; i++){
 				defeatedBosses[i] = (bool)info.GetValue("defeatedBosses" + i, typeof(bool));
 			}

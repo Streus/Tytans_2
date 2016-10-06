@@ -16,6 +16,7 @@ public class CameraControl : MonoBehaviour {
 		GameManager.cameraController = this;
 
 		player = GameManager.player;
+		transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
 		offset = transform.position - player.transform.position;
 
 		cam = transform.GetChild (0);

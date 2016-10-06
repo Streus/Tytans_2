@@ -5,13 +5,21 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour {
 
+	public static OptionsManager manager;
+
 	public AudioMixer mainAudio;
 
 	// Use this for initialization
 	void Awake () {
-		DontDestroyOnLoad(transform.gameObject);
-		loadOptions();
-		PlayerPrefs.DeleteAll (); // DEBUG CODE
+		if(manager == null){
+			DontDestroyOnLoad (transform.gameObject);
+			manager = this;
+
+			loadOptions();
+		}
+		else if(manager != this){
+			Destroy(transform.gameObject);
+		}
 	}
 	
 	// Update is called once per frame
