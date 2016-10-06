@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour {
 
 	// The player object and supporting vars
 	public static GameObject player;
-	private PlayerClass playerClass;
-	private string playerBullet;
+	public PlayerClass playerClass;
+	public string playerBullet;
 
 	// Options to save for this game file
 	public string saveName;
@@ -76,6 +76,22 @@ public class GameManager : MonoBehaviour {
 		foreach (Rigidbody2D body in bodies) {
 			body.simulated = !paused;
 		}
+	}
+
+	// Hide the player and open the death screen
+	public void playerDeath()
+	{
+		//clear player statuses, reset resources, and deactivate player object
+		Entity plyEnt = player.GetComponent<Entity> ();
+		for (int i = 0; i < plyEnt.statuses.Count; i++)
+			((StatusEffect)plyEnt[i]).duration = 0;
+		plyEnt.health = plyEnt.healthMax;
+		plyEnt.energy = plyEnt.energyMax;
+
+		player.SetActive (false);
+
+		//bring up death screen
+		Menu[] menuList = MenuManager.menuSystem.getMenus ();
 	}
 
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
@@ -153,18 +169,6 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < plyScr.learnedAbilities.Count; i++) {
 			((Ability)learnedAbilites [i]).invoker = player.transform;
 		}
-	}
-
-	public void setDifficulty(Difficulty d){
-		difficulty = Options.difficulty;
-	}
-
-	public void setPlayerClass(PlayerClass pc){
-		playerClass = pc;
-	}
-
-	public void setBullet(string bullet){
-		playerBullet = bullet;
 	}
 
 	// Get and set saveGame
