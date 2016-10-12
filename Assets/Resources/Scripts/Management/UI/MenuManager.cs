@@ -17,6 +17,15 @@ public class MenuManager : MonoBehaviour
 		showMenu(currentMenu);
 	}
 
+	public Menu getMenu(string menuName)
+	{
+		foreach (Menu menu in menus) {
+			if (menu.gameObject.name == menuName)
+				return menu;
+		}
+		return null;
+	}
+
 	public Menu[] getMenus()
 	{
 		return menus;

@@ -58,14 +58,10 @@ public class GameManager : MonoBehaviour {
 			paused = !paused;
 			pause ();
 
-			Menu[] menuList = MenuManager.menuSystem.getMenus ();
-			foreach (Menu menu in menuList) 
-			{
-				if (paused && menu.gameObject.name == "Pause")
-					MenuManager.menuSystem.showMenu (menu);
-				else if (!paused && menu.gameObject.name == "Empty")
-					MenuManager.menuSystem.showMenu (menu);
-			}
+			if (paused)
+				MenuManager.menuSystem.showMenu (MenuManager.menuSystem.getMenu("Pause"));
+			else
+				MenuManager.menuSystem.showMenu (MenuManager.menuSystem.getMenu("Empty"));
 		}
 	}
 
@@ -90,8 +86,18 @@ public class GameManager : MonoBehaviour {
 
 		player.SetActive (false);
 
+		//TODO reset boss
+
 		//bring up death screen
-		Menu[] menuList = MenuManager.menuSystem.getMenus ();
+		MenuManager.menuSystem.showMenu(MenuManager.menuSystem.getMenu("Death"));
+
+	}
+
+	public void restartGame()
+	{
+		player.SetActive (true);
+		player.transform.position = spawnCoordinates;
+		MenuManager.menuSystem.showMenu(MenuManager.menuSystem.getMenu("Empty"));
 	}
 
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
