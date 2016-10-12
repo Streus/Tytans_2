@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour {
 		//clear player statuses, reset resources, and deactivate player object
 		Entity plyEnt = player.GetComponent<Entity> ();
 		for (int i = 0; i < plyEnt.statuses.Count; i++)
-			((StatusEffect)plyEnt[i]).duration = 0;
+			((StatusEffect)plyEnt.statuses[i]).duration = 0;
 		plyEnt.health = plyEnt.healthMax;
 		plyEnt.energy = plyEnt.energyMax;
 
