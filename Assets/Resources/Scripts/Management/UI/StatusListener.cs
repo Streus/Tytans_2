@@ -14,7 +14,7 @@ public class StatusListener : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	// Use this for initialization
 	void Start () {
-		cooldownField = transform.GetChild (0).GetComponent<Text> ();
+		cooldownField = transform.GetChild (1).GetComponent<Text> ();
 		image = transform.GetComponent<Image> ();
 
 		image.sprite = status.icon;

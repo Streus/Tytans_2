@@ -6,6 +6,7 @@ public class ExitButton : MonoBehaviour {
 
 	public void exitToMain()
 	{
+		Destroy (GameManager.player);
 		EditorSceneManager.UnloadScene ("Overworld");
 		EditorSceneManager.LoadScene ("MainMenu");
 	}

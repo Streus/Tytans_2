@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 		saveName = "";
 		spawnCoordinates = Vector3.zero;
 		learnedAbilites = new ArrayList();
+		player = null;
 
 		paused = false;
 
@@ -74,35 +75,26 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	// Hide the player and open the death screen
+	// Open the death screen
 	public void playerDeath()
 	{
-		//clear player statuses, reset resources, and deactivate player object
-		Entity plyEnt = player.GetComponent<Entity> ();
-		for (int i = 0; i < plyEnt.statuses.Count; i++)
-			((StatusEffect)plyEnt.statuses[i]).duration = 0;
-		plyEnt.health = plyEnt.healthMax;
-		plyEnt.energy = plyEnt.energyMax;
-
-		player.SetActive (false);
-
-		//TODO reset boss
-
 		//bring up death screen
 		MenuManager.menuSystem.showMenu(MenuManager.menuSystem.getMenu("Death"));
 
+		//roll a new taunt
+		MenuManager.menuSystem.getMenu ("Death").transform.GetChild (0).GetChild (0).GetChild (0).GetComponent<CyclingDeathTaunt> ().rollNewTaunt ();
 	}
 
+	// Reload the Overworld scene
 	public void restartGame()
 	{
-		player.SetActive (true);
-		player.transform.position = spawnCoordinates;
-		MenuManager.menuSystem.showMenu(MenuManager.menuSystem.getMenu("Empty"));
+		SceneManager.UnloadScene("Overworld");
+		SceneManager.LoadScene ("Overworld");
 	}
 
 	void EditorSceneManager_sceneLoaded (UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
 	{
-		if(arg0.name == "MainMenu")
+		if(arg0.name == "MainMenu" || player != null)
 			return;
 
 		//make player

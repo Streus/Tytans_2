@@ -36,12 +36,6 @@ public class NewGameCreator : MonoBehaviour {
 		setClass(0);
 		setDifficulty();
 		setBullet("BulletBasic");
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	// All setters
@@ -103,6 +97,7 @@ public class NewGameCreator : MonoBehaviour {
 	public void moveToGame()
 	{
 		//set up GameManager (clearing any possible loaded values)
+		GameManager.manager.spawnCoordinates = Vector3.zero;
 		GameManager.manager.flexAbilities = new Ability[3];
 		GameManager.manager.learnedAbilites.Clear ();
 		GameManager.manager.completedBosses = new bool[14];

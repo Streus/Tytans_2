@@ -137,14 +137,14 @@ public class Entity : MonoBehaviour {
 		switch(death)
 		{
 		case DeathType.Player:
-			Instantiate (Resources.Load<GameObject> ("Prefabs/Bullets/MediumExplosion"));
+			Instantiate (Resources.Load<GameObject> ("Prefabs/Bullets/MediumExplosion"), transform.position, Quaternion.identity);
 			GameManager.manager.playerDeath ();
 			break;
 		case DeathType.Normal:
-			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"));
-			Destroy(transform.gameObject);
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), transform.position, Quaternion.identity);
 			break;
 		}
+		Destroy(gameObject);
 	}
 }
 
