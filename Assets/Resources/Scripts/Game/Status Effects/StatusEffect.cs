@@ -12,7 +12,7 @@ public abstract class StatusEffect : IComparable{
 	public bool applied;
 
 	public Transform invoker;
-	private ArrayList statusList;
+	protected ArrayList statusList;
 	public Entity invokerVars;
 
 	public StatusEffect(float dur, Transform t)

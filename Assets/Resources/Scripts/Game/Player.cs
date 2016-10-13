@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
 		learnedAbilities = new ArrayList ();
 		learnAbility (new Cleanse (transform)); //DEBUG CODE
 		learnAbility(new DaedalusMissle(transform)); //DEBUG CODE
+		learnAbility(new Berzerk(transform)); //DEBUG CODE
 	}
 
 	void Update () {

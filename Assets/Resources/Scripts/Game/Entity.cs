@@ -29,7 +29,8 @@ public class Entity : MonoBehaviour {
 	public int speed;
 	public DeathType death;
 	public float cooldownRate;
-	public float damageReduction;
+	public float armor;
+	public float damageMultiplier;
 	public int statusImmune;
 
 	// Misc Lists
@@ -42,7 +43,8 @@ public class Entity : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		statusImmune = 0;
-		damageReduction = 1f;
+		armor = 1f;
+		damageMultiplier = 1f;
 		statuses = new ArrayList();
 		//abilities = new Ability[7]; The fuckiest of errors
 
