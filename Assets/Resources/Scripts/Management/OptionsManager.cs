@@ -136,9 +136,6 @@ public static class Bindings
 // A global variable class that holds unique, non-default options
 public static class Options
 {
-	//difficulty will only be loaded/saved on a per save-file basis
-	public static Difficulty difficulty;
-
 	public static bool tutorial;
 }
 

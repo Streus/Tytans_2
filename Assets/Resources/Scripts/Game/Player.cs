@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
 	private Entity player;
 	public ArrayList learnedAbilities;
 
+	public bool acceptInput;
+
 	// Use this for initialization
 	void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
@@ -18,6 +20,9 @@ public class Player : MonoBehaviour {
 		learnAbility (new Cleanse (transform)); //DEBUG CODE
 		learnAbility(new DaedalusMissle(transform)); //DEBUG CODE
 		learnAbility(new Berzerk(transform)); //DEBUG CODE
+		learnAbility(new Judgement(transform)); //DEBUG CODE
+
+		acceptInput = true;
 	}
 
 	void Update () {
@@ -27,7 +32,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (!physbody.simulated)
+		if (!physbody.simulated || !acceptInput)
 			return;
 
 		//point to mouse

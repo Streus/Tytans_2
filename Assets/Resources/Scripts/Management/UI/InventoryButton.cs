@@ -30,5 +30,7 @@ public class InventoryButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 	public void openInventory(){
 		invAnim.SetBool("IsOpen", !invAnim.GetBool("IsOpen"));
 		list.toggleList ();
+		Player plyscr = GameManager.player.GetComponent<Player> ();
+		plyscr.acceptInput = !plyscr.acceptInput;
 	}
 }

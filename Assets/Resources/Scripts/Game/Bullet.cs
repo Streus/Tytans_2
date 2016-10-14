@@ -37,8 +37,9 @@ public class Bullet : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D col) {
-		//check if the object being collided with is an Entity of another faction
-		if(col.transform.gameObject.GetComponent<Entity>() != null && 
+		
+		//Entity Collision
+		if(col.gameObject.tag == "Ent" && 
 			faction != col.transform.GetComponent<Entity>().faction)
 		{
 			Color htColor = new Color(0f, 0f, 0f, 1f);
@@ -80,6 +81,13 @@ public class Bullet : MonoBehaviour {
 			//tell the entity to check for death state
 			other.checkDeath();
 		}
+
+		//Indes Collision
+		if (col.gameObject.tag == "Indes") 
+		{
+			if (onHit)
+				die ();
+		}
 	}
 
 	// Preform on-hit effects
@@ -101,6 +109,12 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Flame:
 			if(other != null && Random.value < 0.33f)
 				other.addStatus(new StatusFire(10f, col.transform, 1f));
+			break;
+		case BulletType.Judgement:
+			
+			break;
+		case BulletType.Spark:
+			//TODO apply stunned/shocked
 			break;
 		case BulletType.Splitter:
 			
@@ -127,6 +141,12 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Flame:
 			
 			break;
+		case BulletType.Judgement:
+			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/JudgementTrap"), transform.position, Quaternion.identity);
+			break;
+		case BulletType.Spark:
+
+			break;
 		case BulletType.Splitter:
 
 			break;
@@ -151,5 +171,5 @@ public class Bullet : MonoBehaviour {
 
 public enum BulletType
 {
-	Basic, Bouncing, Explosion, Explosive, Flame, Splitter
+	Basic, Bouncing, Explosion, Explosive, Flame, Judgement, Spark, Splitter
 }

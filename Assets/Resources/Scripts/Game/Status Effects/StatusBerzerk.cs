@@ -34,7 +34,7 @@ public class StatusBerzerk : StatusEffect {
 		invokerVars.armor -= armorAmount;
 		invokerVars.damageMultiplier -= damMultAmount;
 
-		//calculate and apply modifiers based on current invoker health
+		//calculate and apply modifiers based on current invoker health  TODO revisit these calculations
 		armorAmount = 0.75f + (0.25f * ((invokerVars.health/(invokerVars.healthMax * threshold))));
 		damMultAmount = 1f + (0.25f * (1 - (invokerVars.health/(invokerVars.healthMax * threshold))));
 
