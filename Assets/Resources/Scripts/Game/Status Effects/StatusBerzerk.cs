@@ -20,10 +20,13 @@ public class StatusBerzerk : StatusEffect {
 		this.threshold = threshold;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusBerzerk (initDuration, invoker, threshold);
+	}
+
 	public override void update (float dec)
 	{
-		applied = true;
-
 		//test for exit case
 		if (invokerVars.health / invokerVars.healthMax >= threshold) {
 			revert ();

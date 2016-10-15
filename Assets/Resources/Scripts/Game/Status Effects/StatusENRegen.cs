@@ -14,6 +14,11 @@ public class StatusENRegen : StatusEffect {
 		regenAmount = ra;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusENRegen (initDuration, invoker, regenAmount);
+	}
+
 	public override void apply ()
 	{
 		//apply particle effect

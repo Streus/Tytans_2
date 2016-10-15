@@ -9,7 +9,7 @@ public class FlakShot : BulletFlexAbility {
 	protected override void setValues ()
 	{
 		dispName = "Flak Shot";
-		desc = "Fire a volley of short-range bullets.";
+		desc = "Fire a volley of bullets.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityFlakShot", typeof(Sprite));
 		cost = 0;
 		cooldown = 1f;
@@ -28,7 +28,6 @@ public class FlakShot : BulletFlexAbility {
 			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
 			Bullet bullet = b.transform.GetComponent<Bullet>();
 			bullet.faction = invoker.GetComponent<Entity>().faction;
-			bullet.damage /= 2;
 		}
 			
 		currentCD = cooldown;

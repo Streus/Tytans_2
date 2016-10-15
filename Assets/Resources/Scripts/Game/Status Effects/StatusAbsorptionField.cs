@@ -17,6 +17,11 @@ public class StatusAbsorptionField : StatusEffect {
 		shieldAmount = sa;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusAbsorptionField (initDuration, invoker, regenAmount, shieldAmount);
+	}
+
 	public override void apply ()
 	{
 		//create visual effect

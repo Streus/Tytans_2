@@ -12,6 +12,11 @@ public class StatusCleansed : StatusEffect {
 		icon = Resources.Load<Sprite> ("Sprites/UI/Status Effects/StatusEffectCleansed");
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusCleansed (initDuration, invoker);
+	}
+
 	public override void apply ()
 	{
 		//apply particle effect

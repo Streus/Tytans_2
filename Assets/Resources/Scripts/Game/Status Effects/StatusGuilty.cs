@@ -14,6 +14,11 @@ public class StatusGuilty : StatusEffect {
 		armorReduction = ar;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusGuilty (initDuration, invoker, armorReduction);
+	}
+
 	public override void apply ()
 	{
 		//do effect
@@ -21,6 +26,16 @@ public class StatusGuilty : StatusEffect {
 
 		//apply debuff
 		invokerVars.armor -= armorReduction;
+
+		//remove Innocent if the subject has it
+		for (int i = 0; i < statusList.Count; i++) 
+		{
+			if (((StatusEffect)statusList [i]).name == "Innocent") 
+			{
+				((StatusEffect)statusList [i]).duration = 0;
+				break;
+			}
+		}
 	}
 
 	public override void revert ()

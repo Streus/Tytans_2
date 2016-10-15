@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
 		learnAbility (new Cleanse (transform)); //DEBUG CODE
 		learnAbility(new DaedalusMissle(transform)); //DEBUG CODE
 		learnAbility(new Berzerk(transform)); //DEBUG CODE
-		learnAbility(new Judgement(transform)); //DEBUG CODE
+		learnAbility(new SwordOfTruth(transform)); //DEBUG CODE
 
 		acceptInput = true;
 	}

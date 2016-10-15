@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//TODO
 public class CoreOverload : Ability {
 	
 	public CoreOverload(Transform e) : base(e){ }
@@ -11,8 +10,8 @@ public class CoreOverload : Ability {
 	{
 		dispName = "Core Overload";
 		desc = "Emit a powerful shockwave that knocks back and damages enemies as well as restoring some energy.";
-		image = (Sprite)Resources.Load("Sprites/UI/Abilities/AbilityCoreOverload", typeof(Sprite));
-		cost = -75f;
+		image = (Sprite)Resources.Load<Sprite>("Sprites/UI/Abilities/AbilityCoreOverload");
+		cost = -80f;
 		cooldown = 10f;
 		currentCD = cooldown;
 	}
@@ -24,7 +23,14 @@ public class CoreOverload : Ability {
 		
 	public override bool use(){
 		//explosion boom boom
-		//TODO
+		GameObject shockBullet = Resources.Load<GameObject>("Prefabs/Bullets/BulletSpark");
+		for(int i = 0; i < 30; i++){
+			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (12f * i)));
+			GameObject b = (GameObject)MonoBehaviour.Instantiate(shockBullet, invoker.position, bulletRot);
+			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
+			Bullet bullet = b.transform.GetComponent<Bullet>();
+			bullet.faction = invoker.GetComponent<Entity>().faction;
+		}
 
 		//apply regen and reset ability
 		invoker.GetComponent<Entity>().addStatus(new StatusENRegen(2f, invoker, 40f));

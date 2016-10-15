@@ -14,19 +14,34 @@ public class StatusInnocent : StatusEffect {
 		regenAmount = ra;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusInnocent (initDuration, invoker, regenAmount);
+	}
+
 	public override void apply ()
 	{
-		//add effect
+		//TODO add effect
 
 
 		//add buffs
 		invokerVars.healthRegen += regenAmount;
 		invokerVars.energyRegen += regenAmount;
+
+		//remove Guilty if the subject has it
+		for (int i = 0; i < statusList.Count; i++) 
+		{
+			if (((StatusEffect)statusList [i]).name == "Guilty") 
+			{
+				((StatusEffect)statusList [i]).duration = 0;
+				break;
+			}
+		}
 	}
 
 	public override void revert ()
 	{
-		//remove effect
+		//TODO remove effect
 
 
 		//remove buffs

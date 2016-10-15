@@ -114,7 +114,8 @@ public class Bullet : MonoBehaviour {
 			
 			break;
 		case BulletType.Spark:
-			//TODO apply stunned/shocked
+			if (other != null)
+				other.addStatus (new StatusShocked (5f, col.transform, 0.5f));
 			break;
 		case BulletType.Splitter:
 			

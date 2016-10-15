@@ -16,6 +16,11 @@ public class StatusHPRegen : StatusEffect {
 		regenAmount = ra;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusHPRegen (initDuration, invoker, regenAmount);
+	}
+
 	public override void apply ()
 	{
 		healEffect = (GameObject)MonoBehaviour.Instantiate (Resources.Load<GameObject> ("Prefabs/Effects/HealEffect"), invoker, false);

@@ -96,6 +96,9 @@ public class NewGameCreator : MonoBehaviour {
 	// Assign chosen values to GameManager.manager and move to game scene
 	public void moveToGame()
 	{
+		if (saveName == "")
+			return;
+		
 		//set up GameManager (clearing any possible loaded values)
 		GameManager.manager.spawnCoordinates = Vector3.zero;
 		GameManager.manager.flexAbilities = new Ability[3];

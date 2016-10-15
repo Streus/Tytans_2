@@ -16,6 +16,11 @@ public class StatusFire : StatusEffect {
 		burnAmount = ba;
 	}
 
+	public override StatusEffect Copy ()
+	{
+		return new StatusFire (initDuration, invoker, burnAmount);
+	}
+
 	public override void apply()
 	{
 		fireEffect = (GameObject)MonoBehaviour.Instantiate (Resources.Load<GameObject> ("Prefabs/Effects/FireEffect"), invoker, false);
