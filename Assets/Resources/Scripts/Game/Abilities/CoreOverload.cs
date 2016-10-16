@@ -26,10 +26,7 @@ public class CoreOverload : Ability {
 		GameObject shockBullet = Resources.Load<GameObject>("Prefabs/Bullets/BulletSpark");
 		for(int i = 0; i < 30; i++){
 			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (12f * i)));
-			GameObject b = (GameObject)MonoBehaviour.Instantiate(shockBullet, invoker.position, bulletRot);
-			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
-			Bullet bullet = b.transform.GetComponent<Bullet>();
-			bullet.faction = invoker.GetComponent<Entity>().faction;
+			Bullet.createBullet (invoker.gameObject, shockBullet, invoker.position, bulletRot);
 		}
 
 		//apply regen and reset ability

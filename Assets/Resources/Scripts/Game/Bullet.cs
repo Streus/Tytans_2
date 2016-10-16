@@ -13,6 +13,23 @@ public class Bullet : MonoBehaviour {
 
 	private Rigidbody2D physbody;
 
+	// The GameObject that made this bullet
+	public GameObject creator;
+
+	// Create a bullet gameobject
+	// NOTE: when instPos and instRot are left to their default values, they recieve 
+	// creator.transform.position and creator.transform.rotation respectively.
+	public static GameObject createBullet(GameObject creator, GameObject bullet, Vector3 instPos, Quaternion instRot)
+	{
+		GameObject b = (GameObject)Instantiate(bullet, instPos, instRot);
+		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), creator.GetComponent<Collider2D>());
+		Bullet bulScr = b.transform.GetComponent<Bullet>();
+		bulScr.faction = creator.GetComponent<Entity>().faction;
+		bulScr.creator = creator;
+
+		return b;
+	}
+
 	// Initialization
 	void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
@@ -20,6 +37,8 @@ public class Bullet : MonoBehaviour {
 
 		//add force
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
+
+		creator = null;
 
 		if(type == BulletType.Explosion)
 			GameManager.cameraController.shakeCamera (0.1f, 0.2f);

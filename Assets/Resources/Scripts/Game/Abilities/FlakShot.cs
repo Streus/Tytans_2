@@ -24,10 +24,7 @@ public class FlakShot : BulletFlexAbility {
 	public override bool use(){
 		for(int i = 0; i < 5; i++){
 			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (5f * i) - 10));
-			GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, bulletRot);
-			Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
-			Bullet bullet = b.transform.GetComponent<Bullet>();
-			bullet.faction = invoker.GetComponent<Entity>().faction;
+			Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, bulletRot);
 		}
 			
 		currentCD = cooldown;

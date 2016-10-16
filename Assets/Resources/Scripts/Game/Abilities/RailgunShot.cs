@@ -22,11 +22,8 @@ public class RailgunShot : BulletFlexAbility {
 	}
 
 	public override bool use(){ 
-		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulletPrefab, invoker.position, invoker.rotation);
-		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
-		Bullet bullet = b.transform.GetComponent<Bullet>();
-		bullet.faction = invoker.GetComponent<Entity>().faction;
-		bullet.damage *= 2;
+		GameObject bullet = Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
+		bullet.GetComponent<Bullet>().damage *= 2;
 
 		invoker.GetComponent<Rigidbody2D>().AddForce(invoker.transform.up * 100);
 

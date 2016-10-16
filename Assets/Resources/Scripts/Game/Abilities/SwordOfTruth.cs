@@ -25,10 +25,7 @@ public class SwordOfTruth : Ability {
 	{
 		//create base sword part
 		GameObject bulPrefab = Resources.Load<GameObject>("Prefabs/Bullets/BulletSoTHilt");
-		GameObject b = (GameObject)MonoBehaviour.Instantiate(bulPrefab, invoker.position, invoker.rotation);
-		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), invoker.GetComponent<Collider2D>());
-		Bullet bullet = b.transform.GetComponent<Bullet>();
-		bullet.faction = invoker.GetComponent<Entity>().faction;
+		Bullet.createBullet (invoker.gameObject, bulPrefab, invoker.position, invoker.rotation);
 
 		//apply cost n such
 		invoker.GetComponent<Entity>().energy -= cost;
