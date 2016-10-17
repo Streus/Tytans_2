@@ -38,8 +38,6 @@ public class Bullet : MonoBehaviour {
 		//add force
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
 
-		creator = null;
-
 		if(type == BulletType.Explosion)
 			GameManager.cameraController.shakeCamera (0.1f, 0.2f);
 	}
@@ -63,8 +61,15 @@ public class Bullet : MonoBehaviour {
 		{
 			Color htColor = new Color(0f, 0f, 0f, 1f);
 
-			//retrieve the entity info of the collider
+			//retrieve the entity info of the collider and creator
 			Entity other = col.transform.GetComponent<Entity>();
+			Entity origin = creator.transform.GetComponent<Entity> ();
+
+			//calculate damage
+			Debug.Log("Base Damage: " + damage + " + Additive Damage: " + origin.damageAdditive);
+			damage += origin.damageAdditive;
+			damage -= Mathf.Min (other.armor, damage - 1);
+			Debug.Log ("Modified by " + other.armor + " armor.");
 
 			//check for a shield
 			if(other.shieldHealth > 0)

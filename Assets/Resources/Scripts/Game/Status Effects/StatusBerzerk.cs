@@ -4,9 +4,10 @@ using System.Collections;
 public class StatusBerzerk : StatusEffect {
 	
 	private float armorAmount;
-	private float damMultAmount;
+	private float damAddAmount;
 
 	private float threshold;
+	private float thresholdHealth;
 
 	public StatusBerzerk(float dur, Transform t, float threshold) : base(dur, t)
 	{
@@ -15,9 +16,10 @@ public class StatusBerzerk : StatusEffect {
 		icon = Resources.Load<Sprite> ("Sprites/UI/Status Effects/StatusEffectBerzerk");
 
 		armorAmount = 0f;
-		damMultAmount = 0f;
+		damAddAmount = 0f;
 
 		this.threshold = threshold;
+		thresholdHealth = threshold * invokerVars.healthMax;
 	}
 
 	public override StatusEffect Copy ()
@@ -35,14 +37,14 @@ public class StatusBerzerk : StatusEffect {
 
 		//remove old modifiers
 		invokerVars.armor -= armorAmount;
-		invokerVars.damageMultiplier -= damMultAmount;
+		invokerVars.damageAdditive -= damAddAmount;
 
-		//calculate and apply modifiers based on current invoker health  TODO revisit these calculations
-		armorAmount = 0.75f + (0.25f * ((invokerVars.health/(invokerVars.healthMax * threshold))));
-		damMultAmount = 1f + (0.25f * (1 - (invokerVars.health/(invokerVars.healthMax * threshold))));
+		//calculate and apply modifiers based on current invoker health
+		armorAmount = Mathf.Ceil(-5f * (1 - invokerVars.health/thresholdHealth));
+		damAddAmount = Mathf.Ceil(10f * (1 - invokerVars.health/thresholdHealth));
 
 		invokerVars.armor += armorAmount;
-		invokerVars.damageMultiplier += damMultAmount;
+		invokerVars.damageAdditive += damAddAmount;
 	}
 
 	public override void apply ()
@@ -58,7 +60,7 @@ public class StatusBerzerk : StatusEffect {
 
 		//remove buff
 		invokerVars.armor -= armorAmount;
-		invokerVars.damageMultiplier -= damMultAmount;
+		invokerVars.damageAdditive -= damAddAmount;
 
 		//do list removal manually
 		duration = 0f;
