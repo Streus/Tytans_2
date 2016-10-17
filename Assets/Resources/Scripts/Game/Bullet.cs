@@ -66,10 +66,8 @@ public class Bullet : MonoBehaviour {
 			Entity origin = creator.transform.GetComponent<Entity> ();
 
 			//calculate damage
-			Debug.Log("Base Damage: " + damage + " + Additive Damage: " + origin.damageAdditive);
 			damage += origin.damageAdditive;
 			damage -= Mathf.Min (other.armor, damage - 1);
-			Debug.Log ("Modified by " + other.armor + " armor.");
 
 			//check for a shield
 			if(other.shieldHealth > 0)
@@ -144,6 +142,23 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Splitter:
 			
 			break;
+		case BulletType.Verdict:
+			if(other != null){
+				float r = Random.value;
+				if (r <= 0.5)
+					other.addStatus (new StatusGuilty (7f, col.transform, -5f));
+				else
+					other.addStatus (new StatusInnocent (7f, col.transform, 4f));
+			}
+			break;
+		case BulletType.StatusSharing:
+			if (other != null) {
+				ArrayList shared = creator.GetComponent<Entity> ().statuses;
+				foreach (object status in shared) {
+					other.addStatus (((StatusEffect)status).Copy ());
+				}
+			}
+			break;
 		}
 	}
 
@@ -175,6 +190,9 @@ public class Bullet : MonoBehaviour {
 		case BulletType.Splitter:
 
 			break;
+		case BulletType.Verdict:
+
+			break;
 		}
 		Destroy(gameObject);
 	}
@@ -196,5 +214,5 @@ public class Bullet : MonoBehaviour {
 
 public enum BulletType
 {
-	Basic, Bouncing, Explosion, Explosive, Flame, Judgement, Spark, Splitter
+	Basic, Bouncing, Explosion, Explosive, Flame, Judgement, Spark, Splitter, StatusSharing, Verdict
 }

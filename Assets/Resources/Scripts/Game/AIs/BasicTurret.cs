@@ -11,8 +11,8 @@ public class BasicTurret : MonoBehaviour {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		self = transform.GetComponent<Entity>();
 
-		self.addAbility (new BurstShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletThemis")), 0);
-		self.addAbility(new DaedalusMissle(transform), 1);
+		self.addAbility (new FlakShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletBasic")), 0);
+		self.addAbility(new BalanceTheScales(transform), 1);
 	}
 	
 	// Update is called once per frame
