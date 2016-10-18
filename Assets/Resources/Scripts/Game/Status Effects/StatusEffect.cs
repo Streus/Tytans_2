@@ -42,7 +42,8 @@ public abstract class StatusEffect : IComparable{
 		}
 	}
 
-	public abstract StatusEffect Copy ();
+	// Create a copy of this effect with the passed invoker
+	public abstract StatusEffect Copy (Transform e);
 
 	public int CompareTo(object other)
 	{

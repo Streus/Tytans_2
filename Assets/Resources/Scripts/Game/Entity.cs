@@ -38,7 +38,7 @@ public class Entity : MonoBehaviour {
 	public Ability[] abilities = new Ability[5]; //this has to be here
 
 	// Other Misc
-	public Rigidbody2D physbody;
+	[HideInInspector] public Rigidbody2D physbody;
 
 	// Use this for initialization
 	void Start () {

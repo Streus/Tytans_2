@@ -5,6 +5,8 @@ public class StatusInnocent : StatusEffect {
 
 	private float regenAmount;
 
+	GameObject effect;
+
 	public StatusInnocent(float dur, Transform e, float ra) : base(dur, e)
 	{
 		name = "Innocent";
@@ -14,15 +16,15 @@ public class StatusInnocent : StatusEffect {
 		regenAmount = ra;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusInnocent (initDuration, invoker, regenAmount);
+		return new StatusInnocent (initDuration, e, regenAmount);
 	}
 
 	public override void apply ()
 	{
-		//TODO add effect
-
+		//add effect
+		effect = (GameObject)MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Effects/InnocentEffect"), invoker, false);
 
 		//add buffs
 		invokerVars.healthRegen += regenAmount;
@@ -41,8 +43,8 @@ public class StatusInnocent : StatusEffect {
 
 	public override void revert ()
 	{
-		//TODO remove effect
-
+		//remove effect
+		MonoBehaviour.Destroy(effect);
 
 		//remove buffs
 		invokerVars.healthRegen -= regenAmount;

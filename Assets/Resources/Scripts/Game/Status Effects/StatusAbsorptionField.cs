@@ -17,9 +17,9 @@ public class StatusAbsorptionField : StatusEffect {
 		shieldAmount = sa;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusAbsorptionField (initDuration, invoker, regenAmount, shieldAmount);
+		return new StatusAbsorptionField (initDuration, e, regenAmount, shieldAmount);
 	}
 
 	public override void apply ()

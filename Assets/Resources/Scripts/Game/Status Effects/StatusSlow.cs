@@ -16,9 +16,9 @@ public class StatusSlow : StatusEffect {
 		slowAmount = sa;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusSlow (initDuration, invoker, slowAmount);
+		return new StatusSlow (initDuration, e, slowAmount);
 	}
 
 	public override void apply ()

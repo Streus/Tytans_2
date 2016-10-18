@@ -22,9 +22,9 @@ public class StatusBerzerk : StatusEffect {
 		thresholdHealth = threshold * invokerVars.healthMax;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusBerzerk (initDuration, invoker, threshold);
+		return new StatusBerzerk (initDuration, e, threshold);
 	}
 
 	public override void update (float dec)

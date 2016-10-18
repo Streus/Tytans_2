@@ -27,6 +27,10 @@ public class Bullet : MonoBehaviour {
 		bulScr.faction = creator.GetComponent<Entity>().faction;
 		bulScr.creator = creator;
 
+		//add on damage
+		Entity origin = creator.transform.GetComponent<Entity> ();
+		bulScr.damage += origin.damageAdditive;
+
 		return b;
 	}
 
@@ -63,10 +67,8 @@ public class Bullet : MonoBehaviour {
 
 			//retrieve the entity info of the collider and creator
 			Entity other = col.transform.GetComponent<Entity>();
-			Entity origin = creator.transform.GetComponent<Entity> ();
 
-			//calculate damage
-			damage += origin.damageAdditive;
+			//reduce damage by armor
 			damage -= Mathf.Min (other.armor, damage - 1);
 
 			//check for a shield
@@ -146,16 +148,16 @@ public class Bullet : MonoBehaviour {
 			if(other != null){
 				float r = Random.value;
 				if (r <= 0.5)
-					other.addStatus (new StatusGuilty (7f, col.transform, -5f));
+					other.addStatus (new StatusGuilty (7f, col.transform, 5f));
 				else
-					other.addStatus (new StatusInnocent (7f, col.transform, 4f));
+					other.addStatus (new StatusInnocent (7f, col.transform, 2f));
 			}
 			break;
 		case BulletType.StatusSharing:
 			if (other != null) {
 				ArrayList shared = creator.GetComponent<Entity> ().statuses;
 				foreach (object status in shared) {
-					other.addStatus (((StatusEffect)status).Copy ());
+					other.addStatus (((StatusEffect)status).Copy (other.transform));
 				}
 			}
 			break;

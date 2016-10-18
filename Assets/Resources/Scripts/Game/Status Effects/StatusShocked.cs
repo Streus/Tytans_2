@@ -30,9 +30,9 @@ public class StatusShocked : StatusEffect {
 
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusShocked(initDuration, invoker, interruptInterval);
+		return new StatusShocked(initDuration, e, interruptInterval);
 	}
 
 	public override void apply (){ }

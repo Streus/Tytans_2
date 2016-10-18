@@ -16,9 +16,9 @@ public class StatusHPRegen : StatusEffect {
 		regenAmount = ra;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusHPRegen (initDuration, invoker, regenAmount);
+		return new StatusHPRegen (initDuration, e, regenAmount);
 	}
 
 	public override void apply ()

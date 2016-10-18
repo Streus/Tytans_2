@@ -12,9 +12,7 @@ public class SoTRecurring : MonoBehaviour {
 		bulScr = transform.GetComponent<Bullet> ();
 
 		GameObject bulPrefab = Resources.Load<GameObject> ("Prefabs/Bullets/BulletSoTMidsection");
-		blade = (GameObject)MonoBehaviour.Instantiate(bulPrefab, transform.position, transform.rotation);
-		Bullet bullet = blade.transform.GetComponent<Bullet>();
-		bullet.faction = bulScr.faction;
+		blade = Bullet.createBullet (bulScr.creator, bulPrefab, transform.position, transform.rotation);
 	}
 
 	void Update() {

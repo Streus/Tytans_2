@@ -14,15 +14,15 @@ public class StatusENRegen : StatusEffect {
 		regenAmount = ra;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusENRegen (initDuration, invoker, regenAmount);
+		return new StatusENRegen (initDuration, e, regenAmount);
 	}
 
 	public override void apply ()
 	{
 		//apply particle effect
-		//TODO
+		//TODO particle effect
 
 		//apply regen
 		invokerVars.energyRegen += regenAmount;
@@ -31,7 +31,7 @@ public class StatusENRegen : StatusEffect {
 	public override void revert ()
 	{
 		//remove particle effect
-		//TODO
+
 
 		//remove regen
 		invokerVars.energyRegen -= regenAmount;

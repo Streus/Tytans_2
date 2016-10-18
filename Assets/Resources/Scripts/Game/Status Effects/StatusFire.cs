@@ -16,9 +16,9 @@ public class StatusFire : StatusEffect {
 		burnAmount = ba;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusFire (initDuration, invoker, burnAmount);
+		return new StatusFire (initDuration, e, burnAmount);
 	}
 
 	public override void apply()

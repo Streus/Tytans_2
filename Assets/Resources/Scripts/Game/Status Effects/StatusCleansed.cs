@@ -12,9 +12,9 @@ public class StatusCleansed : StatusEffect {
 		icon = Resources.Load<Sprite> ("Sprites/UI/Status Effects/StatusEffectCleansed");
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusCleansed (initDuration, invoker);
+		return new StatusCleansed (initDuration, e);
 	}
 
 	public override void apply ()

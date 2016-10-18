@@ -21,7 +21,7 @@ public class BasicTurret : MonoBehaviour {
 			return;
 
 		Vector3 tarPos = GameManager.player.transform.position;
-		Quaternion rot = Quaternion.LookRotation(transform.position - new Vector3(tarPos.x, tarPos.y, -20), Vector3.back);
+		Quaternion rot = Quaternion.LookRotation(transform.position - new Vector3(tarPos.x, tarPos.y, -100), Vector3.back);
 		transform.rotation = rot;
 		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
 

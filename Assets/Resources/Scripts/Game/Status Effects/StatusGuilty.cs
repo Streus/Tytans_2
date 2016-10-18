@@ -5,6 +5,8 @@ public class StatusGuilty : StatusEffect {
 
 	private float armorReduction;
 
+	GameObject effect;
+
 	public StatusGuilty(float dur, Transform e, float ar) : base(dur, e)
 	{
 		name = "Guilty";
@@ -14,15 +16,15 @@ public class StatusGuilty : StatusEffect {
 		armorReduction = ar;
 	}
 
-	public override StatusEffect Copy ()
+	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusGuilty (initDuration, invoker, armorReduction);
+		return new StatusGuilty (initDuration, e, armorReduction);
 	}
 
 	public override void apply ()
 	{
 		//do effect
-
+		effect = (GameObject)MonoBehaviour.Instantiate(Resources.Load<GameObject>("Prefabs/Effects/GuiltyEffect"), invoker, false);
 
 		//apply debuff
 		invokerVars.armor -= armorReduction;
@@ -40,6 +42,10 @@ public class StatusGuilty : StatusEffect {
 
 	public override void revert ()
 	{
+		//remove effect
+		MonoBehaviour.Destroy(effect);
+
+		//remove debuff
 		invokerVars.armor += armorReduction;
 	}
 }
