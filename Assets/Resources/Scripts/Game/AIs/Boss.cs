@@ -21,7 +21,7 @@ public class Boss : MonoBehaviour {
 	// Add a boss health bar to the GUI
 	public void OnEnable()
 	{
-		//TODO boss health bar
+		BossHealthDisplay.pool.createNewHealthBar (self);
 	}
 	
 	// AI behavior
@@ -31,11 +31,10 @@ public class Boss : MonoBehaviour {
 			return;
 	}
 
-	// Drop items and mark boss as completed
+	// Drop items //TODO mark as completed somwwhere
 	public virtual void OnDestroy() 
 	{
-		//mark as completed
-		GameManager.manager.completedBosses [bossIndex] = true;
+		
 	}
 
 	// Target accessor
