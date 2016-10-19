@@ -34,7 +34,8 @@ public class Boss : MonoBehaviour {
 	// Drop items //TODO mark as completed somwwhere
 	public virtual void OnDestroy() 
 	{
-		
+		//remove health bar
+		BossHealthDisplay.pool.removeHealthBar (self);
 	}
 
 	// Target accessor

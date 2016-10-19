@@ -105,22 +105,20 @@ public class GameManager : MonoBehaviour {
 		//set up stats and default abilites depending on class
 		switch(playerClass){
 		case PlayerClass.defender:
-			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 150f;
 			entScr.health = entScr.healthMax;
 			entScr.healthRegen = 1.25f;
 			entScr.energyMax = 100f;
 			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 1.25f;
+			entScr.energyRegen = 1.5f;
 			entScr.speed = 27;
 			entScr.addAbility(new FlakShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new AbsorptionField(player.transform), 1);
 
-			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerDefender", typeof(Sprite));
+			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerDefender");
 			break;
 		case PlayerClass.skirmisher:
-			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 75f;
 			entScr.health = entScr.healthMax;
@@ -128,14 +126,13 @@ public class GameManager : MonoBehaviour {
 			entScr.energyMax = 100f;
 			entScr.energy = entScr.energyMax;
 			entScr.energyRegen = 1.25f;
-			entScr.speed = 50;
+			entScr.speed = 45;
 			entScr.addAbility(new BurstShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new Dash(player.transform), 1);
 
-			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerSkirmisher", typeof(Sprite));
+			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerSkirmisher");
 			break;
 		case PlayerClass.caster:
-			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 50f;
 			entScr.health = entScr.healthMax;
@@ -147,9 +144,12 @@ public class GameManager : MonoBehaviour {
 			entScr.addAbility(new RailgunShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new CoreOverload(player.transform), 1);
 
-			player.transform.GetComponent<SpriteRenderer>().sprite = (Sprite)Resources.Load("Sprites/Game/Entities/PlayerCaster", typeof(Sprite));
+			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerCaster");
 			break;
 		}
+
+		//bullet
+		plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 
 		//add flexAbilities
 		for(int i = 0; i < 3; i++)

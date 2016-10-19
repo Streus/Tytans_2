@@ -17,10 +17,6 @@ public class Player : MonoBehaviour {
 		player = transform.GetComponent<Entity>();
 
 		learnedAbilities = new ArrayList ();
-		learnAbility (new Cleanse (transform)); //DEBUG CODE
-		learnAbility(new DaedalusMissle(transform)); //DEBUG CODE
-		learnAbility(new Berzerk(transform)); //DEBUG CODE
-		learnAbility(new SwordOfTruth(transform)); //DEBUG CODE
 
 		acceptInput = true;
 	}
