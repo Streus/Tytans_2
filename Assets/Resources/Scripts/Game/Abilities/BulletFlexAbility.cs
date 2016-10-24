@@ -30,7 +30,7 @@ public class BulletFlexAbility : Ability {
 		return new BulletFlexAbility (invoker, bulletPrefab);
 	}
 
-	// Basic use to be overriden by shild abilities
+	// Basic use to be overriden by child abilities
 	public override bool use ()
 	{
 		return false;

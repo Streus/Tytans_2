@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour {
 		//set up stats and default abilites depending on class
 		switch(playerClass){
 		case PlayerClass.defender:
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 150f;
 			entScr.health = entScr.healthMax;
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour {
 			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerDefender");
 			break;
 		case PlayerClass.skirmisher:
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 75f;
 			entScr.health = entScr.healthMax;
@@ -133,6 +135,7 @@ public class GameManager : MonoBehaviour {
 			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerSkirmisher");
 			break;
 		case PlayerClass.caster:
+			plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 			plyScr.myClass = playerClass;
 			entScr.healthMax = 50f;
 			entScr.health = entScr.healthMax;
@@ -147,9 +150,6 @@ public class GameManager : MonoBehaviour {
 			player.transform.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/Game/Entities/PlayerCaster");
 			break;
 		}
-
-		//bullet
-		plyScr.bullet = Resources.Load<GameObject>("Prefabs/Bullets/" + playerBullet);
 
 		//add flexAbilities
 		for(int i = 0; i < 3; i++)
