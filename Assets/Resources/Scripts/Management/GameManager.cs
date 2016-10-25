@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
 			return;
 
 		//make player
-		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Players/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
+		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
 		Entity entScr = player.transform.GetComponent<Entity>();
 		Player plyScr = player.transform.GetComponent<Player>();
 

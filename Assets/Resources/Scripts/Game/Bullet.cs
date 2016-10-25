@@ -150,7 +150,7 @@ public class Bullet : MonoBehaviour {
 				if (r <= 0.5)
 					other.addStatus (new StatusGuilty (7f, col.transform, 5f));
 				else
-					other.addStatus (new StatusInnocent (7f, col.transform, 2f));
+					other.addStatus (new StatusInnocent (7f, col.transform, 1f));
 			}
 			break;
 		case BulletType.StatusSharing:
@@ -202,7 +202,7 @@ public class Bullet : MonoBehaviour {
 	// Create a damage indicator on the GUI layer
 	// param: the world position of the bullet-entity collision
 	// param: the color of the damage text
-	// opt param: text to describe what happened in the collision, like damage done, a status application, etc
+	// param: text to describe what happened in the collision, like damage done, a status application, etc
 	private void createHitText(Vector3 worldPos, Color color, string info)
 	{
 		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"), Vector3.zero, Quaternion.identity);

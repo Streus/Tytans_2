@@ -8,6 +8,8 @@ public class Boss : MonoBehaviour {
 
 	public int bossIndex;
 
+	public DoorControl[] roomDoors;
+
 	// Set up control
 	public virtual void Awake()
 	{
@@ -18,10 +20,18 @@ public class Boss : MonoBehaviour {
 		target = GameManager.player;
 	}
 
-	// Add a boss health bar to the GUI
+	// Add a boss health bar to the GUI and lock up the room
 	public void OnEnable()
 	{
 		BossHealthDisplay.pool.createNewHealthBar (self);
+
+		if (roomDoors.Length != 0)
+		{
+			for (int i = 0; i < roomDoors.Length; i++)
+			{
+				roomDoors [i].setDoor (false);
+			}
+		}
 	}
 	
 	// AI behavior
@@ -36,6 +46,15 @@ public class Boss : MonoBehaviour {
 	{
 		//remove health bar
 		BossHealthDisplay.pool.removeHealthBar (self);
+
+		//open doors
+		if (roomDoors.Length != 0)
+		{
+			for (int i = 0; i < roomDoors.Length; i++)
+			{
+				roomDoors [i].setDoor (true);
+			}
+		}
 	}
 
 	// Target accessor
