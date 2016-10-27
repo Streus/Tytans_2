@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour {
 	}
 
 	// Initialization
-	void Start () {
+	public virtual void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
 		physbody.drag = 0;
 
@@ -47,7 +47,7 @@ public class Bullet : MonoBehaviour {
 	}
 	
 	// Check for pause, update duration
-	void Update () {
+	public virtual void Update () {
 		if (!physbody.simulated)
 			return;
 
@@ -57,7 +57,17 @@ public class Bullet : MonoBehaviour {
 			die();
 	}
 
-	void OnTriggerEnter2D (Collider2D col) {
+	public virtual void FixedUpdate () {
+		if (!physbody.simulated)
+			return;
+	}
+
+	public virtual void LateUpdate () {
+		if (!physbody.simulated)
+			return;
+	}
+
+	public void OnTriggerEnter2D (Collider2D col) {
 		
 		//Entity Collision
 		if(col.gameObject.tag == "Ent" && 
@@ -115,57 +125,13 @@ public class Bullet : MonoBehaviour {
 	}
 
 	// Preform on-hit effects
-	private void hitEffect(Collider2D col){
-		Entity other = col.transform.GetComponent<Entity>();
-		switch(type)
-		{
-		case BulletType.Basic:
-			
-			break;
-		case BulletType.Bouncing:
-			
-			break;
-		case BulletType.Explosion:
-			break;
-		case BulletType.Explosive:
-			
-			break;
-		case BulletType.Flame:
-			if(other != null && Random.value < 0.33f)
-				other.addStatus(new StatusFire(10f, col.transform, 1f));
-			break;
-		case BulletType.Judgement:
-			
-			break;
-		case BulletType.Spark:
-			if (other != null)
-				other.addStatus (new StatusShocked (5f, col.transform, 0.5f));
-			break;
-		case BulletType.Splitter:
-			
-			break;
-		case BulletType.Verdict:
-			if(other != null){
-				float r = Random.value;
-				if (r <= 0.5)
-					other.addStatus (new StatusGuilty (7f, col.transform, 5f));
-				else
-					other.addStatus (new StatusInnocent (7f, col.transform, 1f));
-			}
-			break;
-		case BulletType.StatusSharing:
-			if (other != null) {
-				ArrayList shared = creator.GetComponent<Entity> ().statuses;
-				foreach (object status in shared) {
-					other.addStatus (((StatusEffect)status).Copy (other.transform));
-				}
-			}
-			break;
-		}
+	protected virtual void hitEffect(Collider2D col)
+	{
+		return;
 	}
 
 	// Preform end-of-lifetime operations like death effects, etc.
-	private void die()
+	protected virtual void die()
 	{
 		switch(type)
 		{
@@ -203,7 +169,7 @@ public class Bullet : MonoBehaviour {
 	// param: the world position of the bullet-entity collision
 	// param: the color of the damage text
 	// param: text to describe what happened in the collision, like damage done, a status application, etc
-	private void createHitText(Vector3 worldPos, Color color, string info)
+	protected void createHitText(Vector3 worldPos, Color color, string info)
 	{
 		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"), Vector3.zero, Quaternion.identity);
 		hitText.GetComponent<HitText> ().setParentPosition (worldPos);

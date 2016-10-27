@@ -27,13 +27,13 @@ public class Themis : Boss {
 
 		//-MOVEMENT-
 		faceTarget ();
-		RaycastHit2D rightProbe = Physics2D.Raycast (transform.position, transform.right, 1.5f, LayerMask.GetMask("World"));
-		RaycastHit2D leftProbe = Physics2D.Raycast (transform.position, -transform.right, 1.5f, LayerMask.GetMask("World"));
-		Debug.Log ((rightProbe.collider != null).ToString ());
+		int worldMask = 1 << 9;
+		RaycastHit2D rightProbe = Physics2D.Raycast (transform.position, transform.right, 1.5f, worldMask);
+		RaycastHit2D leftProbe = Physics2D.Raycast (transform.position, -transform.right, 1.5f, worldMask);
 		if (rightProbe.collider != null)
-			strafeDirection = 1;
-		else if (leftProbe.collider != null) 
 			strafeDirection = -1;
+		else if (leftProbe.collider != null) 
+			strafeDirection = 1;
 		self.physbody.AddForce (transform.right * self.speed * strafeDirection);
 
 		//-COMBAT-
