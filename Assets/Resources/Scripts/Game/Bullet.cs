@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour {
 
-	public BulletType type;
 	public float speed;
 	public float damage;
 	public Faction faction;
@@ -41,9 +40,6 @@ public class Bullet : MonoBehaviour {
 
 		//add force
 		physbody.AddForce(transform.up * -speed, ForceMode2D.Impulse);
-
-		if(type == BulletType.Explosion)
-			GameManager.cameraController.shakeCamera (0.1f, 0.2f);
 	}
 	
 	// Check for pause, update duration
@@ -125,43 +121,11 @@ public class Bullet : MonoBehaviour {
 	}
 
 	// Preform on-hit effects
-	protected virtual void hitEffect(Collider2D col)
-	{
-		return;
-	}
+	protected virtual void hitEffect(Collider2D col){ }
 
 	// Preform end-of-lifetime operations like death effects, etc.
 	protected virtual void die()
 	{
-		switch(type)
-		{
-		case BulletType.Basic:
-
-			break;
-		case BulletType.Bouncing:
-
-			break;
-		case BulletType.Explosion: 
-			break;
-		case BulletType.Explosive:
-			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/MediumExplosion"), transform.position, Quaternion.identity);
-			break;
-		case BulletType.Flame:
-			
-			break;
-		case BulletType.Judgement:
-			Instantiate(Resources.Load<GameObject>("Prefabs/Bullets/JudgementTrap"), transform.position, Quaternion.identity);
-			break;
-		case BulletType.Spark:
-
-			break;
-		case BulletType.Splitter:
-
-			break;
-		case BulletType.Verdict:
-
-			break;
-		}
 		Destroy(gameObject);
 	}
 
@@ -178,9 +142,4 @@ public class Bullet : MonoBehaviour {
 		t.text = info;
 		hitText.GetComponent<HitText> ().duration = 2f;
 	}
-}
-
-public enum BulletType
-{
-	Basic, Bouncing, Explosion, Explosive, Flame, Judgement, Spark, Splitter, StatusSharing, Verdict
 }

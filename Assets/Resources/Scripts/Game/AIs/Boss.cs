@@ -41,7 +41,7 @@ public class Boss : MonoBehaviour {
 			return;
 	}
 
-	// Drop items //TODO mark as completed somwwhere
+	// Drop items
 	public virtual void OnDestroy() 
 	{
 		//remove health bar
@@ -55,6 +55,9 @@ public class Boss : MonoBehaviour {
 				roomDoors [i].setDoor (true);
 			}
 		}
+
+		if (self.health <= 0)
+			GameManager.manager.completedBosses [bossIndex] = true;
 	}
 
 	// Target accessor
