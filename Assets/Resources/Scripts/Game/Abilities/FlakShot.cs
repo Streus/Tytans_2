@@ -21,13 +21,12 @@ public class FlakShot : BulletFlexAbility {
 		return new FlakShot (invoker, bulletPrefab);
 	}
 		
-	public override bool use(){
+	public override void use(){
+		base.use ();
+
 		for(int i = 0; i < 5; i++){
 			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (5f * i) - 10));
 			Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, bulletRot);
 		}
-			
-		currentCD = cooldown;
-		return false; 
 	}
 }

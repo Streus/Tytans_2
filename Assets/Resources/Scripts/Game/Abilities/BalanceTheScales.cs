@@ -21,13 +21,11 @@ public class BalanceTheScales : Ability {
 		return new BalanceTheScales (invoker);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
+		base.use ();
+
 		GameObject bp = Resources.Load<GameObject> ("Prefabs/Bullets/BtSWave");
 		Bullet.createBullet (invoker.gameObject, bp, invoker.position, invoker.rotation);
-
-		invoker.GetComponent<Entity> ().energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

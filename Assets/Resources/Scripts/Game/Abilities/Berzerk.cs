@@ -21,17 +21,14 @@ public class Berzerk : Ability {
 		return new Berzerk (invoker);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
 		Entity invokervars = invoker.GetComponent<Entity> ();
 
 		if (invokervars.health / invokervars.healthMax < 0.5f) {
 			invokervars.addStatus (new StatusBerzerk (1f, invoker, 0.5f));
 
-			invokervars.energy -= cost;
-			currentCD = cooldown;
-			return true;
+			base.use ();
 		}
-		return false;
 	}
 }

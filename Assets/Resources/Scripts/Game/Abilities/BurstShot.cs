@@ -24,7 +24,7 @@ public class BurstShot : BulletFlexAbility {
 		return new BurstShot (invoker, bulletPrefab);
 	}
 		
-	public override bool use(){ 
+	public override void use(){ 
 		Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
 
 		shotNumber = shotNumber % 3;
@@ -33,6 +33,5 @@ public class BurstShot : BulletFlexAbility {
 		else
 			currentCD = 0.05f;
 		shotNumber++;
-		return true; 
 	}
 }

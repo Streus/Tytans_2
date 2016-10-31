@@ -25,11 +25,9 @@ public class DaedalusMissle : Ability {
 		return new DaedalusMissle (invoker);
 	}
 
-	public override bool use()
+	public override void use()
 	{
+		base.use ();
 		Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
-		invoker.GetComponent<Entity> ().energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

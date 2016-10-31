@@ -2,8 +2,8 @@
 using System.Collections;
 using System;
 
-public abstract class Ability : IComparable{
-	 
+public abstract class Ability : IComparable
+{	 
 	// The ability's display name
 	public string dispName;
 
@@ -22,17 +22,27 @@ public abstract class Ability : IComparable{
 	// The current cooldown
 	public float currentCD;
 
+	// The maximum number of allowed charges
+	public int maxCharges; 
+
+	// The number of charges this ability has accrued
+	public int currentCharges;
+
 	// The invoker using the ability
 	public Transform invoker;
 
 	// A basic constructor
-	public Ability(Transform entity) {
+	public Ability(Transform entity)
+	{
 		invoker = entity;
+		maxCharges = 1;
 		setValues ();
 	}
 	// An empty constructor
-	public Ability() {
+	public Ability()
+	{
 		invoker = null;
+		maxCharges = 1;
 		setValues ();
 	}
 
@@ -41,24 +51,32 @@ public abstract class Ability : IComparable{
 	protected abstract void setValues();
 
 	// Clamp the cooldown variable at zero
-	public void clampCD() {
-		if(currentCD < 0)
-			currentCD = 0f;
+	public void update(float dec)
+	{
+		currentCD -= Mathf.Min (currentCD, dec);
+		if (currentCD == 0f && currentCharges < maxCharges) 
+		{
+			currentCharges++;
+			currentCD = cooldown;
+		}
 	}
 
+	// Return the readiness state of this ability
 	public bool ready()
 	{
-		return (currentCD <= 0f) && (cost <= invoker.GetComponent<Entity>().energy);
+		return (currentCD <= 0f || currentCharges >= 1) && (cost <= invoker.GetComponent<Entity>().energy);
 	}
 
+	// Test the names of this ability and another ability for equivilence
 	public int CompareTo(object other)
 	{
 		return this.dispName.CompareTo (((Ability)other).dispName);
 	}
 
+	// Create a string representation of this ability
 	public override string ToString ()
 	{
-		return dispName + "\n" + desc + "\n" + "\nCost: " + cost + " energy\nCooldown: " + cooldown + " seconds";
+		return dispName + "\n" + desc + "\n" + "\nCost: " + cost + " energy\nCooldown: " + cooldown + " seconds\nMax Charges: " + maxCharges;
 	}
 
 	// Creates a deep copy of this Ability
@@ -66,7 +84,14 @@ public abstract class Ability : IComparable{
 	public abstract Ability Copy();
 
 	// Invoke the ability
-	// Returns true if the ability was successfully used
-	// Returns false if the ability was on cooldown, or the invoker has insufficent energy
-	public abstract bool use();
+	public virtual void use()
+	{
+		invoker.GetComponent<Entity> ().energy -= cost;
+		if (currentCharges >= 1) {
+			currentCharges--;
+		}
+		if(currentCharges == 0){
+			currentCD = cooldown;
+		}
+	}
 }

@@ -17,6 +17,7 @@ public class Justice : BulletFlexAbility {
 		cooldown = 1.5f;
 		currentCD = cooldown;
 
+		maxCharges = 0;
 		stage = false;
 	}
 
@@ -25,7 +26,7 @@ public class Justice : BulletFlexAbility {
 		return new Justice (invoker, bulletPrefab);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
 		if (!stage) 
 		{
@@ -54,6 +55,5 @@ public class Justice : BulletFlexAbility {
 			stage = false;
 			currentCD = cooldown;
 		}
-		return true;
 	}
 }

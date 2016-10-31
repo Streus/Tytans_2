@@ -31,8 +31,8 @@ public class BulletFlexAbility : Ability {
 	}
 
 	// Basic use to be overriden by child abilities
-	public override bool use ()
+	public override void use () 
 	{
-		return false;
+		base.use ();
 	}
 }

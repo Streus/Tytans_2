@@ -21,10 +21,10 @@ public class BasicShot : BulletFlexAbility {
 		return new BasicShot (invoker, bulletPrefab);
 	}
 
-	public override bool use()
+	public override void use()
 	{
+		base.use ();
+
 		Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
-		currentCD = cooldown;
-		return true;
 	}
 }

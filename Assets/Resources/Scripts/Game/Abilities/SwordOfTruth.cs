@@ -21,15 +21,12 @@ public class SwordOfTruth : Ability {
 		return new SwordOfTruth (invoker);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
+		base.use ();
+
 		//create base sword part
 		GameObject bulPrefab = Resources.Load<GameObject>("Prefabs/Bullets/BulletSoTHilt");
 		Bullet.createBullet (invoker.gameObject, bulPrefab, invoker.position, invoker.rotation);
-
-		//apply cost n such
-		invoker.GetComponent<Entity>().energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

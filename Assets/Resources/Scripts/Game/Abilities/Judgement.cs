@@ -21,13 +21,11 @@ public class Judgement : Ability {
 		return new Judgement (invoker);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
+		base.use ();
+
 		GameObject bulletPrefab = Resources.Load<GameObject> ("Prefabs/Bullets/BulletJudgement");
 		Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
-
-		invoker.GetComponent<Entity> ().energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

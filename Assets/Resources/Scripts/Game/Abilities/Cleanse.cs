@@ -21,8 +21,10 @@ public class Cleanse : Ability {
 		return new Cleanse (invoker);
 	}
 
-	public override bool use ()
+	public override void use ()
 	{
+		base.use ();
+
 		//remove all status effects on invoker
 		Entity invokerVars = invoker.GetComponent<Entity>();
 		for (int i = 0; i < invokerVars.statuses.Count; i++) {
@@ -31,9 +33,5 @@ public class Cleanse : Ability {
 
 		//apply cleansed status effect
 		invokerVars.addStatus (new StatusCleansed (5f, invoker));
-
-		invokerVars.energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

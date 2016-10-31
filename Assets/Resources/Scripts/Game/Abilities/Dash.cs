@@ -21,11 +21,10 @@ public class Dash : Ability {
 		return new Dash (invoker);
 	}
 
-	public override bool use(){
+	public override void use(){
+		base.use ();
+
 		Rigidbody2D body = invoker.GetComponent<Rigidbody2D>();
 		body.AddForce(invoker.up * -50, ForceMode2D.Impulse);
-		invoker.GetComponent<Entity>().energy -= cost;
-		currentCD = cooldown;
-		return true;
 	}
 }

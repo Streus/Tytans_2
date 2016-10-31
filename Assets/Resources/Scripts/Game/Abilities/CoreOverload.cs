@@ -21,7 +21,9 @@ public class CoreOverload : Ability {
 		return new CoreOverload (invoker);
 	}
 		
-	public override bool use(){
+	public override void use(){
+		base.use ();
+
 		//explosion boom boom
 		GameObject shockBullet = Resources.Load<GameObject>("Prefabs/Bullets/BulletSpark");
 		for(int i = 0; i < 30; i++){
@@ -31,7 +33,5 @@ public class CoreOverload : Ability {
 
 		//apply regen and reset ability
 		invoker.GetComponent<Entity>().addStatus(new StatusENRegen(2f, invoker, 40f));
-		currentCD = cooldown;
-		return true; 
 	}
 }

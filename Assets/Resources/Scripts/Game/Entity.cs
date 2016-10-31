@@ -60,8 +60,7 @@ public class Entity : MonoBehaviour {
 		for(int i = 0; i < abilities.Length; i++)
 		{
 			if(abilities[i] != null){
-				abilities[i].currentCD -= Time.deltaTime * cooldownRate;
-				abilities[i].clampCD();
+				abilities[i].update(Time.deltaTime * cooldownRate);
 			}	
 		}
 

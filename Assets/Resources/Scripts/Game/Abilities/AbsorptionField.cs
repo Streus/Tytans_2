@@ -21,14 +21,13 @@ public class AbsorptionField : Ability {
 		return new AbsorptionField (invoker);
 	}
 		
-	public override bool use(){ 
+	public override void use(){ 
+		base.use ();
+
 		Entity invokervars = invoker.GetComponent<Entity>();
 		if (invokervars.shieldMax > 0) //invoker already has a shield
-			return false;
+			return;
 
 		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 2f, 350f));
-		invokervars.energy -= cost;
-		currentCD = cooldown;
-		return true; 
 	}
 }
