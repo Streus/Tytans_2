@@ -12,8 +12,10 @@ public class RailgunShot : BulletFlexAbility {
 		desc = "Fire a powerful bullet that knocks the ship back.";
 		image = Resources.Load<Sprite>("Sprites/UI/Abilities/AbilityRailgunShot");
 		cost = 0;
-		cooldown = 1.5f;
+		cooldown = 0.7f;
 		currentCD = cooldown;
+
+		maxCharges = 3;
 	}
 
 	public override Ability Copy ()
@@ -25,8 +27,8 @@ public class RailgunShot : BulletFlexAbility {
 		base.use ();
 
 		GameObject bullet = Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);
-		bullet.GetComponent<Bullet>().damage *= 2;
+		bullet.GetComponent<Bullet>().damage += currentCharges;
 
-		invoker.GetComponent<Rigidbody2D>().AddForce(invoker.transform.up * 100);
+		invoker.GetComponent<Rigidbody2D>().AddForce(invoker.transform.up * 75 * (currentCharges + 1));
 	}
 }

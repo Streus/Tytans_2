@@ -9,7 +9,7 @@ public class Berzerk : Ability {
 	protected override void setValues ()
 	{
 		dispName = "Berzerk";
-		desc = "If below 50% health, apply Berzerking.\nBerzerking increases damage and armor as health decreases.";
+		desc = "If below 50% health, apply Berzerking.\nBerzerking increases damage and\ndecreases armor as health decreases.";
 		image = Resources.Load<Sprite> ("Sprites/UI/Abilities/AbilityBerzerk");
 		cost = 30f;
 		cooldown = 120f;
@@ -29,6 +29,7 @@ public class Berzerk : Ability {
 			invokervars.addStatus (new StatusBerzerk (1f, invoker, 0.5f));
 
 			base.use ();
+			return;
 		}
 	}
 }

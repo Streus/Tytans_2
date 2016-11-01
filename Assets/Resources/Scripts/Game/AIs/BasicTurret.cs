@@ -1,29 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasicTurret : MonoBehaviour {
-
-	private Entity self;
-	private Rigidbody2D physbody;
-
+public class BasicTurret : ControlScript
+{
 	// Use this for initialization
-	void Start () {
-		physbody = transform.GetComponent<Rigidbody2D>();
-		self = transform.GetComponent<Entity>();
-
+	public void Start () 
+	{
+		target = GameManager.player;
 		self.addAbility (new FlakShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletBasic")), 0);
 		self.addAbility(new BalanceTheScales(transform), 1);
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-		if (!physbody.simulated)
-			return;
+	public override void FixedUpdate () {
 
-		Vector3 tarPos = GameManager.player.transform.position;
-		Quaternion rot = Quaternion.LookRotation(transform.position - new Vector3(tarPos.x, tarPos.y, -100), Vector3.back);
-		transform.rotation = rot;
-		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
+		faceTarget (target);
 
 		if(self.abilities[0].ready())
 		{

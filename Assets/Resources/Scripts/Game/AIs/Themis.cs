@@ -19,6 +19,11 @@ public class Themis : Boss {
 		self.addAbility (new Berzerk (transform), 4);
 
 		self.abilities [4].currentCD = 0;
+
+		//add drops
+		bulletDrops = new string[]{"BulletThemis"};
+		Transform temp = GameManager.player.transform;
+		abilityDrops = new Ability[]{new Berzerk(temp), new Cleanse(temp), new DaedalusMissle(temp), new BalanceTheScales(temp)};
 	}
 
 	public override void FixedUpdate ()
@@ -26,7 +31,7 @@ public class Themis : Boss {
 		base.FixedUpdate ();
 
 		//-MOVEMENT-
-		faceTarget ();
+		faceTarget (target);
 		int worldMask = 1 << 9;
 		RaycastHit2D rightProbe = Physics2D.Raycast (transform.position, transform.right, 1.5f, worldMask);
 		RaycastHit2D leftProbe = Physics2D.Raycast (transform.position, -transform.right, 1.5f, worldMask);

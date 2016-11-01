@@ -28,6 +28,6 @@ public class AbsorptionField : Ability {
 		if (invokervars.shieldMax > 0) //invoker already has a shield
 			return;
 
-		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 2f, 350f));
+		invokervars.addStatus(new StatusAbsorptionField(5f, invoker.transform, 4f, 150f));
 	}
 }

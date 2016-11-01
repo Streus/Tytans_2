@@ -6,11 +6,15 @@ public class BulletPickUp : MonoBehaviour {
 	private SpriteRenderer image;
 	private Rigidbody2D physbody;
 	public GameObject bullet;
+	public bool interactable;
+	public float interactDelay;
 
 	void Awake () {
 		image = transform.GetComponent<SpriteRenderer> ();
 		physbody = transform.GetComponent<Rigidbody2D> ();
 		bullet = null;
+		interactable = false;
+		interactDelay = 2f;
 	}
 
 	// Use this for initialization
@@ -24,14 +28,22 @@ public class BulletPickUp : MonoBehaviour {
 	void Update () {
 		//just for effect
 		transform.rotation = Quaternion.Euler(new Vector3(0, 0, transform.rotation.eulerAngles.z + 1));
+
+		interactDelay -= Time.deltaTime;
+		if (interactDelay <= 0)
+			interactable = true;
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.gameObject == GameManager.player) 
+		if (col.gameObject == GameManager.player && interactable)
 		{
-			Entity playerEnt = col.transform.GetComponent<Entity> ();
+			GameObject drop = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/BulletPickUp"), transform.position, Quaternion.identity);
+			drop.GetComponent<BulletPickUp> ().bullet = col.gameObject.GetComponent<Player> ().bullet;
+
 			col.gameObject.GetComponent<Player> ().bullet = bullet;
+
+			Entity playerEnt = col.transform.GetComponent<Entity> ();
 			for (int i = 0; i < playerEnt.abilities.Length; i++) {
 				if (playerEnt.abilities [i] is BulletFlexAbility)
 					((BulletFlexAbility)playerEnt.abilities [i]).bulletPrefab = bullet;

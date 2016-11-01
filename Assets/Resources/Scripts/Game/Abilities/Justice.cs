@@ -17,7 +17,6 @@ public class Justice : BulletFlexAbility {
 		cooldown = 1.5f;
 		currentCD = cooldown;
 
-		maxCharges = 0;
 		stage = false;
 	}
 

@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Boss : MonoBehaviour {
-
-	protected Entity self;
-	protected GameObject target;
-
+public class Boss : ControlScript
+{
 	public int bossIndex;
 
 	public DoorControl[] roomDoors;
+	protected string[] bulletDrops;
+	protected Ability[] abilityDrops;
 
-	// Set up control
-	public virtual void Awake()
+	public override void Awake()
 	{
+		base.Awake ();
+
 		if (GameManager.manager.completedBosses [bossIndex])
 			Destroy (gameObject);
-
-		self = transform.GetComponent<Entity> ();
+	}
+	public void Start()
+	{
 		target = GameManager.player;
 	}
 
@@ -32,13 +33,6 @@ public class Boss : MonoBehaviour {
 				roomDoors [i].setDoor (false);
 			}
 		}
-	}
-	
-	// AI behavior
-	public virtual void FixedUpdate()
-	{
-		if (!self.physbody.simulated)
-			return;
 	}
 
 	// Drop items
@@ -56,44 +50,27 @@ public class Boss : MonoBehaviour {
 			}
 		}
 
-		if (self.health <= 0)
+		if (self.health <= 0) {
 			GameManager.manager.completedBosses [bossIndex] = true;
-	}
-
-	// Target accessor
-	public GameObject Target
-	{
-		get{ return target; }
-		set{ target = value; }
-	}
-
-	// Rotate this boss to face their given target
-	protected void faceTarget() 
-	{
-		Vector3 tarPos = target.transform.position;
-		Quaternion rot = Quaternion.LookRotation(transform.position - new Vector3(tarPos.x, tarPos.y, -100f), Vector3.back);
-		transform.rotation = rot;
-		transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
-	}
-
-	// Use the ability at [index] if the ability is ready and the passed conditions are true
-	protected bool useAbility(int index, params bool[] conditions)
-	{
-		if (!self.abilities [index].ready ())
-			return false;
-		for (int i = 0; i < conditions.Length; i++)
-		{
-			if (conditions [i] == false)
-				return false;
+			dropItems ();
 		}
-		self.abilities [index].use ();
-		return true;
 	}
 
-	// useAbility without the extra conditions
-	protected bool useAbility(int index)
+	// Drop pickups with the values in bulletDrops and abilityDrops
+	private void dropItems()
 	{
-		return useAbility(index, true);
-	}
+		//bullets
+		for (int i = 0; i < bulletDrops.Length; i++)
+		{
+			GameObject drop = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/BulletPickUp"), transform.position, Quaternion.identity);
+			drop.GetComponent<BulletPickUp> ().assignBullet (bulletDrops [i]);
+		}
 
+		//abilities
+		for (int i = 0; i < abilityDrops.Length; i++)
+		{
+			GameObject drop = (GameObject)Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/AbilityPickUp"), transform.position, Quaternion.identity);
+			drop.GetComponent<AbilityPickUp> ().assignAbility (abilityDrops [i].Copy ());
+		}
+	}
 }

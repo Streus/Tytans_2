@@ -25,7 +25,7 @@ public class FlakShot : BulletFlexAbility {
 		base.use ();
 
 		for(int i = 0; i < 5; i++){
-			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (5f * i) - 10));
+			Quaternion bulletRot = Quaternion.Euler(new Vector3(0, 0, invoker.eulerAngles.z + (10f * i) - 20));
 			Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, bulletRot);
 		}
 	}

@@ -26,7 +26,7 @@ public abstract class StatusEffect : IComparable{
 		statusList = invokerVars.statuses;
 	}
 
-	// Add an effect to the passed transform's Entity script
+	// Add an effect to the passed transform
 	public abstract void apply();
 
 	// Remove the effect added by this instance

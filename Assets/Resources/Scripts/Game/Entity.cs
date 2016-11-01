@@ -29,9 +29,12 @@ public class Entity : MonoBehaviour {
 	public int speed;
 	public DeathType death;
 	public float cooldownRate;
+
+	// Combat vars
 	public float armor;
 	public float damageAdditive;
 	public int statusImmune;
+	public int stunned; //TODO add stunned support
 
 	// Misc Lists
 	public ArrayList statuses;
@@ -56,7 +59,7 @@ public class Entity : MonoBehaviour {
 		if (!physbody.simulated)
 			return;
 
-		// update cooldowns
+		//update ability cooldowns
 		for(int i = 0; i < abilities.Length; i++)
 		{
 			if(abilities[i] != null){
@@ -87,6 +90,8 @@ public class Entity : MonoBehaviour {
 	// Adds an ability to this entity's roster at index
 	public bool addAbility(Ability abil, int index)
 	{
+		if (index >= abilities.Length)
+			return false;
 		abilities[index] = abil;
 		return true;
 	}

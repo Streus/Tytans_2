@@ -35,14 +35,14 @@ public abstract class Ability : IComparable
 	public Ability(Transform entity)
 	{
 		invoker = entity;
-		maxCharges = 1;
+		maxCharges = 0;
 		setValues ();
 	}
 	// An empty constructor
 	public Ability()
 	{
 		invoker = null;
-		maxCharges = 1;
+		maxCharges = 0;
 		setValues ();
 	}
 
@@ -57,7 +57,8 @@ public abstract class Ability : IComparable
 		if (currentCD == 0f && currentCharges < maxCharges) 
 		{
 			currentCharges++;
-			currentCD = cooldown;
+			if(currentCharges != maxCharges)
+				currentCD = cooldown;
 		}
 	}
 
@@ -90,7 +91,7 @@ public abstract class Ability : IComparable
 		if (currentCharges >= 1) {
 			currentCharges--;
 		}
-		if(currentCharges == 0){
+		if(currentCharges < maxCharges || maxCharges == 0){
 			currentCD = cooldown;
 		}
 	}

@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
 			return;
 
 		//make player
-		player = (GameObject)Instantiate((GameObject)Resources.Load("Prefabs/Entities/Player", typeof(GameObject)), (Vector3)(spawnCoordinates), Quaternion.identity);
+		player = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/Entities/Player"), (Vector3)(spawnCoordinates), Quaternion.identity);
 		Entity entScr = player.transform.GetComponent<Entity>();
 		Player plyScr = player.transform.GetComponent<Player>();
 
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour {
 			entScr.energyMax = 100f;
 			entScr.energy = entScr.energyMax;
 			entScr.energyRegen = 1.5f;
-			entScr.speed = 27;
+			entScr.speed = 25;
 			entScr.addAbility(new FlakShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new AbsorptionField(player.transform), 1);
 
