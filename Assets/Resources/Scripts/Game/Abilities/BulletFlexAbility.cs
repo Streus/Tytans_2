@@ -19,10 +19,7 @@ public class BulletFlexAbility : Ability {
 	}
 
 	// Empty setValues inherited from Ability
-	protected override void setValues ()
-	{
-		return;
-	}
+	protected override void setValues () { }
 
 	// Basic Copy to be overriden by child abilities
 	public override Ability Copy ()

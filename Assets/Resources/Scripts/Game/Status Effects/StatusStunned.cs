@@ -14,7 +14,7 @@ public class StatusStunned : StatusEffect
 
 	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusStunned (initDuration, invoker);
+		return new StatusStunned (initDuration, e);
 	}
 
 	public override void apply ()

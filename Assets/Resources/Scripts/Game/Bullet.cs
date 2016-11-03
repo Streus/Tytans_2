@@ -74,28 +74,34 @@ public class Bullet : MonoBehaviour {
 			//retrieve the entity info of the collider and creator
 			Entity other = col.transform.GetComponent<Entity>();
 
-			//reduce damage by armor
-			damage -= Mathf.Min (other.armor, damage - 1);
-
-			//check for a shield
-			if(other.shieldHealth > 0)
-			{
-				//do damage to the shield, and destroy it if necessary
-				other.shieldHealth -= damage;
-				if(other.shieldHealth < 0)
-				{
-					other.health -= -other.shieldHealth;
-					other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
-				}
-
-				htColor = new Color(1f, 0.7f, 0f, 1f); //hitText color for shields
-			}
-			else
-			{
-				//do damage to the entity's health pool
+			//check for zero/negative damage
+			if (damage <= 0) {
+				htColor = new Color (0f, 1f, 0f, 1f);
 				other.health -= damage;
+				if (other.health > other.healthMax)
+					other.health = other.healthMax;
+			} 
+			else //damage is postive
+			{
+				//reduce damage by armor
+				damage -= Mathf.Min (other.armor, damage - 1);
 
-				htColor = new Color(1f, 0f, 0f, 1f); //hitText color for health
+				//check for a shield
+				if (other.shieldHealth > 0) {
+					//do damage to the shield, and destroy it if necessary
+					other.shieldHealth -= damage;
+					if (other.shieldHealth < 0) {
+						other.health -= -other.shieldHealth;
+						other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
+					}
+
+					htColor = new Color (1f, 0.7f, 0f, 1f); //hitText color for shields
+				} else {
+					//do damage to the entity's health pool
+					other.health -= damage;
+
+					htColor = new Color (1f, 0f, 0f, 1f); //hitText color for health
+				}
 			}
 
 			//create a hitText
