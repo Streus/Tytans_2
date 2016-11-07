@@ -23,12 +23,20 @@ public class Bullet : MonoBehaviour {
 		GameObject b = (GameObject)Instantiate(bullet, instPos, instRot);
 		Physics2D.IgnoreCollision(b.transform.GetComponent<Collider2D>(), creator.GetComponent<Collider2D>());
 		Bullet bulScr = b.transform.GetComponent<Bullet>();
-		bulScr.faction = creator.GetComponent<Entity>().faction;
-		bulScr.creator = creator;
 
-		//add on damage
 		Entity origin = creator.transform.GetComponent<Entity> ();
-		bulScr.damage += origin.damageAdditive;
+
+		if (origin != null) 
+		{
+			bulScr.faction = creator.GetComponent<Entity> ().faction;
+			bulScr.creator = creator;
+
+			//add on damage
+			bulScr.damage += origin.damageAdditive;
+		} else { //non-entity creator
+			bulScr.faction = Faction.NEUTRAL;
+			bulScr.creator = null;
+		}
 
 		return b;
 	}
@@ -80,6 +88,7 @@ public class Bullet : MonoBehaviour {
 				other.health -= damage;
 				if (other.health > other.healthMax)
 					other.health = other.healthMax;
+				damage = Mathf.Abs (damage);
 			} 
 			else //damage is postive
 			{

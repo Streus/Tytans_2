@@ -20,6 +20,16 @@ public class ControlScript : MonoBehaviour
 			return;
 	}
 
+	// Rotate to face the target object + its velocity
+	protected void faceTargetLeading(GameObject tar, float bulletSpeed)
+	{
+		Rigidbody2D tarBody = tar.GetComponent<Rigidbody2D> ();
+		if (tarBody == null)
+			throw new System.ArgumentException ("Tried to lead a velocity-less GameObject");
+		float stepsToCollision = Vector2.Distance (transform.position, tar.transform.position) / bulletSpeed;
+		facePoint ((Vector2)tar.transform.position + (tarBody.velocity * stepsToCollision));
+	}
+
 	// Rotate this transform to face their given target
 	protected void faceTarget(GameObject tar)
 	{

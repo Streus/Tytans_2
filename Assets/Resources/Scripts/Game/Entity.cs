@@ -34,7 +34,7 @@ public class Entity : MonoBehaviour {
 	public float armor;
 	public float damageAdditive;
 	public int statusImmune;
-	public int stunned; //TODO add stunned support
+	public int stunned;
 
 	// Misc Lists
 	public ArrayList statuses;
@@ -111,7 +111,7 @@ public class Entity : MonoBehaviour {
 			return;
 
 		//check for duplicate statuses
-		//if there are duplicates, replace them
+		//if there are duplicates, replace them TODO add support for stacking effects
 		for(int i = 0; i < statuses.Count; i++)
 		{
 			if(((StatusEffect)statuses[i]).CompareTo(status) == 0)
@@ -151,6 +151,16 @@ public class Entity : MonoBehaviour {
 			break;
 		}
 		Destroy(gameObject);
+	}
+
+	// Clean up internals for destruction
+	public void OnDestroy()
+	{
+		for (int i = 0; i < statuses.Count; i++)
+		{
+			((StatusEffect)statuses [i]).duration = 0f;
+			((StatusEffect)statuses [i]).revert ();
+		}
 	}
 }
 
