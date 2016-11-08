@@ -6,11 +6,6 @@ public class BossSpawnTrigger : MonoBehaviour {
 	public GameObject boss;
 	public bool armed;
 
-	void Awake()
-	{
-		armed = false;
-	}
-
 	public void OnTriggerEnter2D(Collider2D col)
 	{
 		if (boss != null && col.gameObject == GameManager.player && armed) {

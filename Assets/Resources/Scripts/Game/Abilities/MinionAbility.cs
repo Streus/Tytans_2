@@ -4,7 +4,7 @@ using System.Collections;
 // Intermidiate parent class for abilities that are applied on a group of minions
 public class MinionAbility : Ability {
 
-	//arraylist of minions to perform actions on
+	//arraylist of Transforms to perform actions on
 	public ArrayList minions;
 
 	// Constructors

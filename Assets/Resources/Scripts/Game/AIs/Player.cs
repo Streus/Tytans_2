@@ -15,9 +15,11 @@ public class Player : ControlScript {
 		base.Awake ();
 
 		learnedAbilities = new ArrayList ();
-		learnAbility (new DaedalusMissle (transform));
 
 		acceptInput = true;
+	}
+
+	public void Start(){ //DEBUG STUFF
 	}
 
 	void Update () {
@@ -27,8 +29,7 @@ public class Player : ControlScript {
 	
 	// Update is called once per frame
 	public override void FixedUpdate () {
-		base.FixedUpdate ();
-		if (!acceptInput)
+		if (!acceptInput || !physbody.simulated || self.stunned > 0)
 			return;
 
 		//point to mouse

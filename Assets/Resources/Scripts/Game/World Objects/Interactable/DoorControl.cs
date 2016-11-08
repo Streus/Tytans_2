@@ -10,7 +10,6 @@ public class DoorControl : MonoBehaviour {
 	void Start ()
 	{
 		door = transform.GetChild (0).gameObject;
-		open = false;
 	}
 
 	//Door "animation"

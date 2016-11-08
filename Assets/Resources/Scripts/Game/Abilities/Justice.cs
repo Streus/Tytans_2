@@ -35,7 +35,7 @@ public class Justice : BulletFlexAbility {
 				Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, bulletRot);
 			}
 			stage = true;
-			currentCD = 1f;
+			currentCD = 1f / ((float)((int)GameManager.manager.difficulty + 1));
 		} 
 		else 
 		{

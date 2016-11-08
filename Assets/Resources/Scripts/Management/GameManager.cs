@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour {
 			entScr.addAbility(flexAbilities[i].Copy(), i + 2);
 		}
 
-		//add learned abilities
+		//add learned abilities TODO some bug with this causes duplication
 		plyScr.learnedAbilities = (ArrayList)learnedAbilites.Clone();
 		for (int i = 0; i < plyScr.learnedAbilities.Count; i++) {
 			((Ability)learnedAbilites [i]).invoker = player.transform;

@@ -27,6 +27,11 @@ public class SwordOfTruth : Ability {
 
 		//create base sword part
 		GameObject bulPrefab = Resources.Load<GameObject>("Prefabs/Bullets/BulletSoTHilt");
-		Bullet.createBullet (invoker.gameObject, bulPrefab, invoker.position, invoker.rotation);
+		int numSwords = (int)GameManager.manager.difficulty;
+		for (int i = 0; i <= numSwords; i++)
+		{
+			Quaternion rot = Quaternion.Euler (0f, 0f, invoker.rotation.eulerAngles.z - (45 * numSwords) + (i * 90));
+			Bullet.createBullet (invoker.gameObject, bulPrefab, invoker.position, rot);
+		}
 	}
 }

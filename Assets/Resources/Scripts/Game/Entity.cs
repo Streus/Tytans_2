@@ -130,6 +130,16 @@ public class Entity : MonoBehaviour {
 		onChangedStatus (status);
 	}
 
+	public bool hasStatus(StatusEffect s)
+	{
+		for (int i = 0; i < statuses.Count; i++)
+		{
+			if (((StatusEffect)statuses [i]).CompareTo (s) == 0)
+				return true;
+		}
+		return false;
+	}
+
 	// Verify that this Entity is still alive
 	public void checkDeath()
 	{

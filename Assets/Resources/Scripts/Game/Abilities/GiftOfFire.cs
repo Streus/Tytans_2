@@ -1,18 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Sacrifice : MinionAbility
+public class GiftOfFire : MinionAbility
 {
-	public Sacrifice(Transform e, ArrayList m) : base(e, m){ }
-	public Sacrifice() : base(){ }
+	public GiftOfFire(Transform e, ArrayList m) : base(e, m){ }
+	public GiftOfFire() : base(){ }
 
 	protected override void setValues ()
 	{
-		dispName = "Sacrifice";
-		desc = "Mark a minion as Offered\nOffered minions release health upon death.";
+		dispName = "Gift of Fire";
+		desc = "Bless a minion with orbiting bullets.";
 		image = Resources.Load<Sprite> ("Sprites/UI/Abilities/AbilitySacrifice");
-		cost = 10f;
-		cooldown = 10f;
+		cost = 30f;
+		cooldown = 7f;
 		currentCD = cooldown;
 	}
 
@@ -25,14 +25,14 @@ public class Sacrifice : MinionAbility
 	{
 		base.use ();
 
-		StatusOffered offered = new StatusOffered (10f, invoker, invoker.gameObject);
+		StatusGiftOfFire gof = new StatusGiftOfFire (10f, invoker);
 
 		for (int i = 0; i < minions.Count; i++)
 		{
 			Entity minion = ((GameObject)minions [i]).GetComponent<Entity> ();
-			if (!(minion.hasStatus (offered)))
+			if (!(minion.hasStatus (gof)))
 			{
-				minion.addStatus (offered.Copy(((GameObject)minions [i]).transform));
+				minion.addStatus (gof.Copy(((GameObject)minions [i]).transform));
 				return;
 			}
 		}
