@@ -44,7 +44,8 @@ public class PrometheusThrall : ControlScript
 					pickup = "HealthPickUp";
 				Instantiate (Resources.Load<GameObject> ("Prefabs/World/Interactable/" + pickup), transform.position, transform.rotation);
 			}
-			prometheus.GetComponent<Prometheus> ().removeMinion (gameObject);
+			if(prometheus != null)
+				prometheus.GetComponent<Prometheus> ().removeMinion (gameObject);
 		}
 	}
 }

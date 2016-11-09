@@ -20,7 +20,7 @@ public class StatusGiftOfFire : StatusEffect
 		//add bullets
 		for (int i = 0; i < bullets.Length; i++)
 		{
-			bullets [i] = Bullet.createBullet (invoker, Resources.Load<GameObject> ("Prefabs/Bullets/BulletGiftOfFire"), invoker.position, invoker.rotation);
+			bullets [i] = Bullet.createBullet (invoker.gameObject, Resources.Load<GameObject> ("Prefabs/Bullets/BulletGiftOfFire"), invoker.position, invoker.rotation);
 			bullets [i].transform.localRotation = Quaternion.Euler (0f, 0f, 90f * (float)i);
 		}
 	}
