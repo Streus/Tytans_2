@@ -1,67 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MinionFormation
+/* Author: Sam "Streus" Streed
+ * Date: 11/10/2016
+ */
+public abstract class MinionFormation
 {
-	// Static templates
-	public const MinionFormation POINT = 
-		new MinionFormation();
+	/* Instance vars */
 
-	// Instance variables
-	//for use with polygons/lines
-	private Vector2[] points;
+	//the center of the shape
+	protected Vector2 center;
 
-	//for use with elipses/circles
-	private Vector2 focalPoint1;
-	private Vector2 focalPoint2;
-	private float radius;
+	//the rotation of the shape
+	protected Quaternion rotation;
+
+	//the scale of the shape
+	protected float scale;
 
 	//use points withing the defined shape?
-	private bool filled;
+	protected bool filled;
 
-	//number of discrete positions to distribute throughout the shape
-	private int numPositions;
-
-	//determines the type of shape the formation will conform to
-	private FormationShapeType shapeType;
-
-	// Empty constructor
-	//creates a formation that is a single point at Vector2.zero
+	/* Constructor */
 	public MinionFormation()
 	{
-		points = new Vector2[]{ Vector2.zero };
-		focalPoint1 = focalPoint2 = Vector2.zero;
-		shapeType = FormationShapeType.LINE;
-		numPositions = 1;
+		center = Vector2.zero;
+		rotation = Quaternion.identity;
+		filled = false;
 	}
 
-	// Polygon/Line Constructor
-	public MinionFormation(bool isPolygon, bool isFilled, int numPositions, params Vector2[] points)
+	/* Accessors */
+	public Vector2 Center
 	{
-		if (isPolygon) {
-			shapeType = FormationShapeType.POLYGON;
-			filled = isFilled;
-		} else {
-			shapeType = FormationShapeType.LINE;
-			filled = false;
-		}
-		this.numPositions = numPositions;
-		this.points = points.Clone ();
+		get{ return center; }
+	}
+	public Quaternion Rotation
+	{
+		get{ return rotation; }
+	}
+	public float Scale
+	{
+		get{ return scale; }
+	}
+	public bool Filled
+	{
+		get{ return filled; }
+		set{ filled = value; }
 	}
 
-	// Circle/Elipse Constructor
-	public MinionFormation(bool isFilled, int numPositions, Vector2 focalPoint1, Vector2 focalPoint2, float radius)
-	{
-		filled = isFilled;
-		this.numPositions = numPositions;
-		this.focalPoint1 = focalPoint1;
-		this.focalPoint2 = focalPoint2;
-		this.radius = radius;
-	}
-
-	// Shape type enum
-	public enum FormationShapeType
-	{
-		POLYGON, LINE, ELIPSE
-	}
+	public abstract Vector2[] distribute (int numPositions);
+	public abstract void recenter (Vector2 center);
+	public abstract void rotate (Quaternion rotation);
+	public abstract void scale (float scale);
 }
