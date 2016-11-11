@@ -6,6 +6,12 @@ public class Prometheus : Boss {
 	//list of minions this AI can use its MinionAbilities on
 	private ArrayList minions;
 
+	//formation stuff
+	private MinionFormation[] formList;
+	private int currentFormation;
+	private float rotationDelay;
+	private float currentDelay;
+
 	public override void Awake()
 	{
 		base.Awake ();
@@ -19,6 +25,16 @@ public class Prometheus : Boss {
 		self.addAbility(new Rally(transform), 1);
 		self.addAbility (new Sacrifice (transform, minions), 2);
 		self.addAbility (new GiftOfFire (transform, minions), 3);
+
+		//formation related stuff
+		formList = new MinionFormation[]{ 
+			new PolyFormation(true, PolyFormation.SQUARE), 
+			new PolyFormation(false, PolyFormation.TRAPEZOID), 
+			new PolyFormation(true, PolyFormation.HEXAGON) 
+		};
+		currentFormation = 0;
+		rotationDelay = 10f;
+		currentDelay = rotationDelay;
 
 		//add drops
 		//TODO add drops for Prometheus
@@ -37,10 +53,26 @@ public class Prometheus : Boss {
 		useAbility (2);
 		useAbility (3);
 
-		for (int i = 0; i < minions.Count; i++) //DEBUG CODE
-		{
-			if(Random.value < 0.01)
-				((GameObject)minions [i]).GetComponent<PrometheusThrall> ().FormationPosition = (Vector2)transform.position + Random.insideUnitCircle * 10;
+		//minion formation updating
+		currentDelay -= Time.deltaTime;
+		if(currentDelay <= 0){
+			currentDelay = rotationDelay;
+			formList [currentFormation].recenter (transform.position);
+			Vector2[] positions = formList [currentFormation].distribute (minions.Count);
+			for (int i = 0; i < minions.Count; i++)
+			{
+				((GameObject)minions [i]).GetComponent<PrometheusThrall> ().FormationPosition = positions [i];
+			}
+			//DEBUG
+			Debug.Log(formList[currentFormation].ToString());
+			string str = "";
+			for (int i = 0; i < positions.Length; i++)
+			{
+				str += positions [i].ToString () + "\n";
+			}
+			Debug.Log (str);
+
+			currentFormation = (currentFormation + 1) % formList.Length;
 		}
 	}
 

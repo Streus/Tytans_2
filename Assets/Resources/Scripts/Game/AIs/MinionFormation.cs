@@ -12,7 +12,7 @@ public abstract class MinionFormation
 	protected Vector2 center;
 
 	//the rotation of the shape
-	protected Quaternion rotation;
+	protected float rotation;
 
 	//the scale of the shape
 	protected float scale;
@@ -24,7 +24,7 @@ public abstract class MinionFormation
 	public MinionFormation()
 	{
 		center = Vector2.zero;
-		rotation = Quaternion.identity;
+		rotation = 0f;
 		filled = false;
 	}
 
@@ -33,7 +33,7 @@ public abstract class MinionFormation
 	{
 		get{ return center; }
 	}
-	public Quaternion Rotation
+	public float Rotation
 	{
 		get{ return rotation; }
 	}
@@ -47,8 +47,8 @@ public abstract class MinionFormation
 		set{ filled = value; }
 	}
 
-	public abstract Vector2[] distribute (int numPositions);
+	public abstract Vector2[] distribute (int n);
 	public abstract void recenter (Vector2 center);
-	public abstract void rotate (Quaternion rotation);
-	public abstract void scale (float scale);
+	public abstract void rotate (float rotation);
+	public abstract void rescale (float scale);
 }
