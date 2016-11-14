@@ -28,6 +28,7 @@ public class SummonThrall : MinionAbility
 		base.use ();
 
 		GameObject minion = (GameObject)MonoBehaviour.Instantiate (Resources.Load<GameObject> ("Prefabs/Entities/PrometheusThrall"), invoker.position, invoker.rotation);
+		Physics2D.IgnoreCollision (minion.GetComponent<Collider2D> (), invoker.GetComponent<Collider2D> ());
 		minion.GetComponent<Rigidbody2D> ().AddForce (minion.transform.up * -50, ForceMode2D.Impulse);
 		minion.GetComponent<PrometheusThrall> ().prometheus = invoker.gameObject;
 		minions.Add (minion);

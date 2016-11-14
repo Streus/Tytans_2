@@ -24,6 +24,7 @@ public abstract class MinionFormation
 	public MinionFormation()
 	{
 		center = Vector2.zero;
+		scale = 1f;
 		rotation = 0f;
 		filled = false;
 	}

@@ -32,9 +32,12 @@ public class Prometheus : Boss {
 			new PolyFormation(false, PolyFormation.TRAPEZOID), 
 			new PolyFormation(true, PolyFormation.HEXAGON) 
 		};
+		for (int i = 0; i < formList.Length; i++) {
+			formList [i].rescale (3f);
+		}
 		currentFormation = 0;
 		rotationDelay = 10f;
-		currentDelay = rotationDelay;
+		currentDelay = 2f;
 
 		//add drops
 		//TODO add drops for Prometheus

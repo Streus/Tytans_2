@@ -2,7 +2,7 @@
 using System.Collections;
 
 /* Author: Sam "Streus" Streed
- * Date: 11/10/2016
+ * Date: 11/14/2016
  */
 public class PolyFormation : MinionFormation
 {
@@ -82,7 +82,7 @@ public class PolyFormation : MinionFormation
 		get{ return points; }
 		set {
 			points = (Vector2[])value.Clone();
-			scale = 0f;
+			scale = 1f;
 			rotation = 0f;
 		}
 			
@@ -163,13 +163,13 @@ public class PolyFormation : MinionFormation
 	{
 		//find the perimiter of the shape denoted by points
 		float distance = 0f;
-		for (int i = 0; i < points.Length - 2; i++)
+		for (int i = 0; i < points.Length - 1; i++)
 		{
 			distance += Vector2.Distance (points [i], points [i + 1]);
 		}
 		//add line connecting first and last points if this is a polygon
 		if (isPolygon)
-			distance += Vector2.Distance (points [points.Length - 2], points [points.Length - 1]);
+			distance += Vector2.Distance (points [points.Length - 1], points [0]);
 
 		//distance between objects
 		float stepDistance = distance / n;

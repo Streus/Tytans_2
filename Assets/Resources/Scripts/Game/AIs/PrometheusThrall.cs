@@ -6,11 +6,15 @@ public class PrometheusThrall : ControlScript
 	private Vector2 formationPosition;
 	public GameObject prometheus;
 
+	private bool atPosition;
+
 	public override void Awake ()
 	{
 		base.Awake ();
 
 		self.addAbility (new BasicShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletPlasma")), 0);
+
+		atPosition = false;
 	}
 
 	public void Start()
@@ -22,15 +26,26 @@ public class PrometheusThrall : ControlScript
 	public Vector2 FormationPosition
 	{
 		get{ return formationPosition; }
-		set{ formationPosition = value; }
+		set{ 
+			formationPosition = value;
+			atPosition = false;
+		}
 	}
 
 	public override void FixedUpdate ()
 	{
 		base.FixedUpdate ();
 
-		facePoint (formationPosition);
-		physbody.AddForce (transform.up * -self.speed);
+		if (!atPosition) {
+			facePoint (formationPosition);
+			physbody.AddForce (transform.up * -self.speed);
+			atPosition = Vector2.Distance (transform.position, formationPosition) < 0.01f;
+		} else if(target != null){
+			physbody.velocity = Vector2.zero;
+			faceTarget(target);
+		}
+
+		useAbility (0, atPosition, target != null);
 	}
 
 	public void OnDestroy()
