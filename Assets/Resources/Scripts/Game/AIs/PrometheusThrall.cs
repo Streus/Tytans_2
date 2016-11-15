@@ -44,8 +44,6 @@ public class PrometheusThrall : ControlScript
 			physbody.velocity = Vector2.zero;
 			faceTarget(target);
 		}
-
-		useAbility (0, atPosition, target != null);
 	}
 
 	public void OnDestroy()

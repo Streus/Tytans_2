@@ -11,6 +11,10 @@ public class PolyFormation : MinionFormation
 	public static Vector2[] POINT = new Vector2[] { 
 		Vector2.zero 
 	};
+	public static Vector2[] LINE = new Vector2[] {
+		new Vector2(0, 1),
+		new Vector2(0, -1)
+	};
 	public static Vector2[] SQUARE = new Vector2[] { 
 		new Vector2(-1, 1), 
 		new Vector2(1, 1), 
@@ -175,42 +179,51 @@ public class PolyFormation : MinionFormation
 		float stepDistance = distance / n;
 
 		//last point in points crossed
-		int currentIndex = 0;
+		int lastIndex = 0;
 
-		//current object position being calculated
-		Vector2 currentPoint = points [currentIndex];
+		//current and next object position being calculated
+		Vector2 currentPoint = points [lastIndex];
+		Vector2 nextPoint = points [lastIndex + 1 % points.Length];
 
 		//the array of positions to return
 		Vector2[] positions = new Vector2[n];
 
 		//the distance between n + 1 and the last filled position
-		float dpn = Vector2.Distance(currentPoint, points[currentIndex + 1]);
+		float dpn = Vector2.Distance(currentPoint, nextPoint);
 
-		int count = 0;
-		while (distance > 0)
+		//the percentage of dpn to move
+		float distRatio = 1f;
+
+		//include the first point of points in positions
+		positions[0] = points[0];
+
+		for(int i = 1; i < positions.Length; i++)
 		{ 
-			float distRatio = 1f;
-			if (dpn - stepDistance > 0) //won't reach the next point
+			if (dpn > stepDistance) //won't reach the next point
 			{
 				distRatio = (stepDistance / dpn);
+				dpn -= stepDistance;
 			} 
-			else if (dpn - stepDistance <= 0) //will reach or pass the next point
+			else if (dpn <= stepDistance) //will reach or pass the next point
 			{
-				//update currentPoint and calculate the distance to progress from currentPoint to nextPoint
-				currentPoint = points [(++currentIndex) % points.Length];
+				//update currentPoint and next point. calculate the distance to progress from currentPoint to nextPoint
+				currentPoint = nextPoint;
+				lastIndex++;
+				nextPoint = points [lastIndex % points.Length];
 				float leftoverDistance = stepDistance - dpn;
-				dpn = Vector2.Distance(currentPoint, points[(currentIndex + 1) % points.Length]);
+				dpn = Vector2.Distance(currentPoint, nextPoint);
 
+				Debug.Log ("Calculated distance from " + currentPoint.ToString () + " to " + nextPoint.ToString ());
+				if (dpn == 0) Debug.LogError ("dpn is zero!\nFor point " + i);//DEBUG
 				distRatio = (leftoverDistance / dpn);
+				dpn -= leftoverDistance;
 			}
 
 			Vector2 newPos = Vector2.zero;
-			newPos.x = currentPoint.x + distRatio * (points [(currentIndex + 1) % points.Length].x - currentPoint.x);
-			newPos.y = currentPoint.y + distRatio * (points [(currentIndex + 1) % points.Length].y - currentPoint.y);
+			newPos.x = currentPoint.x + distRatio * (nextPoint.x - currentPoint.x);
+			newPos.y = currentPoint.y + distRatio * (nextPoint.y - currentPoint.y);
 
-			positions [count++] = currentPoint = newPos; //TODO this breaks at max minion count?
-			dpn -= stepDistance;
-			distance -= stepDistance;
+			positions [i] = currentPoint = newPos;
 		}
 		return positions;
 	}

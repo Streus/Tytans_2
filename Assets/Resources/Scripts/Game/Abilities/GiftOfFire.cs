@@ -12,7 +12,7 @@ public class GiftOfFire : MinionAbility
 		desc = "Bless a minion with orbiting bullets.";
 		image = Resources.Load<Sprite> ("Sprites/UI/Abilities/AbilitySacrifice");
 		cost = 30f;
-		cooldown = 7f;
+		cooldown = 10f;
 		currentCD = cooldown;
 	}
 
@@ -25,18 +25,10 @@ public class GiftOfFire : MinionAbility
 	{
 		base.use ();
 
-		StatusGiftOfFire gof = new StatusGiftOfFire (10f, invoker);
-
 		for (int i = 0; i < minions.Count; i++)
 		{
 			Entity minion = ((GameObject)minions [i]).GetComponent<Entity> ();
-			if (!(minion.hasStatus (gof)))
-			{
-				minion.addStatus (gof.Copy(((GameObject)minions [i]).transform));
-				return;
-			}
+			minion.addStatus (new StatusGiftOfFire (5f, minion.transform));
 		}
-		//failed to apply, refund energy cost
-		invoker.GetComponent<Entity> ().energy += cost;
 	}
 }

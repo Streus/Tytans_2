@@ -28,6 +28,7 @@ public class Prometheus : Boss {
 
 		//formation related stuff
 		formList = new MinionFormation[]{ 
+			new PolyFormation(false, PolyFormation.LINE),
 			new PolyFormation(true, PolyFormation.SQUARE), 
 			new PolyFormation(false, PolyFormation.TRAPEZOID), 
 			new PolyFormation(true, PolyFormation.HEXAGON) 
@@ -35,9 +36,10 @@ public class Prometheus : Boss {
 		for (int i = 0; i < formList.Length; i++) {
 			formList [i].rescale (3f);
 		}
+		formList [0].rescale (12f);
 		currentFormation = 0;
 		rotationDelay = 10f;
-		currentDelay = 2f;
+		currentDelay = 0.5f;
 
 		//add drops
 		//TODO add drops for Prometheus
@@ -65,16 +67,8 @@ public class Prometheus : Boss {
 			for (int i = 0; i < minions.Count; i++)
 			{
 				((GameObject)minions [i]).GetComponent<PrometheusThrall> ().FormationPosition = positions [i];
+				Debug.Log (i.ToString () + " : " + positions [i].ToString ()); //DEBUG
 			}
-			//DEBUG
-			Debug.Log(formList[currentFormation].ToString());
-			string str = "";
-			for (int i = 0; i < positions.Length; i++)
-			{
-				str += positions [i].ToString () + "\n";
-			}
-			Debug.Log (str);
-
 			currentFormation = (currentFormation + 1) % formList.Length;
 		}
 	}
