@@ -60,7 +60,8 @@ public class Prometheus : Boss {
 
 		//minion formation updating
 		currentDelay -= Time.deltaTime;
-		if(currentDelay <= 0){
+		if(currentDelay <= 0)
+		{
 			currentDelay = rotationDelay;
 			formList [currentFormation].recenter (transform.position);
 			Vector2[] positions = formList [currentFormation].distribute (minions.Count);

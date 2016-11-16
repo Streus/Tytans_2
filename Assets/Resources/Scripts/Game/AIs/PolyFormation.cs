@@ -210,11 +210,11 @@ public class PolyFormation : MinionFormation
 				currentPoint = nextPoint;
 				lastIndex++;
 				nextPoint = points [lastIndex % points.Length];
+				if (currentPoint == nextPoint)
+					nextPoint = points [++lastIndex % points.Length];
 				float leftoverDistance = stepDistance - dpn;
 				dpn = Vector2.Distance(currentPoint, nextPoint);
 
-				Debug.Log ("Calculated distance from " + currentPoint.ToString () + " to " + nextPoint.ToString ());
-				if (dpn == 0) Debug.LogError ("dpn is zero!\nFor point " + i);//DEBUG
 				distRatio = (leftoverDistance / dpn);
 				dpn -= leftoverDistance;
 			}
