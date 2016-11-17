@@ -35,10 +35,8 @@ public class Prometheus : Boss {
 			new PolyFormation(false, PolyFormation.LINE),
 			new PolyFormation(true, PolyFormation.HEXAGON) 
 		};
-		for (int i = 0; i < formList.Length; i++) {
-			formList [i].rescale (3f);
-		}
 		formList [0].rescale (12f);
+		formList [1].rescale (2f);
 		currentFormation = 0;
 		rotationDelay = 10f;
 		currentDelay = 0.5f;
@@ -57,9 +55,7 @@ public class Prometheus : Boss {
 
 		//TODO write Prometheus behavior
 		useAbility (0, minions.Count < 30);
-		useAbility (1);
 		useAbility (2);
-		useAbility (3);
 
 		//minion formation updating
 		currentDelay -= Time.deltaTime;
@@ -69,17 +65,18 @@ public class Prometheus : Boss {
 			if (!sweep) {
 				formList [0].recenter (leftSideMarker);
 				distributeMinions (formList [0]);
-				sweep = true;
 			} else {
 				shiftPositions (rightSideMarker - leftSideMarker);
-				sweep = false;
+				useAbility (3);
 			}
+			sweep = !sweep;
 		}
 
 		if (Vector2.Distance (transform.position, GameManager.player.transform.position) < 3f && !sweep)
 		{
 			formList [1].recenter (transform.position);
 			distributeMinions (formList [1]);
+			useAbility (1);
 		}
 	}
 

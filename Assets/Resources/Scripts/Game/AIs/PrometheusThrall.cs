@@ -36,7 +36,7 @@ public class PrometheusThrall : ControlScript
 	{
 		base.FixedUpdate ();
 
-		if (!atPosition) {
+		if (!atPosition && formationPosition != Vector2.zero) {
 			facePoint (formationPosition);
 			physbody.AddForce (transform.up * -self.speed);
 			atPosition = Vector2.Distance (transform.position, formationPosition) < 0.01f;
