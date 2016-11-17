@@ -104,17 +104,18 @@ public class Bullet : MonoBehaviour {
 						other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
 					}
 
-					htColor = new Color (1f, 0.7f, 0f, 1f); //hitText color for shields
+					htColor = Color.yellow; //hitText color for shields
 				} else {
 					//do damage to the entity's health pool
 					other.health -= damage;
 
-					htColor = new Color (1f, 0f, 0f, 1f); //hitText color for health
+					htColor = Color.white; //hitText color for health
 				}
 			}
 
 			//create a hitText
-			createHitText(col.transform.position, htColor, damage.ToString());
+			if(damage != 0)
+				createHitText(col.transform.position, htColor, damage.ToString());
 
 			//do fancy stuff
 			hitEffect(col);

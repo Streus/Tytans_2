@@ -11,6 +11,10 @@ public class Prometheus : Boss {
 	private int currentFormation;
 	private float rotationDelay;
 	private float currentDelay;
+	private bool sweep;
+
+	public Vector2 leftSideMarker;
+	public Vector2 rightSideMarker;
 
 	public override void Awake()
 	{
@@ -29,8 +33,6 @@ public class Prometheus : Boss {
 		//formation related stuff
 		formList = new MinionFormation[]{ 
 			new PolyFormation(false, PolyFormation.LINE),
-			new PolyFormation(true, PolyFormation.SQUARE), 
-			new PolyFormation(false, PolyFormation.TRAPEZOID), 
 			new PolyFormation(true, PolyFormation.HEXAGON) 
 		};
 		for (int i = 0; i < formList.Length; i++) {
@@ -40,6 +42,7 @@ public class Prometheus : Boss {
 		currentFormation = 0;
 		rotationDelay = 10f;
 		currentDelay = 0.5f;
+		sweep = false;
 
 		//add drops
 		//TODO add drops for Prometheus
@@ -63,19 +66,53 @@ public class Prometheus : Boss {
 		if(currentDelay <= 0)
 		{
 			currentDelay = rotationDelay;
-			formList [currentFormation].recenter (transform.position);
-			Vector2[] positions = formList [currentFormation].distribute (minions.Count);
-			for (int i = 0; i < minions.Count; i++)
-			{
-				((GameObject)minions [i]).GetComponent<PrometheusThrall> ().FormationPosition = positions [i];
-				Debug.Log (i.ToString () + " : " + positions [i].ToString ()); //DEBUG
+			if (!sweep) {
+				formList [0].recenter (leftSideMarker);
+				distributeMinions (formList [0]);
+				sweep = true;
+			} else {
+				shiftPositions (rightSideMarker - leftSideMarker);
+				sweep = false;
 			}
-			currentFormation = (currentFormation + 1) % formList.Length;
+		}
+
+		if (Vector2.Distance (transform.position, GameManager.player.transform.position) < 3f && !sweep)
+		{
+			formList [1].recenter (transform.position);
+			distributeMinions (formList [1]);
+		}
+	}
+
+	public override void OnDestroy ()
+	{
+		base.OnDestroy ();
+
+		for (int i = 0; i < minions.Count; i++)
+		{
+			((GameObject)minions [i]).GetComponent<Entity> ().die ();
 		}
 	}
 
 	public void removeMinion(GameObject e)
 	{
 		minions.Remove (e);
+	}
+
+	private void distributeMinions(MinionFormation mf)
+	{
+		Vector2[] positions = mf.distribute (minions.Count);
+		for (int i = 0; i < minions.Count; i++){
+			((GameObject)minions [i]).GetComponent<PrometheusThrall> ().FormationPosition = positions [i];
+		}
+	}
+
+	// Shift all minion positions by an offset
+	private void shiftPositions(Vector2 offset)
+	{
+		for (int i = 0; i < minions.Count; i++)
+		{
+			PrometheusThrall minion = ((GameObject)minions [i]).GetComponent<PrometheusThrall> ();
+			minion.FormationPosition = minion.FormationPosition + offset;
+		}
 	}
 }

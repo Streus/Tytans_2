@@ -38,6 +38,7 @@ public class StatusOffered : StatusEffect
 		{
 			GameObject bul = Bullet.createBullet (invoker.gameObject, Resources.Load<GameObject> ("Prefabs/Bullets/BulletHomingHealth"), invoker.position, invoker.rotation);
 			HomingBullet hb = bul.GetComponent<HomingBullet> ();
+			hb.faction = Faction.NEUTRAL;
 			hb.homingTarget = healTarget;
 			hb.damage = -healAmount;
 		}

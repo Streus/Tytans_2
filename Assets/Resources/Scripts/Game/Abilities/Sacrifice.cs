@@ -25,18 +25,8 @@ public class Sacrifice : MinionAbility
 	{
 		base.use ();
 
-		StatusOffered offered = new StatusOffered (10f, invoker, invoker.gameObject);
-
-		for (int i = 0; i < minions.Count; i++)
-		{
-			Entity minion = ((GameObject)minions [i]).GetComponent<Entity> ();
-			if (!(minion.hasStatus (offered)))
-			{
-				minion.addStatus (offered.Copy(((GameObject)minions [i]).transform));
-				return;
-			}
-		}
-		//failed to apply, refund energy cost
-		invoker.GetComponent<Entity> ().energy += cost;
+		int randomIndex = (int)(Random.value * minions.Count);
+		Entity minion = ((GameObject)minions [randomIndex]).GetComponent<Entity> ();
+		minion.addStatus (new StatusOffered (20f, invoker, invoker.gameObject));
 	}
 }

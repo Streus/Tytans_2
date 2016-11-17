@@ -38,14 +38,7 @@ public class PrometheusThrall : ControlScript
 
 		if (!atPosition) {
 			facePoint (formationPosition);
-
-			RaycastHit2D hit = Physics2D.CircleCast (transform.position, 0.5f, physbody.velocity, 0.25f, 1 << 8);
-			bool hitOther = Physics2D.IsTouching (hit.collider, transform.GetComponent<Collider2D> ());
-			if(!hitOther)
-				physbody.AddForce (transform.up * -self.speed);
-			else
-				physbody.AddForce ((transform.right + -transform.up) * -self.speed);
-			
+			physbody.AddForce (transform.up * -self.speed);
 			atPosition = Vector2.Distance (transform.position, formationPosition) < 0.01f;
 		} else if(target != null){
 			physbody.velocity = Vector2.zero;
