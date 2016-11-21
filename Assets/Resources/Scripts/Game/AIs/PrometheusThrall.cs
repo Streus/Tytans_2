@@ -14,6 +14,7 @@ public class PrometheusThrall : ControlScript
 		base.Awake ();
 
 		self.addAbility (new BasicShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletPlasma")), 0);
+		self.speed *= (2 + (int)GameManager.manager.difficulty) / 2;
 
 		atPosition = false;
 		upgraded = false;
