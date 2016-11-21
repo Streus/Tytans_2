@@ -88,7 +88,6 @@ public class GameManager : MonoBehaviour {
 	// Reload the Overworld scene
 	public void restartGame()
 	{
-		SceneManager.UnloadScene("Overworld");
 		SceneManager.LoadScene ("Overworld");
 	}
 

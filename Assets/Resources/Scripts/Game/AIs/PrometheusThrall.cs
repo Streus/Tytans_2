@@ -5,6 +5,7 @@ public class PrometheusThrall : ControlScript
 {
 	private Vector2 formationPosition;
 	public GameObject prometheus;
+	public bool upgraded;
 
 	private bool atPosition;
 
@@ -15,6 +16,7 @@ public class PrometheusThrall : ControlScript
 		self.addAbility (new BasicShot (transform, Resources.Load<GameObject> ("Prefabs/Bullets/BulletPlasma")), 0);
 
 		atPosition = false;
+		upgraded = false;
 	}
 
 	public void Start()
@@ -29,6 +31,7 @@ public class PrometheusThrall : ControlScript
 		set{ 
 			formationPosition = value;
 			atPosition = false;
+			//Debug.Log (formationPosition.ToString ());
 		}
 	}
 
@@ -36,13 +39,24 @@ public class PrometheusThrall : ControlScript
 	{
 		base.FixedUpdate ();
 
-		if (!atPosition && formationPosition != Vector2.zero) {
+		if (!atPosition && formationPosition != Vector2.zero)
+		{
 			facePoint (formationPosition);
 			physbody.AddForce (transform.up * -self.speed);
 			atPosition = Vector2.Distance (transform.position, formationPosition) < 0.01f;
-		} else if(target != null){
+		} else if (target != null && formationPosition != Vector2.zero)
+		{
 			physbody.velocity = Vector2.zero;
-			faceTarget(target);
+			faceTarget (target);
+
+			if (!upgraded)
+				useAbility (0, prometheus.GetComponent<Prometheus> ().abilityPermission);
+			else
+				useAbility (1, prometheus.GetComponent<Prometheus> ().abilityPermission);
+		} else if(target != null)
+		{
+			faceTarget (target);
+			physbody.AddForce (transform.up * -self.speed);
 		}
 	}
 

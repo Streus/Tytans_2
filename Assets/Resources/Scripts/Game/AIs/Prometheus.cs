@@ -8,13 +8,14 @@ public class Prometheus : Boss {
 
 	//formation stuff
 	private MinionFormation[] formList;
-	private int currentFormation;
 	private float rotationDelay;
 	private float currentDelay;
 	private bool sweep;
+	public bool abilityPermission;
 
 	public Vector2 leftSideMarker;
 	public Vector2 rightSideMarker;
+	private Vector2 targetPoint;
 
 	public override void Awake()
 	{
@@ -24,11 +25,11 @@ public class Prometheus : Boss {
 
 		//add abilities
 		self.abilities = new Ability[6];
-		//TODO add abilites to Prometheus
 		self.addAbility(new SummonThrall(transform, minions), 0);
 		self.addAbility(new Rally(transform), 1);
 		self.addAbility (new Sacrifice (transform, minions), 2);
 		self.addAbility (new GiftOfFire (transform, minions), 3);
+		self.addAbility (new Championed (transform, minions), 4);
 
 		//formation related stuff
 		formList = new MinionFormation[]{ 
@@ -36,26 +37,32 @@ public class Prometheus : Boss {
 			new PolyFormation(true, PolyFormation.HEXAGON) 
 		};
 		formList [0].rescale (12f);
-		formList [1].rescale (2f);
-		currentFormation = 0;
+		formList [1].rescale (1.5f);
 		rotationDelay = 10f;
 		currentDelay = 0.5f;
 		sweep = false;
 
 		//add drops
 		//TODO add drops for Prometheus
-		bulletDrops = new string[]{  };
+		bulletDrops = new string[]{ "BulletSpark", "BulletPlasma" };
 		Transform temp = GameManager.player.transform;
-		abilityDrops = new Ability[]{  };
+		abilityDrops = new Ability[]{ new Overpowered(temp) };
 	}
 
 	public override void FixedUpdate ()
 	{
 		base.FixedUpdate ();
 
-		//TODO write Prometheus behavior
+		//TODO write Prometheus movement
 		useAbility (0, minions.Count < 30);
 		useAbility (2);
+		useAbility (4, self.health/self.healthMax < 0.5f);
+
+		if (Vector2.Distance (transform.position, targetPoint) > 0.1f) {
+			facePoint (targetPoint);
+			physbody.AddForce (transform.up * -self.speed);
+		} else if(target != null)
+			faceTarget (target);
 
 		//minion formation updating
 		currentDelay -= Time.deltaTime;
@@ -64,15 +71,18 @@ public class Prometheus : Boss {
 			currentDelay = rotationDelay;
 			if (!sweep) {
 				formList [0].recenter (leftSideMarker);
+				targetPoint = rightSideMarker;
 				distributeMinions (formList [0]);
+				abilityPermission = false;
 			} else {
 				shiftPositions (rightSideMarker - leftSideMarker);
+				targetPoint = leftSideMarker;
+				abilityPermission = true;
 				useAbility (3);
 			}
 			sweep = !sweep;
 		}
-
-		if (Vector2.Distance (transform.position, GameManager.player.transform.position) < 3f && !sweep)
+		if (GameManager.player != null && Vector2.Distance (transform.position, GameManager.player.transform.position) < 3f && !sweep)
 		{
 			formList [1].recenter (transform.position);
 			distributeMinions (formList [1]);

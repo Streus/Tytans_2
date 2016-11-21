@@ -29,12 +29,16 @@ public class StatusAbsorptionField : StatusEffect {
 
 		//apply shield to invoker
 		invokerVars.shieldMax = invokerVars.shieldHealth = shieldAmount;
+		invokerVars.statusImmune++;
 	}
 
 	public override void revert ()
 	{
 		//remove visual
 		MonoBehaviour.Destroy(shieldEffect);
+
+		//remove status immunity
+		invokerVars.statusImmune--;
 
 		//calculate and apply regen status
 		float absorbedDamage = 1 - (invokerVars.shieldHealth / invokerVars.shieldMax);
