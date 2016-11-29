@@ -29,6 +29,8 @@ public class Themis : Boss {
 	public override void FixedUpdate ()
 	{
 		base.FixedUpdate ();
+		if (!physbody.simulated || self.stunned > 0)
+			return;
 
 		//-MOVEMENT-
 		faceTarget (target);

@@ -16,8 +16,6 @@ public class Bullet : MonoBehaviour {
 	public GameObject creator;
 
 	// Create a bullet gameobject
-	// NOTE: when instPos and instRot are left to their default values, they recieve 
-	// creator.transform.position and creator.transform.rotation respectively.
 	public static GameObject createBullet(GameObject creator, GameObject bullet, Vector3 instPos, Quaternion instRot)
 	{
 		GameObject b = (GameObject)Instantiate(bullet, instPos, instRot);
@@ -39,6 +37,14 @@ public class Bullet : MonoBehaviour {
 		}
 
 		return b;
+	}
+
+	//Create a bullet in creator's transform heirarchy
+	public static GameObject createChildBullet(GameObject creator, GameObject bullet)
+	{
+		GameObject childBullet = Bullet.createBullet (creator, bullet, creator.transform.position, creator.transform.rotation);
+		childBullet.transform.SetParent (creator.transform, false);
+		return childBullet;
 	}
 
 	// Initialization
