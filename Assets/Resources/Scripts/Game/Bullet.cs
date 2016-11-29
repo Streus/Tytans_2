@@ -2,8 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Bullet : MonoBehaviour {
-
+public class Bullet : MonoBehaviour
+{
 	public float speed;
 	public float damage;
 	public Faction faction;
@@ -47,6 +47,47 @@ public class Bullet : MonoBehaviour {
 		return childBullet;
 	}
 
+	//Deal damage to an entity
+	public static void dealDamage(Entity e, float damage)
+	{
+		Color htColor = new Color(0f, 0f, 0f, 1f);
+
+		//check for zero/negative damage
+		if (damage <= 0) {
+			htColor = new Color (0f, 1f, 0f, 1f);
+			e.health -= damage;
+			if (e.health > e.healthMax)
+				e.health = e.healthMax;
+			damage = Mathf.Abs (damage);
+		} 
+		else //damage is postive
+		{
+			//reduce damage by armor
+			damage -= Mathf.Min (e.armor, damage - 1);
+
+			//check for a shield
+			if (e.shieldHealth > 0) {
+				//do damage to the shield, and destroy it if necessary
+				e.shieldHealth -= damage;
+				if (e.shieldHealth < 0) {
+					e.health -= -e.shieldHealth;
+					e.shieldMax = e.shieldRegen = e.shieldHealth = 0;
+				}
+
+				htColor = Color.yellow; //hitText color for shields
+			} else {
+				//do damage to the entity's health pool
+				e.health -= damage;
+
+				htColor = Color.white; //hitText color for health
+			}
+		}
+
+		//create a hitText
+		if(damage != 0)
+			createHitText(e.transform.position, htColor, damage.ToString());
+	}
+
 	// Initialization
 	public virtual void Start () {
 		physbody = transform.GetComponent<Rigidbody2D>();
@@ -83,45 +124,11 @@ public class Bullet : MonoBehaviour {
 		if(col.gameObject.tag == "Ent" && 
 			faction != col.transform.GetComponent<Entity>().faction)
 		{
-			Color htColor = new Color(0f, 0f, 0f, 1f);
-
 			//retrieve the entity info of the collider and creator
 			Entity other = col.transform.GetComponent<Entity>();
 
-			//check for zero/negative damage
-			if (damage <= 0) {
-				htColor = new Color (0f, 1f, 0f, 1f);
-				other.health -= damage;
-				if (other.health > other.healthMax)
-					other.health = other.healthMax;
-				damage = Mathf.Abs (damage);
-			} 
-			else //damage is postive
-			{
-				//reduce damage by armor
-				damage -= Mathf.Min (other.armor, damage - 1);
-
-				//check for a shield
-				if (other.shieldHealth > 0) {
-					//do damage to the shield, and destroy it if necessary
-					other.shieldHealth -= damage;
-					if (other.shieldHealth < 0) {
-						other.health -= -other.shieldHealth;
-						other.shieldMax = other.shieldRegen = other.shieldHealth = 0;
-					}
-
-					htColor = Color.yellow; //hitText color for shields
-				} else {
-					//do damage to the entity's health pool
-					other.health -= damage;
-
-					htColor = Color.white; //hitText color for health
-				}
-			}
-
-			//create a hitText
-			if(damage != 0)
-				createHitText(col.transform.position, htColor, damage.ToString());
+			//deal damage to Entity other
+			dealDamage (other, damage);
 
 			//do fancy stuff
 			hitEffect(col);
@@ -155,7 +162,7 @@ public class Bullet : MonoBehaviour {
 	// param: the world position of the bullet-entity collision
 	// param: the color of the damage text
 	// param: text to describe what happened in the collision, like damage done, a status application, etc
-	protected void createHitText(Vector3 worldPos, Color color, string info)
+	protected static void createHitText(Vector3 worldPos, Color color, string info)
 	{
 		GameObject hitText = (GameObject)Instantiate(Resources.Load<GameObject>("Prefabs/UI/HitText"), Vector3.zero, Quaternion.identity);
 		hitText.GetComponent<HitText> ().setParentPosition (worldPos);

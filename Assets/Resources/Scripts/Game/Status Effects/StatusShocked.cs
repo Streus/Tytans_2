@@ -6,6 +6,8 @@ public class StatusShocked : StatusEffect {
 	private float interruptInterval;
 	private float interruptTimer;
 
+	private GameObject shockEffect;
+
 	public StatusShocked(float dur, Transform e, float ii) : base(dur, e)
 	{
 		name = "Shocked";
@@ -25,9 +27,6 @@ public class StatusShocked : StatusEffect {
 			invoker.GetComponent<Rigidbody2D> ().velocity = Vector2.zero;
 			interruptTimer = interruptInterval;
 		}
-
-		//do effect TODO add effect
-
 	}
 
 	public override StatusEffect Copy (Transform e)
@@ -35,7 +34,13 @@ public class StatusShocked : StatusEffect {
 		return new StatusShocked(initDuration, e, interruptInterval);
 	}
 
-	public override void apply (){ }
+	public override void apply ()
+	{
+		shockEffect = (GameObject)MonoBehaviour.Instantiate (Resources.Load<GameObject> ("Prefabs/Effects/SparkEffect"), invoker, false);
+	}
 
-	public override void revert (){ }
+	public override void revert ()
+	{
+		MonoBehaviour.Destroy (shockEffect);
+	}
 }

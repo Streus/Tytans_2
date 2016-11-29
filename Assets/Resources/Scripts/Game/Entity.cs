@@ -5,8 +5,8 @@ using System;
 // Delegate for the addStatus method
 public delegate void UpdatedStatusList(StatusEffect status);
 
-public class Entity : MonoBehaviour {
-
+public class Entity : MonoBehaviour
+{
 	// Faction
 	public Faction faction;
 

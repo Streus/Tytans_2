@@ -20,7 +20,7 @@ public class Player : ControlScript {
 	}
 
 	public void Start(){ //DEBUG STUFF
-		learnAbility (new Charge (transform));
+		learnAbility (new Arc (transform));
 	}
 
 	void Update () {
@@ -28,32 +28,31 @@ public class Player : ControlScript {
 			return;
 
 		// basic attack (abilities[0])
-		if(Input.GetKey(Bindings.fire) && self.abilities[0].ready())
+		if(Input.GetKey(Bindings.fire))
 		{
 			useAbility (0);
 		}
 
 		// class ability (abilities[1])
-		if(Input.GetKeyDown(Bindings.classAbility) && self.abilities[1].ready())
+		if(Input.GetKeyDown(Bindings.classAbility))
 		{
 			useAbility (1);
 		}
 
 		// flex ability 1 (abilities[2])
-		if(Input.GetKeyDown(Bindings.ability0) && self.abilities[2].ready())
+		if(Input.GetKeyDown(Bindings.ability0))
 		{
 			useAbility (2);
-			self.abilities[2].use();
 		}
 
 		// flex ability 2 (abilities[3])
-		if(Input.GetKeyDown(Bindings.ability1) && self.abilities[3].ready())
+		if(Input.GetKeyDown(Bindings.ability1))
 		{
 			useAbility (3);
 		}
 
 		// flex ability 3 (abilities[4])
-		if(Input.GetKeyDown(Bindings.ability2) && self.abilities[4].ready())
+		if(Input.GetKeyDown(Bindings.ability2))
 		{
 			useAbility (4);
 		}

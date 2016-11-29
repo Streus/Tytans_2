@@ -2,14 +2,15 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BossHealthDisplay : MonoBehaviour {
-
+public class BossHealthDisplay : MonoBehaviour
+{
 	public static BossHealthDisplay pool;
 
 	public ArrayList bosses;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		if (pool == null)
 			pool = this;
 		else if(pool != this)
@@ -34,8 +35,10 @@ public class BossHealthDisplay : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		for (int i = 0; i < transform.childCount; i++) {
+	void Update ()
+	{
+		for (int i = 0; i < bosses.Count; i++)
+		{
 			Entity boss = (Entity)bosses [i];
 			float hppercent = boss.health / boss.healthMax;
 			float spercent = boss.shieldHealth / boss.shieldMax;

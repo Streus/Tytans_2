@@ -9,7 +9,7 @@ public class CoreOverload : Ability {
 	protected override void setValues ()
 	{
 		dispName = "Core Overload";
-		desc = "Emit a powerful shockwave that damages enemies as well as restoring 80 energy.";
+		desc = "Emit a powerful shockwave that damages\nenemies as well as restoring 80 energy.";
 		image = (Sprite)Resources.Load<Sprite>("Sprites/UI/Abilities/AbilityCoreOverload");
 		cost = 0;
 		cooldown = 10f;

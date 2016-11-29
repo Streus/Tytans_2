@@ -33,7 +33,8 @@ public class ControlScript : MonoBehaviour
 	// Rotate this transform to face their given target
 	protected void faceTarget(GameObject tar)
 	{
-		facePoint(tar.transform.position);
+		if(target != null)
+			facePoint(tar.transform.position);
 	}
 
 	// Rotate this transform to face a given point

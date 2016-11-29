@@ -52,9 +52,12 @@ public class Themis : Boss {
 		useAbility(1);
 
 		//BtS and judgement
-		float distToTarget = Vector2.Distance(transform.position, target.transform.position);
-		useAbility(2, distToTarget < 2.5f);
-		useAbility(3, distToTarget < 5f);
+		if (target != null) 
+		{
+			float distToTarget = Vector2.Distance (transform.position, target.transform.position);		
+			useAbility (2, distToTarget < 2.5f);
+			useAbility (3, distToTarget < 5f);
+		}
 
 		//berzerk
 		bool phase2Threshold = self.health / self.healthMax < 0.5f;

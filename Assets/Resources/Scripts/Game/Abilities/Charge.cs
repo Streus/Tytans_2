@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Charge : Ability
 {
-	GameObject chargeBullet;
-
 	public Charge(Transform e) : base(e){ }
 	public Charge() : base(){ }
 
@@ -29,6 +27,6 @@ public class Charge : Ability
 		Rigidbody2D body = invoker.GetComponent<Rigidbody2D>();
 		body.AddForce(invoker.up * -25, ForceMode2D.Impulse);
 
-		chargeBullet = Bullet.createBullet (invoker.gameObject, Resources.Load<GameObject> ("Prefabs/Bullets/BulletCharge"), invoker.position, invoker.rotation);
+		Bullet.createBullet (invoker.gameObject, Resources.Load<GameObject> ("Prefabs/Bullets/BulletCharge"), invoker.position, invoker.rotation);
 	}
 }

@@ -61,7 +61,7 @@ public class Prometheus : Boss {
 		if (Vector2.Distance (transform.position, targetPoint) > 0.1f) {
 			facePoint (targetPoint);
 			physbody.AddForce (transform.up * -self.speed);
-		} else if(target != null)
+		} else
 			faceTarget (target);
 
 		//minion formation updating
