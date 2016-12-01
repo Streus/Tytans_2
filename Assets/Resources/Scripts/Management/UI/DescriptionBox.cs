@@ -21,18 +21,13 @@ public class DescriptionBox : MonoBehaviour
 	{
 		//TODO screen locking of pop-up boxes doesn't work yet
 
-		//clamp anchorMin
-		Vector3 botLeft = Camera.main.WorldToScreenPoint (rect.anchorMin);
-		Mathf.Clamp01 (botLeft.x);
-		Mathf.Clamp01 (botLeft.y);
-		rect.anchorMin = Camera.main.ScreenToWorldPoint (botLeft);
-		Debug.Log (rect.anchorMin.ToString ());
+		Canvas canvas = rect.root.GetComponent<Canvas> ();
+		Rect canvasBounds = canvas.pixelRect;
 
-		//clamp anchorMax
-		Vector3 topRight = Camera.main.WorldToScreenPoint (rect.anchorMax);
-		Mathf.Clamp01 (topRight.x);
-		Mathf.Clamp01 (topRight.y);
-		rect.anchorMax = Camera.main.ScreenToWorldPoint (topRight);
-		Debug.Log (rect.anchorMax.ToString ());
+		//upper right
+		rect.offsetMax = new Vector2(Mathf.Min (rect.offsetMax.x, canvasBounds.max.x), Mathf.Min (rect.offsetMax.y, canvasBounds.max.y));
+
+		//lower left
+		rect.offsetMin = new Vector2(Mathf.Max (rect.offsetMin.x, canvasBounds.min.x), Mathf.Max(rect.offsetMin.y, canvasBounds.min.y));
 	}
 }
