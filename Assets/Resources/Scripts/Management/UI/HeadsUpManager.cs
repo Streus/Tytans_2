@@ -3,13 +3,14 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
 
-public class HeadsUpManager : MonoBehaviour {
-
+public class HeadsUpManager : MonoBehaviour 
+{
 	// Entity to pull stats from
 	private Entity player;
 
 	private Image healthBarBack;
 	private Image healthBar;
+	private GameObject healthBarGO;
 	private Image shieldBar;
 	private Image heatBarBack;
 	private Image heatBar;
@@ -17,14 +18,16 @@ public class HeadsUpManager : MonoBehaviour {
 	private Transform abilityBar;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		player = GameManager.player.transform.GetComponent<Entity>();
 
 		//add a listener to the changedStatuses event
 		player.changedStatuses += new UpdatedStatusList (addStatusToStatusBar);
 
 		healthBarBack = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
-		healthBar = transform.GetChild (0).GetChild (1).GetComponent<Image> ();
+		healthBarGO = transform.GetChild (0).GetChild (1).gameObject;
+		healthBar = healthBarGO.GetComponent<Image> ();
 		shieldBar = transform.GetChild (0).GetChild (2).GetComponent<Image> ();
 		heatBarBack = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
 		heatBar = transform.GetChild (1).GetChild (1).GetComponent<Image> ();
@@ -33,20 +36,26 @@ public class HeadsUpManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		//check for destroyed player
 		if (GameManager.player == null)
 			return;
 
 		//update health and heat bars
-		healthBar.fillAmount = player.health / player.healthMax;
+		float percentHP = player.health / player.healthMax;
+		healthBar.fillAmount = percentHP;
+
+		healthBarGO.GetComponent<Animator> ().SetBool ("IsCritical", percentHP <= 0.35f);
 
 		if(player.shieldMax != 0)
 			shieldBar.fillAmount = player.shieldHealth / player.shieldMax;
 		else
 			shieldBar.fillAmount = 0;
-		
-		heatBar.fillAmount = player.heat / player.heatMax;
+
+		float percentHeat = player.heat / player.heatMax;
+		heatBar.fillAmount = percentHeat;
+		heatBar.color = new Color (percentHeat, 1 - percentHeat, 1f);
 
 		//update resource bar backgrounds
 		if(healthBarBack.fillAmount != healthBar.fillAmount)
@@ -67,7 +76,8 @@ public class HeadsUpManager : MonoBehaviour {
 		}
 	}
 
-	void OnDestroy () {
+	void OnDestroy ()
+	{
 		//remove this object's listener to the changedStatuses event
 		player.changedStatuses -= new UpdatedStatusList (addStatusToStatusBar);
 	}

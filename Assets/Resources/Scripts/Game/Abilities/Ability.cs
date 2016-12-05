@@ -77,7 +77,7 @@ public abstract class Ability : IComparable
 	// Create a string representation of this ability
 	public override string ToString ()
 	{
-		return dispName + "\n" + desc + "\n" + "\nCost: " + cost + " energy\nCooldown: " + cooldown + " seconds\nMax Charges: " + maxCharges;
+		return dispName + "\n" + desc + "\n" + "\nGenerates " + cost + " heat\nCooldown: " + cooldown + " seconds\nMax Charges: " + maxCharges;
 	}
 
 	// Creates a deep copy of this Ability

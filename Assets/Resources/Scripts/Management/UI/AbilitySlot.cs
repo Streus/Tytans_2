@@ -9,6 +9,7 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	private Image icon;
 	private Image cdIndicator;
 	private Text cdText;
+	private GameObject chargeIndicator;
 	private Text chargeText;
 
 	private GameObject popupInfo;
@@ -19,7 +20,8 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 		icon = transform.GetChild (0).GetComponent<Image> ();
 		cdIndicator = transform.GetChild (1).GetComponent<Image> ();
 		cdText = transform.GetChild (2).GetComponent<Text> ();
-		chargeText = transform.GetChild (3).GetComponent<Text> ();
+		chargeIndicator = transform.GetChild (3).gameObject;
+		chargeText = chargeIndicator.transform.GetChild(0).GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
@@ -28,16 +30,20 @@ public class AbilitySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 		if (ability != null) 
 		{
 			icon.sprite = ability.image;
+
 			cdIndicator.fillAmount = ability.currentCD / ability.cooldown;
 			cdText.text = (ability.currentCD).ToString ("###.#");
-			chargeText.text = ability.currentCharges.ToString ("###");
+
+			chargeIndicator.SetActive (ability.maxCharges > 0);
+			if(chargeIndicator.activeSelf)
+				chargeText.text = ability.currentCharges.ToString ("###");
 		} 
 		else 
 		{
 			icon.sprite = null;
 			cdIndicator.fillAmount = 0;
 			cdText.text = "";
-			chargeText.text = "";
+			chargeIndicator.SetActive (false);
 		}
 	}
 
