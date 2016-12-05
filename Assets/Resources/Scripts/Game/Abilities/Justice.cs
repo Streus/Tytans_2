@@ -13,7 +13,7 @@ public class Justice : BulletFlexAbility {
 		dispName = "Justice";
 		desc = "Fire two volleys of bullets in succession.";
 		image = Resources.Load<Sprite> ("Sprites/UI/Abilities/AbilityJustice");
-		cost = 0;
+		cost = -7f;
 		cooldown = 1.5f;
 		currentCD = cooldown;
 
@@ -27,6 +27,8 @@ public class Justice : BulletFlexAbility {
 
 	public override void use ()
 	{
+		invoker.GetComponent<Entity> ().heat += cost;
+
 		if (!stage) 
 		{
 			//forward spread

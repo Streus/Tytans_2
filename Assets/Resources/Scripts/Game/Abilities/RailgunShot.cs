@@ -11,7 +11,7 @@ public class RailgunShot : BulletFlexAbility {
 		dispName = "Railgun Shot";
 		desc = "Fire a powerful bullet that knocks the ship back.";
 		image = Resources.Load<Sprite>("Sprites/UI/Abilities/AbilityRailgunShot");
-		cost = 0;
+		cost = -1.2f;
 		cooldown = 0.7f;
 		currentCD = cooldown;
 
@@ -23,7 +23,8 @@ public class RailgunShot : BulletFlexAbility {
 		return new RailgunShot (invoker, bulletPrefab);
 	}
 
-	public override void use(){ 
+	public override void use()
+	{ 
 		base.use ();
 
 		GameObject bullet = Bullet.createBullet (invoker.gameObject, bulletPrefab, invoker.position, invoker.rotation);

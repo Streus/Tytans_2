@@ -44,7 +44,8 @@ public class Entity : MonoBehaviour
 	[HideInInspector] public Rigidbody2D physbody;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		statusImmune = 0;
 		armor = 0f;
 		damageAdditive = 0f;
@@ -55,7 +56,8 @@ public class Entity : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		if (!physbody.simulated)
 			return;
 
@@ -72,7 +74,7 @@ public class Entity : MonoBehaviour
 			((StatusEffect)statuses [i]).update (Time.deltaTime);
 		}
 
-		// regen health, shield, and decay heat
+		//regen health, shield, and decay heat
 		health += healthRegen * Time.deltaTime;
 		if(health > healthMax) health = healthMax;
 
@@ -102,7 +104,8 @@ public class Entity : MonoBehaviour
 
 	// Event code for broadcasting status list changes to listeners
 	public event UpdatedStatusList changedStatuses;
-	protected virtual void onChangedStatus(StatusEffect status) {
+	protected virtual void onChangedStatus(StatusEffect status)
+	{
 		if (changedStatuses != null)
 			changedStatuses(status);
 	}

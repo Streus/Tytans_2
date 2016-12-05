@@ -11,7 +11,7 @@ public class BasicShot : BulletFlexAbility {
 		dispName = "Shoot";
 		desc = "Fire a bullet.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityBasicShot", typeof(Sprite));
-		cost = 0;
+		cost = -3f;
 		cooldown = 0.5f;
 		currentCD = cooldown;
 	}

@@ -11,7 +11,7 @@ public class FlakShot : BulletFlexAbility {
 		dispName = "Flak Shot";
 		desc = "Fire a volley of bullets.";
 		image = (Sprite)Resources.Load ("Sprites/UI/Abilities/AbilityFlakShot", typeof(Sprite));
-		cost = 0;
+		cost = -3f;
 		cooldown = 1f;
 		currentCD = cooldown;
 	}
@@ -21,7 +21,8 @@ public class FlakShot : BulletFlexAbility {
 		return new FlakShot (invoker, bulletPrefab);
 	}
 		
-	public override void use(){
+	public override void use()
+	{
 		base.use ();
 
 		for(int i = 0; i < 5; i++){
