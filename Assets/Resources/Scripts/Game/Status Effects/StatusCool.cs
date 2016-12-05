@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StatusENRegen : StatusEffect {
+public class StatusCool : StatusEffect {
 
-	private float regenAmount;
+	private float decayAmount;
 
-	public StatusENRegen(float dur, Transform t, float ra) : base(dur, t)
+	public StatusCool(float dur, Transform t, float da) : base(dur, t)
 	{
-		name = "Recharging";
-		desc = "Regenerating energy over time.";
+		name = "Cooling";
+		desc = "Heat is dispersing.";
 		icon = Resources.Load<Sprite>("Sprites/UI/Status Effects/StatusEffectENRegen");
 
-		regenAmount = ra;
+		decayAmount = da;
 	}
 
 	public override StatusEffect Copy (Transform e)
 	{
-		return new StatusENRegen (initDuration, e, regenAmount);
+		return new StatusCool (initDuration, e, decayAmount);
 	}
 
 	public override void apply ()
@@ -25,7 +25,7 @@ public class StatusENRegen : StatusEffect {
 		//TODO particle effect
 
 		//apply regen
-		invokerVars.energyRegen += regenAmount;
+		invokerVars.heatDecay += decayAmount;
 	}
 
 	public override void revert ()
@@ -34,6 +34,6 @@ public class StatusENRegen : StatusEffect {
 
 
 		//remove regen
-		invokerVars.energyRegen -= regenAmount;
+		invokerVars.heatDecay -= decayAmount;
 	}
 }

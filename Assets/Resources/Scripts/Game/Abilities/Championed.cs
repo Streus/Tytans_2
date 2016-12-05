@@ -34,14 +34,14 @@ public class Championed : MinionAbility
 		{
 			minion.GetComponent<SpriteRenderer> ().sprite = Resources.Load<Sprite> ("Sprites/Game/Entities/PrometheusChampion");
 			minionVars.healthMax *= 4;
-			minionVars.energyMax += 20;
+			minionVars.heatMax += 20;
 			minionVars.addAbility (new Overpowered (minion.transform), 1);
 			minionAI.upgraded = true;
 		} 
 		else 
 		{
 			minionVars.health = minionVars.healthMax;
-			minionVars.energy = minionVars.energyMax;
+			minionVars.heat = minionVars.heatMax;
 		}
 		//TODO add visual effect for upgrade
 	}

@@ -25,7 +25,7 @@ public class Overpowered : Ability
 
 	public override void use ()
 	{
-		invoker.GetComponent<Entity> ().energy -= cost;
+		invoker.GetComponent<Entity> ().heat += cost;
 
 		GameObject bulPrefab = Resources.Load<GameObject> ("Prefabs/Bullets/BulletGolden");
 		for (int i = 0; i < currentCharges; i++)

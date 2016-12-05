@@ -13,7 +13,7 @@ public abstract class Ability : IComparable
 	// The graphic associated with this ability
 	public Sprite image;
 
-	// The amount of energy this ability consumes
+	// The amount of heat this ability generates
 	public float cost;
 
 	// The time the invokee must wait in seconds
@@ -65,7 +65,7 @@ public abstract class Ability : IComparable
 	// Return the readiness state of this ability
 	public bool ready()
 	{
-		return (currentCD <= 0f || currentCharges >= 1) && (cost <= invoker.GetComponent<Entity>().energy);
+		return (currentCD <= 0f || currentCharges >= 1);
 	}
 
 	// Test the names of this ability and another ability for equivilence
@@ -87,7 +87,7 @@ public abstract class Ability : IComparable
 	// Invoke the ability
 	public virtual void use()
 	{
-		invoker.GetComponent<Entity> ().energy -= cost;
+		invoker.GetComponent<Entity> ().heat += cost;
 		if (currentCharges >= 1) {
 			currentCharges--;
 		}

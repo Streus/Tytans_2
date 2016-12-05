@@ -25,7 +25,7 @@ public class SavePoint : MonoBehaviour {
 			//clean up the player for saving
 			playervars.addStatus(new StatusCleansed(5f, col.transform));
 			playervars.health = playervars.healthMax;
-			playervars.energy = playervars.energyMax;
+			playervars.heat = 0;
 			playervars.shieldHealth = playervars.shieldMax;
 
 			//update spawn coordinates and save

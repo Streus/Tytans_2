@@ -11,8 +11,8 @@ public class HeadsUpManager : MonoBehaviour {
 	private Image healthBarBack;
 	private Image healthBar;
 	private Image shieldBar;
-	private Image energyBarBack;
-	private Image energyBar;
+	private Image heatBarBack;
+	private Image heatBar;
 	private Transform statusBar;
 	private Transform abilityBar;
 
@@ -26,8 +26,8 @@ public class HeadsUpManager : MonoBehaviour {
 		healthBarBack = transform.GetChild (0).GetChild (0).GetComponent<Image> ();
 		healthBar = transform.GetChild (0).GetChild (1).GetComponent<Image> ();
 		shieldBar = transform.GetChild (0).GetChild (2).GetComponent<Image> ();
-		energyBarBack = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
-		energyBar = transform.GetChild (1).GetChild (1).GetComponent<Image> ();
+		heatBarBack = transform.GetChild (1).GetChild (0).GetComponent<Image> ();
+		heatBar = transform.GetChild (1).GetChild (1).GetComponent<Image> ();
 		statusBar = transform.GetChild (2).GetChild (0);
 		abilityBar = transform.GetChild (2).GetChild (1);
 	}
@@ -38,7 +38,7 @@ public class HeadsUpManager : MonoBehaviour {
 		if (GameManager.player == null)
 			return;
 
-		//update health and energy bars
+		//update health and heat bars
 		healthBar.fillAmount = player.health / player.healthMax;
 
 		if(player.shieldMax != 0)
@@ -46,7 +46,7 @@ public class HeadsUpManager : MonoBehaviour {
 		else
 			shieldBar.fillAmount = 0;
 		
-		energyBar.fillAmount = player.energy / player.energyMax;
+		heatBar.fillAmount = player.heat / player.heatMax;
 
 		//update resource bar backgrounds
 		if(healthBarBack.fillAmount != healthBar.fillAmount)
@@ -55,10 +55,10 @@ public class HeadsUpManager : MonoBehaviour {
 			healthBarBack.fillAmount += dFill * Time.deltaTime;
 		}
 
-		if(energyBarBack.fillAmount != energyBar.fillAmount)
+		if(heatBarBack.fillAmount != heatBar.fillAmount)
 		{
-			float dFill = energyBar.fillAmount - energyBarBack.fillAmount;
-			energyBarBack.fillAmount += dFill * Time.deltaTime;
+			float dFill = heatBar.fillAmount - heatBarBack.fillAmount;
+			heatBarBack.fillAmount += dFill * Time.deltaTime;
 		}
 
 		//update ability bar

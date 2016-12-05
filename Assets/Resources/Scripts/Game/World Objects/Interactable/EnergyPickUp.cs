@@ -24,7 +24,7 @@ public class EnergyPickUp : MonoBehaviour {
 	{
 		if (col.gameObject == GameManager.player) 
 		{
-			col.gameObject.GetComponent<Entity> ().energy += 20f;
+			col.gameObject.GetComponent<Entity> ().addStatus(new StatusCool(1f, col.transform, 20f));
 			Destroy (gameObject);
 		}
 	}

@@ -9,10 +9,10 @@ public class CoreOverload : Ability {
 	protected override void setValues ()
 	{
 		dispName = "Core Overload";
-		desc = "Emit a powerful shockwave that damages\nenemies as well as restoring 80 energy.";
+		desc = "Emit a powerful shockwave that damages\nenemies and disperses a large amount of heat.";
 		image = (Sprite)Resources.Load<Sprite>("Sprites/UI/Abilities/AbilityCoreOverload");
 		cost = 0;
-		cooldown = 10f;
+		cooldown = 12f;
 		currentCD = cooldown;
 	}
 
@@ -32,6 +32,6 @@ public class CoreOverload : Ability {
 		}
 
 		//apply regen and reset ability
-		invoker.GetComponent<Entity>().addStatus(new StatusENRegen(2f, invoker, 40f));
+		invoker.GetComponent<Entity>().addStatus(new StatusCool(2f, invoker, 30f));
 	}
 }

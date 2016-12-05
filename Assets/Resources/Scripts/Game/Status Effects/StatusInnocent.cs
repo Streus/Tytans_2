@@ -28,7 +28,7 @@ public class StatusInnocent : StatusEffect {
 
 		//add buffs
 		invokerVars.healthRegen += regenAmount;
-		invokerVars.energyRegen += regenAmount;
+		invokerVars.heatDecay += regenAmount;
 
 		//remove Guilty if the subject has it
 		for (int i = 0; i < statusList.Count; i++) 
@@ -48,6 +48,6 @@ public class StatusInnocent : StatusEffect {
 
 		//remove buffs
 		invokerVars.healthRegen -= regenAmount;
-		invokerVars.energyRegen -= regenAmount;
+		invokerVars.heatDecay -= regenAmount;
 	}
 }

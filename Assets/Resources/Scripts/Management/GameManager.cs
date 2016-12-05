@@ -109,9 +109,9 @@ public class GameManager : MonoBehaviour {
 			entScr.healthMax = 150f;
 			entScr.health = entScr.healthMax;
 			entScr.healthRegen = 1.25f;
-			entScr.energyMax = 100f;
-			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 1.5f;
+			entScr.heatMax = 100f;
+			entScr.heat = 0;
+			entScr.heatDecay = 1.5f;
 			entScr.speed = 25;
 			entScr.addAbility(new FlakShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new AbsorptionField(player.transform), 1);
@@ -124,9 +124,9 @@ public class GameManager : MonoBehaviour {
 			entScr.healthMax = 75f;
 			entScr.health = entScr.healthMax;
 			entScr.healthRegen = 0.5f;
-			entScr.energyMax = 100f;
-			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 1.25f;
+			entScr.heatMax = 100f;
+			entScr.heat = 0;
+			entScr.heatDecay = 1.25f;
 			entScr.speed = 45;
 			entScr.addAbility(new BurstShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new Dash(player.transform), 1);
@@ -139,9 +139,9 @@ public class GameManager : MonoBehaviour {
 			entScr.healthMax = 50f;
 			entScr.health = entScr.healthMax;
 			entScr.healthRegen = 0.5f;
-			entScr.energyMax = 200f;
-			entScr.energy = entScr.energyMax;
-			entScr.energyRegen = 2f;
+			entScr.heatMax = 200f;
+			entScr.heat = 0;
+			entScr.heatDecay = 2f;
 			entScr.speed = 35;
 			entScr.addAbility(new RailgunShot(player.transform, plyScr.bullet), 0);
 			entScr.addAbility(new CoreOverload(player.transform), 1);

@@ -9,7 +9,7 @@ public class SwordOfTruth : Ability {
 	protected override void setValues ()
 	{
 		dispName = "Sword of Truth";
-		desc = "Fire a double sided laser.\nOne side applies Innocent, the other Guilty";
+		desc = "Fire a double sided laser.";
 		image = Resources.Load<Sprite> ("Sprites/UI/Abilities/AbilitySwordOfTruth");
 		cost = 40f;
 		cooldown = 10f;

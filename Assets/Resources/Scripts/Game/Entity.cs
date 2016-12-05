@@ -21,9 +21,9 @@ public class Entity : MonoBehaviour
 	public float shieldRegen;
 
 	// Energy vars
-	public float energy;
-	public float energyMax;
-	public float energyRegen;
+	public float heat;
+	public float heatMax;
+	public float heatDecay;
 
 	// Misc Stat vars
 	public int speed;
@@ -72,7 +72,7 @@ public class Entity : MonoBehaviour
 			((StatusEffect)statuses [i]).update (Time.deltaTime);
 		}
 
-		// regen health, shield, and energy
+		// regen health, shield, and decay heat
 		health += healthRegen * Time.deltaTime;
 		if(health > healthMax) health = healthMax;
 
@@ -80,9 +80,13 @@ public class Entity : MonoBehaviour
 		if(shieldHealth > shieldMax) shieldHealth = shieldMax;
 		if(shieldHealth <= 0) shieldHealth = shieldMax = shieldRegen = 0f; //shield break state
 
-		energy += energyRegen * Time.deltaTime;
-		if(energy > energyMax) energy = energyMax;
-		if(energy < 0) energy = 0;
+		heat -= heatDecay * Time.deltaTime;
+		if (heat > heatMax) //heat exceeded accepted amount
+		{
+			this.addStatus (new StatusFire (3f, transform, heat - heatMax));
+			heat = heatMax;
+		}
+		if(heat < 0) heat = 0;
 
 		checkDeath();
 	}
